@@ -1,1 +1,22 @@
-body{}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+	font-family: vazir;
+	src: url("./assets/fonts/Vazir-Regular-FD-WOL.woff") format("woff");
+	font-weight: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: vazir;
+	src: url("./assets/fonts/Vazir-Bold-FD-WOL.woff") format("woff");
+	font-weight: bold;
+	font-display: swap;
+}
+#app{
+	font-family: vazir, Avenir, Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	@apply text-slate-600;
+}
