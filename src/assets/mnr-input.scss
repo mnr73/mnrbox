@@ -1,0 +1,38 @@
+.mnr-input {
+	&,
+	& * {
+		box-sizing: border-box;
+		&[dir="ltr"] {
+			text-align: left;
+		}
+		&[dir="rtl"] {
+			text-align: right;
+		}
+	}
+	input {
+		&[type="checkbox"],
+		&[type="radio"] {
+			width: 0;
+			height: 0;
+			position: absolute;
+			z-index: -1000;
+			opacity: 0;
+		}
+	}
+	.mnr-options {
+		max-height: 280px;
+		overflow-y: auto;
+		.mnr-option {
+			display: flex;
+			border-style: solid;
+			border-top-width: 1px;
+			background-color: #fbfbfb;
+			border-color: #ddd;
+			padding: 10px;
+			cursor: pointer;
+			&:hover {
+				background-color: #eee;
+			}
+		}
+	}
+}

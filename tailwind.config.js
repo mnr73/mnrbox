@@ -18,6 +18,8 @@ export default {
       lime: colors.lime,
       emerald: colors.emerald,
       gray: colors.gray,
+      sky: colors.sky,
+      amber: colors.amber,
     },
 		extend: {},
 	},

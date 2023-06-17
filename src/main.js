@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import './style.scss'
+import './assets/mnr-input.scss'
 import App from './App.vue'
 import { createRouter } from "./router";
 import { createHead } from "@vueuse/head"
