@@ -13,7 +13,7 @@ defineProps({
 <template>
 	<RoleWrapper :role="role">
 		<template #icon>
-			<Icon icon="game-icons:poison-bottle" class="inline-block w-7 h-full" />
+			<Icon icon="game-icons:dripping-tube" class="inline-block w-7 h-full" />
 		</template>
 		<p>
 			<span class="text-red-600 font-bold">سم ساز</span> در ساید <span class="text-red-600 font-bold">مافیا</span> بازی

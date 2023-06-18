@@ -2,8 +2,8 @@
 import { Icon } from "@iconify/vue";
 import mafia from "../../modules/mafia";
 import {
-	godFather, strongMan, nato, natasha, afsoongar, terrorist, mashooghe,
-	bazjoo, samSaz, negotiator, kharabKar, doctorLekter, groganGir, shabKhosb,
+	godFather, strongMan, nato, natasha, dozd, afsoongar, terrorist, mashooghe,
+	bazjoo, samSaz, negotiator, kharabKar, doctorLekter, groganGir,
 	spy, sharlatan, simpleMafia1, simpleMafia2, simpleMafia3,
 
 	doctor, detective, sniper, farmande, bomber, takavar1, takavar2, takavar3, saghi,
@@ -22,6 +22,13 @@ import Mashooghe from "@/components/mafia/roles/Mashooghe.vue";
 import Bazjoo from "@/components/mafia/roles/Bazjoo.vue";
 import SamSaz from "@/components/mafia/roles/SamSaz.vue";
 import Negotiator from "@/components/mafia/roles/Negotiator.vue";
+import KharabKar from "@/components/mafia/roles/KharabKar.vue";
+import DoctorLekter from "@/components/mafia/roles/DoctorLekter.vue";
+import GroganGir from "@/components/mafia/roles/GroganGir.vue";
+import Spy from "@/components/mafia/roles/Spy.vue";
+import Sharlatan from "@/components/mafia/roles/Sharlatan.vue";
+import SimpleMafia from "@/components/mafia/roles/SimpleMafia.vue";
+import Dozd from "@/components/mafia/roles/Dozd.vue";
 
 let data = new mafia();
 let name = ref();
@@ -46,6 +53,11 @@ let roles = reactive({
 		active: false,
 		open: false,
 		card: new natasha().card,
+	},
+	dozd: {
+		active: false,
+		open: false,
+		card: new dozd().card,
 	},
 	afsoongar: {
 		active: false,
@@ -77,51 +89,46 @@ let roles = reactive({
 		open: false,
 		card: new negotiator().card,
 	},
-	// kharabKar: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new kharabKar().card,
-	// },
-	// doctorLekter: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new doctorLekter().card,
-	// },
-	// groganGir: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new groganGir().card,
-	// },
-	// shabKhosb: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new shabKhosb().card,
-	// },
-	// spy: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new spy().card,
-	// },
-	// sharlatan: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new sharlatan().card,
-	// },
-	// simpleMafia1: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new simpleMafia1().card,
-	// },
-	// simpleMafia2: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new simpleMafia2().card,
-	// },
-	// simpleMafia3: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new simpleMafia3().card,
-	// },
+	kharabKar: {
+		active: false,
+		open: false,
+		card: new kharabKar().card,
+	},
+	doctorLekter: {
+		active: false,
+		open: false,
+		card: new doctorLekter().card,
+	},
+	groganGir: {
+		active: false,
+		open: false,
+		card: new groganGir().card,
+	},
+	spy: {
+		active: false,
+		open: false,
+		card: new spy().card,
+	},
+	sharlatan: {
+		active: false,
+		open: false,
+		card: new sharlatan().card,
+	},
+	simpleMafia1: {
+		active: false,
+		open: false,
+		card: new simpleMafia1().card,
+	},
+	simpleMafia2: {
+		active: false,
+		open: false,
+		card: new simpleMafia2().card,
+	},
+	simpleMafia3: {
+		active: false,
+		open: false,
+		card: new simpleMafia3().card,
+	},
 	// doctor: {
 	// 	active: false,
 	// 	open: false,

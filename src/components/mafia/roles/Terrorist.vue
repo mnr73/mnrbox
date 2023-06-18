@@ -13,7 +13,7 @@ defineProps({
 <template>
 	<RoleWrapper :role="role">
 		<template #icon>
-			<Icon icon="solar:bomb-emoji-broken" class="inline-block w-7 h-full" />
+			<Icon icon="game-icons:ak47" class="inline-block w-7 h-full" />
 		</template>
 		<p>
 			<span class="text-red-600 font-bold">تروریست</span> در ساید <span class="text-red-600 font-bold">مافیا</span> بازی
@@ -25,4 +25,5 @@ defineProps({
 		<MnrCheckSlider v-model:checked="role.card.afterVote.value" class="block w-full">بعد از رای گیری و خارج شدن
 		</MnrCheckSlider>
 		<MnrCheckSlider v-model:checked="role.card.alone.value" class="block w-full">بیدار شدن مستقل از مافیا</MnrCheckSlider>
-</RoleWrapper></template>
+	</RoleWrapper>
+</template>
