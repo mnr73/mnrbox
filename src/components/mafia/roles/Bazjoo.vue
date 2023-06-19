@@ -1,6 +1,5 @@
 <script setup>
 
-import { defineProps } from 'vue';
 import MnrNumber from '@/components/mnr/MnrNumber.vue';
 import RoleWrapper from '../RoleWrapper.vue';
 import { Icon } from '@iconify/vue';
@@ -23,4 +22,5 @@ defineProps({
 		<hr class="my-2">
 		<MnrNumber placeholder="تعداد بازجویی" title="تعداد بازجویی" :min="0" :max="100" v-model="role.card.count.value">
 		</MnrNumber>
-	</RoleWrapper></template>
+	</RoleWrapper>
+</template>

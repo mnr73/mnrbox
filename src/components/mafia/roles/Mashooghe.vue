@@ -1,6 +1,5 @@
 <script setup>
 
-import { defineProps } from 'vue';
 import MnrCheckSlider from '@/components/mnr/MnrCheckSlider.vue';
 import RoleWrapper from '../RoleWrapper.vue';
 import { Icon } from '@iconify/vue';
@@ -26,5 +25,6 @@ defineProps({
 		<MnrCheckSlider v-model:checked="role.card.inDay.value" class="block w-full">شب مافیایی در صورت کشته شدن در روز
 		</MnrCheckSlider>
 		<MnrCheckSlider v-model:checked="role.card.inNight.value" class="block w-full">شب مافیایی در صورت کشته شدن در شب
-	</MnrCheckSlider>
-</RoleWrapper></template>
+		</MnrCheckSlider>
+	</RoleWrapper>
+</template>

@@ -1,6 +1,5 @@
 <script setup>
 
-import { defineProps } from 'vue';
 import MnrNumber from '../../mnr/MnrNumber.vue';
 import RoleWrapper from '../RoleWrapper.vue';
 import { Icon } from "@iconify/vue";
@@ -31,4 +30,5 @@ defineProps({
 			v-model="role.card.negativeInquiry.value"></MnrNumber>
 		<MnrNumber placeholder="جان اضافه" title="تعداد جان اضافه" :min="0" :max="100" v-model="role.card.armor.value"
 			class="mt-3"></MnrNumber>
-</RoleWrapper></template>
+	</RoleWrapper>
+</template>

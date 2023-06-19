@@ -29,6 +29,12 @@ import Spy from "@/components/mafia/roles/Spy.vue";
 import Sharlatan from "@/components/mafia/roles/Sharlatan.vue";
 import SimpleMafia from "@/components/mafia/roles/SimpleMafia.vue";
 import Dozd from "@/components/mafia/roles/Dozd.vue";
+import Doctor from "@/components/mafia/roles/Doctor.vue";
+import Detective from "@/components/mafia/roles/Detective.vue";
+import Sniper from "@/components/mafia/roles/Sniper.vue";
+import Farmande from "@/components/mafia/roles/Farmande.vue";
+import Bomber from "@/components/mafia/roles/Bomber.vue";
+import Takavar from "@/components/mafia/roles/Takavar.vue";
 
 let data = new mafia();
 let name = ref();
@@ -129,46 +135,46 @@ let roles = reactive({
 		open: false,
 		card: new simpleMafia3().card,
 	},
-	// doctor: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new doctor().card,
-	// },
-	// detective: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new detective().card,
-	// },
-	// sniper: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new sniper().card,
-	// },
-	// farmande: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new farmande().card,
-	// },
-	// bomber: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new bomber().card,
-	// },
-	// takavar1: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new takavar1().card,
-	// },
-	// takavar2: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new takavar2().card,
-	// },
-	// takavar3: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new takavar3().card,
-	// },
+	doctor: {
+		active: false,
+		open: false,
+		card: new doctor().card,
+	},
+	detective: {
+		active: false,
+		open: false,
+		card: new detective().card,
+	},
+	sniper: {
+		active: false,
+		open: false,
+		card: new sniper().card,
+	},
+	farmande: {
+		active: false,
+		open: false,
+		card: new farmande().card,
+	},
+	bomber: {
+		active: false,
+		open: false,
+		card: new bomber().card,
+	},
+	takavar1: {
+		active: false,
+		open: false,
+		card: new takavar1().card,
+	},
+	takavar2: {
+		active: false,
+		open: false,
+		card: new takavar2().card,
+	},
+	takavar3: {
+		active: false,
+		open: false,
+		card: new takavar3().card,
+	},
 	// saghi: {
 	// 	active: false,
 	// 	open: false,

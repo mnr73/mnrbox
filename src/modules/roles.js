@@ -244,12 +244,12 @@ class doctor extends roles {
 		super()
 		this.card.roleName = "دکتر"
 		this.card.roleComponent = "Doctor"
-		this.card.side = "city",
-			this.card.counts = [
-				{ players: 20, defaultPlayers: 20, default: 3, value: 3 },
-				{ players: 15, defaultPlayers: 15, default: 2, value: 2 },
-				{ players: 10, defaultPlayers: 10, default: 1, value: 1 },
-			]
+		this.card.side = "city"
+		this.card.counts = [
+			{ players: 20, defaultPlayers: 20, default: 3, value: 3 },
+			{ players: 15, defaultPlayers: 15, default: 2, value: 2 },
+			{ players: 10, defaultPlayers: 10, default: 1, value: 1 },
+		]
 		this.card.self = { default: 1, value: 1 }
 	}
 }
@@ -260,6 +260,7 @@ class detective extends roles {
 		this.card.roleName = "کاراگاه"
 		this.card.roleComponent = "Detective"
 		this.card.side = "city"
+		this.card.count = { default: 100, value: 100 }
 	}
 }
 
@@ -269,6 +270,7 @@ class sniper extends roles {
 		this.card.roleName = "اسنایپر"
 		this.card.roleComponent = "Sniper"
 		this.card.side = "city"
+		this.card.count = { default: 100, value: 100 }
 	}
 }
 
@@ -278,6 +280,7 @@ class farmande extends roles {
 		this.card.roleName = "فرمانده"
 		this.card.roleComponent = "Farmande"
 		this.card.side = "city"
+		this.card.dieOnFail = { default: true, value: true }
 	}
 }
 
@@ -287,6 +290,7 @@ class bomber extends roles {
 		this.card.roleName = "بمبر"
 		this.card.roleComponent = "Bomber"
 		this.card.side = "city"
+		this.card.count = { default: 5, value: 5 }
 	}
 }
 
@@ -294,8 +298,9 @@ class takavar1 extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "تکاور 1"
-		this.card.roleComponent = "Takavar1"
+		this.card.roleComponent = "Takavar"
 		this.card.side = "city"
+		this.card.sniperShot = { default: true, value: true }
 	}
 }
 
@@ -303,8 +308,9 @@ class takavar2 extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "تکاور 2"
-		this.card.roleComponent = "Takavar2"
+		this.card.roleComponent = "Takavar"
 		this.card.side = "city"
+		// this.card.sniperShot = { default: true, value: true }
 	}
 }
 
@@ -312,8 +318,9 @@ class takavar3 extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "تکاور 3"
-		this.card.roleComponent = "Takavar3"
+		this.card.roleComponent = "Takavar"
 		this.card.side = "city"
+		this.card.sniperShot = { default: true, value: true }
 	}
 }
 

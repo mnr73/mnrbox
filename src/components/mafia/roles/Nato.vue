@@ -1,6 +1,5 @@
 <script setup>
 
-import { defineProps } from 'vue';
 import MnrNumber from '../../mnr/MnrNumber.vue';
 import RoleWrapper from '../RoleWrapper.vue';
 import { Icon } from '@iconify/vue';

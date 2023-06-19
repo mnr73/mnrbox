@@ -12,12 +12,12 @@ defineProps({
 <template>
 	<RoleWrapper :role="role">
 		<template #icon>
-			<Icon icon="game-icons:luger" class="inline-block w-7 h-full" />
+			<Icon icon="game-icons:love-injection" class="inline-block w-7 h-full" />
 		</template>
 		<p>
-			<span class="text-red-600 font-bold">خرابکار</span> در ساید <span class="text-red-600 font-bold">مافیا</span> بازی
-			می‌کند. خرابکار در شب بیدار می‌شود و یک یا تعدادی از اشخاص را به گاد نشان می‌دهد. اگر آن اشخاص از تفنگدار تفنگ
-			دریافت کرده باشند، تفنگ آنها خراب شده و به سمت خود شلیک می‌کند.
+			<span class="text-emerald-600 font-bold">دکتر</span> در ساید <span class="text-emerald-600 font-bold">شهر</span>
+			بازی
+			می‌کند. او شب بیدار می‌شود و یک یا چند نفر را انتخاب می‌کند. اگر آن شخص در شب تیر بخورد کشته نمی‌شود.
 		</p>
 		<hr class="my-2">
 		<div class="flex items-center gap-2 mt-2" v-for="(item, index) in role.card.counts" :key="index">
@@ -26,7 +26,8 @@ defineProps({
 			<div>بازیکن</div>
 			<MnrNumber class="flex-grow" placeholder="تعدا" :min="0" :max="100" v-model="item.value">
 			</MnrNumber>
-			<div>خرابکاری</div>
+			<div>نجات</div>
 		</div>
+		<MnrNumber placeholder="نجات خود" title="نجات خود" :min="1" :max="100" v-model="role.card.self.value"></MnrNumber>
 	</RoleWrapper>
 </template>

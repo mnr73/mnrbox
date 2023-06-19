@@ -1,6 +1,5 @@
 <script setup>
 
-import { defineProps } from 'vue';
 import MnrCheckSlider from '@/components/mnr/MnrCheckSlider.vue';
 import RoleWrapper from '../RoleWrapper.vue';
 import { Icon } from '@iconify/vue';
