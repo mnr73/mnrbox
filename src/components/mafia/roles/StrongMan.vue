@@ -22,7 +22,7 @@ defineProps({
 		<MnrCheckSlider v-model:checked="role.card.sameShot.value">شات همزمان با تیم</MnrCheckSlider>
 		<MnrNumber placeholder="استعلام منفی" title="تعداد تیر" :min="0" :max="100" v-model="role.card.shot.value">
 		</MnrNumber>
-		<MnrNumber placeholder="جان اضافه" title="تعداد جان اضافه" :min="0" :max="100" v-model="role.card.armor.value"
+		<MnrNumber placeholder="جان اضافه" title="تعداد جان اضافه" :min="0" :max="100" v-model="role.card.heart.value"
 			class="mt-3">
 		</MnrNumber>
 	</RoleWrapper>

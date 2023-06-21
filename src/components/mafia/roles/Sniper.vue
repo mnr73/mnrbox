@@ -12,7 +12,7 @@ defineProps({
 <template>
 	<RoleWrapper :role="role">
 		<template #icon>
-			<Icon icon="solar:target-broken" class="inline-block w-7 h-full" />
+			<Icon icon="fe:target" class="inline-block w-7 h-full" />
 		</template>
 		<p>
 			<span class="text-emerald-600 font-bold">اسنایپر</span> در ساید <span class="text-emerald-600 font-bold">شهر</span>

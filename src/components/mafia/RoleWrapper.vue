@@ -1,6 +1,5 @@
 <script setup>
 
-import { defineProps } from 'vue';
 import { Icon } from "@iconify/vue";
 
 defineProps({

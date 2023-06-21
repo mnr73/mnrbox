@@ -8,7 +8,7 @@ import {
 
 	doctor, detective, sniper, farmande, bomber, takavar1, takavar2, takavar3, saghi,
 	fadayi, janSakht, keshish, tofangdar, ghazi, shahrdar, framason, tiler,
-	citizen1, citizen2, citizen3
+	cowboy, ahangar, khabGard, royinTan, citizen1, citizen2, citizen3
 } from "@/modules/roles";
 import { ref, reactive } from "vue";
 import _ from "lodash";
@@ -35,6 +35,20 @@ import Sniper from "@/components/mafia/roles/Sniper.vue";
 import Farmande from "@/components/mafia/roles/Farmande.vue";
 import Bomber from "@/components/mafia/roles/Bomber.vue";
 import Takavar from "@/components/mafia/roles/Takavar.vue";
+import Fadayi from "@/components/mafia/roles/Fadayi.vue";
+import JanSakht from "@/components/mafia/roles/JanSakht.vue";
+import Keshish from "@/components/mafia/roles/Keshish.vue";
+import Tofangdar from "@/components/mafia/roles/Tofangdar.vue";
+import Ghazi from "@/components/mafia/roles/Ghazi.vue";
+import Shahrdar from "@/components/mafia/roles/Shahrdar.vue";
+import Framason from "@/components/mafia/roles/Framason.vue";
+import Tiler from "@/components/mafia/roles/Tiler.vue";
+import RoyinTan from "@/components/mafia/roles/RoyinTan.vue";
+import Citizen from "@/components/mafia/roles/Citizen.vue";
+import Saghi from "@/components/mafia/roles/Saghi.vue";
+import Cowboy from "@/components/mafia/roles/Cowboy.vue";
+import KhabGard from "@/components/mafia/roles/KhabGard.vue";
+import Ahangar from "@/components/mafia/roles/Ahangar.vue";
 
 let data = new mafia();
 let name = ref();
@@ -175,66 +189,86 @@ let roles = reactive({
 		open: false,
 		card: new takavar3().card,
 	},
-	// saghi: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new saghi().card,
-	// },
-	// fadayi: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new fadayi().card,
-	// },
-	// janSakht: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new janSakht().card,
-	// },
-	// keshish: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new keshish().card,
-	// },
-	// tofangdar: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new tofangdar().card,
-	// },
-	// ghazi: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new ghazi().card,
-	// },
-	// shahrdar: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new shahrdar().card,
-	// },
-	// framason: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new framason().card,
-	// },
-	// tiler: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new tiler().card,
-	// },
-	// citizen1: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new citizen1().card,
-	// },
-	// citizen2: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new citizen2().card,
-	// },
-	// citizen3: {
-	// 	active: false,
-	// 	open: false,
-	// 	card: new citizen3().card,
-	// },
+	saghi: {
+		active: false,
+		open: false,
+		card: new saghi().card,
+	},
+	fadayi: {
+		active: false,
+		open: false,
+		card: new fadayi().card,
+	},
+	janSakht: {
+		active: false,
+		open: false,
+		card: new janSakht().card,
+	},
+	keshish: {
+		active: false,
+		open: false,
+		card: new keshish().card,
+	},
+	tofangdar: {
+		active: false,
+		open: false,
+		card: new tofangdar().card,
+	},
+	ghazi: {
+		active: false,
+		open: false,
+		card: new ghazi().card,
+	},
+	shahrdar: {
+		active: false,
+		open: false,
+		card: new shahrdar().card,
+	},
+	framason: {
+		active: false,
+		open: false,
+		card: new framason().card,
+	},
+	tiler: {
+		active: false,
+		open: false,
+		card: new tiler().card,
+	},
+	royinTan: {
+		active: false,
+		open: false,
+		card: new royinTan().card,
+	},
+	cowboy: {
+		active: false,
+		open: false,
+		card: new cowboy().card,
+	},
+	KhabGard: {
+		active: false,
+		open: false,
+		card: new khabGard().card,
+	},
+	Ahangar: {
+		active: false,
+		open: false,
+		card: new ahangar().card,
+	},
+	citizen1: {
+		active: false,
+		open: false,
+		card: new citizen1().card,
+	},
+	citizen2: {
+		active: false,
+		open: false,
+		card: new citizen2().card,
+	},
+	citizen3: {
+		active: false,
+		open: false,
+		card: new citizen3().card,
+	},
 });
 
 // console.log(roles.godFather.role.card);

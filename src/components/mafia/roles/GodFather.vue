@@ -28,7 +28,7 @@ defineProps({
 		<hr class="my-2">
 		<MnrNumber placeholder="استعلام منفی" title="تعداد استعلام منفی" :min="0" :max="100"
 			v-model="role.card.negativeInquiry.value"></MnrNumber>
-		<MnrNumber placeholder="جان اضافه" title="تعداد جان اضافه" :min="0" :max="100" v-model="role.card.armor.value"
+		<MnrNumber placeholder="جان اضافه" title="تعداد جان اضافه" :min="0" :max="100" v-model="role.card.heart.value"
 			class="mt-3"></MnrNumber>
 	</RoleWrapper>
 </template>

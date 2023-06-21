@@ -38,7 +38,7 @@ class godFather extends roles {
 		this.card.roleComponent = "GodFather"
 		this.card.side = "mafia"
 		this.card.negativeInquiry = { default: 100, value: 100 }
-		this.card.armor = { default: 0, value: 0 }
+		this.card.heart = { default: 0, value: 0 }
 	}
 }
 
@@ -50,7 +50,7 @@ class strongMan extends roles {
 		this.card.side = "mafia"
 		this.card.shot = { default: 1, value: 1 }
 		this.card.sameShot = { default: false, value: false }
-		this.card.armor = { default: 0, value: 0 }
+		this.card.heart = { default: 0, value: 0 }
 	}
 }
 
@@ -161,7 +161,7 @@ class kharabKar extends roles {
 		this.card.counts = [
 			{ players: 20, defaultPlayers: 20, default: 3, value: 3 },
 			{ players: 15, defaultPlayers: 15, default: 2, value: 2 },
-			{ players: 10, defaultPlayers: 10, default: 1, value: 1 },
+			{ players: 1, defaultPlayers: 1, default: 1, value: 1 },
 		]
 	}
 }
@@ -248,7 +248,7 @@ class doctor extends roles {
 		this.card.counts = [
 			{ players: 20, defaultPlayers: 20, default: 3, value: 3 },
 			{ players: 15, defaultPlayers: 15, default: 2, value: 2 },
-			{ players: 10, defaultPlayers: 10, default: 1, value: 1 },
+			{ players: 1, defaultPlayers: 1, default: 1, value: 1 },
 		]
 		this.card.self = { default: 1, value: 1 }
 	}
@@ -348,6 +348,8 @@ class janSakht extends roles {
 		this.card.roleName = "جان ساخت"
 		this.card.roleComponent = "JanSakht"
 		this.card.side = "city"
+		this.card.inquiry = { default: 2, value: 2 }
+		this.card.heart = { default: 1, value: 1 }
 	}
 }
 class keshish extends roles {
@@ -356,6 +358,11 @@ class keshish extends roles {
 		this.card.roleName = "کشیش"
 		this.card.roleComponent = "Keshish"
 		this.card.side = "city"
+		this.card.counts = [
+			{ players: 20, defaultPlayers: 20, default: 3, value: 3 },
+			{ players: 15, defaultPlayers: 15, default: 2, value: 2 },
+			{ players: 1, defaultPlayers: 1, default: 1, value: 1 },
+		]
 	}
 }
 class tofangdar extends roles {
@@ -364,6 +371,8 @@ class tofangdar extends roles {
 		this.card.roleName = "تفنگدار"
 		this.card.roleComponent = "Tofangdar"
 		this.card.side = "city"
+		this.card.count = { default: 3, value: 3 }
+		this.card.everyNight = { default: 4, value: 4 }
 	}
 }
 class ghazi extends roles {
@@ -380,6 +389,7 @@ class shahrdar extends roles {
 		this.card.roleName = "شهردارد"
 		this.card.roleComponent = "Shahrdar"
 		this.card.side = "city"
+		this.card.count = { default: 1, value: 1 }
 	}
 }
 class framason extends roles {
@@ -398,11 +408,43 @@ class tiler extends roles {
 		this.card.side = "city"
 	}
 }
+class royinTan extends roles {
+	constructor() {
+		super()
+		this.card.roleName = "رویین تن"
+		this.card.roleComponent = "RoyinTan"
+		this.card.side = "city"
+	}
+}
+class cowboy extends roles {
+	constructor() {
+		super()
+		this.card.roleName = "کابوی"
+		this.card.roleComponent = "Cowboy"
+		this.card.side = "city"
+	}
+}
+class khabGard extends roles {
+	constructor() {
+		super()
+		this.card.roleName = "خوابگرد"
+		this.card.roleComponent = "KhabGard"
+		this.card.side = "city"
+	}
+}
+class ahangar extends roles {
+	constructor() {
+		super()
+		this.card.roleName = "آهنگر"
+		this.card.roleComponent = "Ahangar"
+		this.card.side = "city"
+	}
+}
 class citizen1 extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "شهر ساده 1"
-		this.card.roleComponent = "citizen1"
+		this.card.roleComponent = "Citizen"
 		this.card.side = "city"
 	}
 }
@@ -410,7 +452,7 @@ class citizen2 extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "شهر ساده 2"
-		this.card.roleComponent = "citizen2"
+		this.card.roleComponent = "Citizen"
 		this.card.side = "city"
 	}
 }
@@ -418,7 +460,7 @@ class citizen3 extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "شهر ساده 3"
-		this.card.roleComponent = "citizen3"
+		this.card.roleComponent = "Citizen"
 		this.card.side = "city"
 	}
 }
@@ -430,5 +472,5 @@ export {
 
 	doctor, detective, sniper, farmande, bomber, takavar1, takavar2, takavar3, saghi,
 	fadayi, janSakht, keshish, tofangdar, ghazi, shahrdar, framason, tiler,
-	citizen1, citizen2, citizen3
+	cowboy, ahangar, khabGard, royinTan, citizen1, citizen2, citizen3
 };
