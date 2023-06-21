@@ -9,6 +9,10 @@ class roles {
 		'roleComponent': "",
 	}
 
+	constructor() {
+		this.card.class = this.constructor.name
+	}
+
 
 	setUser(userName, userId) {
 		this.card.userName = userName
@@ -440,6 +444,19 @@ class ahangar extends roles {
 		this.card.side = "city"
 	}
 }
+class negahban extends roles {
+	constructor() {
+		super()
+		this.card.roleName = "نگهبان"
+		this.card.roleComponent = "Negahban"
+		this.card.side = "city"
+		this.card.counts = [
+			{ players: 30, defaultPlayers: 30, default: 3, value: 3 },
+			{ players: 20, defaultPlayers: 20, default: 2, value: 2 },
+			{ players: 1, defaultPlayers: 1, default: 1, value: 1 },
+		]
+	}
+}
 class citizen1 extends roles {
 	constructor() {
 		super()
@@ -464,6 +481,36 @@ class citizen3 extends roles {
 		this.card.side = "city"
 	}
 }
+class killer extends roles {
+	constructor() {
+		super()
+		this.card.roleName = "قاتل"
+		this.card.roleComponent = "Killer"
+		this.card.side = "independent"
+		this.card.justOdd = { default: true, value: true }
+		this.card.deepShot = { default: true, value: true }
+		this.card.heart = { default: 100, value: 100 }
+	}
+}
+class joker extends roles {
+	constructor() {
+		super()
+		this.card.roleName = "جوکر"
+		this.card.roleComponent = "Joker"
+		this.card.side = "independent"
+		this.card.count = { default: 4, value: 4 }
+		this.card.heart = { default: 100, value: 100 }
+	}
+}
+class nostradamus extends roles {
+	constructor() {
+		super()
+		this.card.roleName = "نوستراداموس"
+		this.card.roleComponent = "Nostradamus"
+		this.card.side = "gray"
+		this.card.heart = { default: 100, value: 100 }
+	}
+}
 
 export {
 	godFather, strongMan, nato, natasha, dozd, afsoongar, terrorist, mashooghe,
@@ -472,5 +519,7 @@ export {
 
 	doctor, detective, sniper, farmande, bomber, takavar1, takavar2, takavar3, saghi,
 	fadayi, janSakht, keshish, tofangdar, ghazi, shahrdar, framason, tiler,
-	cowboy, ahangar, khabGard, royinTan, citizen1, citizen2, citizen3
+	cowboy, ahangar, khabGard, royinTan, negahban, citizen1, citizen2, citizen3,
+
+	killer, joker, nostradamus
 };

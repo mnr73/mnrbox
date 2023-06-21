@@ -1,6 +1,7 @@
 <script setup>
 import { Icon } from "@iconify/vue";
-import mafia from "../../modules/mafia";
+import mafia from "@/modules/mafia";
+import _ from "lodash";
 import {
 	godFather, strongMan, nato, natasha, dozd, afsoongar, terrorist, mashooghe,
 	bazjoo, samSaz, negotiator, kharabKar, doctorLekter, groganGir,
@@ -8,10 +9,11 @@ import {
 
 	doctor, detective, sniper, farmande, bomber, takavar1, takavar2, takavar3, saghi,
 	fadayi, janSakht, keshish, tofangdar, ghazi, shahrdar, framason, tiler,
-	cowboy, ahangar, khabGard, royinTan, citizen1, citizen2, citizen3
+	cowboy, ahangar, khabGard, royinTan, negahban, citizen1, citizen2, citizen3,
+
+	killer, joker, nostradamus
 } from "@/modules/roles";
-import { ref, reactive } from "vue";
-import _ from "lodash";
+import { ref, reactive, computed } from "vue";
 import GodFather from "@/components/mafia/roles/GodFather.vue"
 import StrongMan from "@/components/mafia/roles/StrongMan.vue"
 import Nato from "@/components/mafia/roles/Nato.vue";
@@ -49,6 +51,10 @@ import Saghi from "@/components/mafia/roles/Saghi.vue";
 import Cowboy from "@/components/mafia/roles/Cowboy.vue";
 import KhabGard from "@/components/mafia/roles/KhabGard.vue";
 import Ahangar from "@/components/mafia/roles/Ahangar.vue";
+import Killer from "@/components/mafia/roles/Killer.vue";
+import Joker from "@/components/mafia/roles/Joker.vue";
+import Nostradamus from "@/components/mafia/roles/Nostradamus.vue";
+import Negahban from "@/components/mafia/roles/Negahban.vue";
 
 let data = new mafia();
 let name = ref();
@@ -249,10 +255,15 @@ let roles = reactive({
 		open: false,
 		card: new khabGard().card,
 	},
-	Ahangar: {
+	ahangar: {
 		active: false,
 		open: false,
 		card: new ahangar().card,
+	},
+	negahban: {
+		active: false,
+		open: false,
+		card: new negahban().card,
 	},
 	citizen1: {
 		active: false,
@@ -269,21 +280,77 @@ let roles = reactive({
 		open: false,
 		card: new citizen3().card,
 	},
+	killer: {
+		active: false,
+		open: false,
+		card: new killer().card,
+	},
+	joker: {
+		active: false,
+		open: false,
+		card: new joker().card,
+	},
+	nostradamus: {
+		active: false,
+		open: false,
+		card: new nostradamus().card,
+	},
 });
 
-// console.log(roles.godFather.role.card);
-// roles.godFather.role.targetBy()
-// console.log(roles.godFather.status);
+const sortedRoles = computed(() => _.orderBy(roles, 'active', 'desc'))
 
 users.value = data.getUsers();
 
 function updateRoles() {
+	console.log('updateRoles');
 	// users.value = data.updateUsers(users.value);
 }
 
 function getComponent(component) {
-	// return { GodFather, StrongMan, Nato, Natasha, Afsoongar, Terrorist, Mashooghe }[component]
-	return eval(component)
+	return {
+		GodFather,
+		StrongMan,
+		Nato,
+		Natasha,
+		Afsoongar,
+		Terrorist,
+		Mashooghe,
+		Bazjoo,
+		SamSaz,
+		Negotiator,
+		KharabKar,
+		DoctorLekter,
+		GroganGir,
+		Spy,
+		Sharlatan,
+		SimpleMafia,
+		Dozd,
+		Doctor,
+		Detective,
+		Sniper,
+		Farmande,
+		Bomber,
+		Takavar,
+		Fadayi,
+		JanSakht,
+		Keshish,
+		Tofangdar,
+		Ghazi,
+		Shahrdar,
+		Framason,
+		Tiler,
+		RoyinTan,
+		Citizen,
+		Saghi,
+		Cowboy,
+		KhabGard,
+		Ahangar,
+		Killer,
+		Joker,
+		Nostradamus,
+		Negahban,
+	}[component]
+	// return eval(component)
 }
 </script>
 <template>
@@ -300,30 +367,31 @@ function getComponent(component) {
 			</h2>
 			<div class="grid grid-cols-4 gap-2 mt-2">
 				<div class="bg-red-500 p-2 rounded-md text-white text-center">
-					{{ _.filter(roles, { 'card': { 'side': 'mafia' }, 'active': true }).length }} از {{ _.filter(roles,
-						["card.side", 'mafia']).length }}
+					{{ _.filter(roles, {
+						'card': { 'side': 'mafia' }, 'active': true
+					}).length }} از {{ _.filter(roles, ["card.side", 'mafia']).length }}
 				</div>
-				<div class="bg-emerald-500 p-2 rounded-md text-white text-center">{{ _.filter(roles, {
-					'card': {
-						'side': 'city'
-					}, 'active': true
-				}).length }} از {{ _.filter(roles, ["card.side", 'city']).length }}
+				<div class="bg-emerald-500 p-2 rounded-md text-white text-center">
+					{{ _.filter(roles, {
+						'card': { 'side': 'city' }, 'active': true
+					}).length }} از {{ _.filter(roles, ["card.side", 'city']).length }}
 				</div>
-				<div class="bg-amber-500 p-2 rounded-md text-white text-center">{{ _.filter(roles, {
-					'card': {
-						'side': 'independent'
-					}, 'active': true
-				}).length }} از {{ _.filter(roles, ["card.side", 'independent']).length }}
+				<div class="bg-amber-500 p-2 rounded-md text-white text-center">
+					{{ _.filter(roles, {
+						'card': { 'side': 'independent' }, 'active': true
+					}).length }} از {{ _.filter(roles, ["card.side", 'independent']).length }}
 				</div>
-				<div class="bg-slate-500 p-2 rounded-md text-white text-center">{{ _.filter(roles, ["card.side", 'gray']).length
-				}}
+				<div class="bg-slate-500 p-2 rounded-md text-white text-center">
+					{{ _.filter(roles, {
+						'card': { 'side': 'gray' }, 'active': true
+					}).length }} از {{ _.filter(roles, ["card.side", 'gray']).length }}
 				</div>
 			</div>
 			<div class="mt-5" v-if="Object.keys(roles).length == 0">
 				کاربری وجود ندارد
 			</div>
-			<div class="mt-5 grid grid-cols-1 gap-3" v-else>
-				<template v-for="(role, key) in roles" :key="key">
+			<div class="mt-5 grid grid-cols-1 gap-3" @change="updateRoles()" v-else>
+				<template v-for="role in sortedRoles" :key="role.card.class">
 					<component :is='getComponent(role.card.roleComponent)' :role="role"></component>
 				</template>
 			</div>

@@ -11,7 +11,7 @@ defineProps({
 <template>
 	<RoleWrapper :role="role">
 		<template #icon>
-			<Icon icon="quill:user-happy" class="inline-block w-7 h-full" />
+			<Icon icon="game-icons:anvil-impact" class="inline-block w-7 h-full" />
 		</template>
 		<p>
 			<span class="text-emerald-600 font-bold">آهنگر</span> در ساید <span class="text-emerald-600 font-bold">شهر</span>
