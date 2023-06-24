@@ -13,7 +13,7 @@ import {
 
 	killer, joker, nostradamus
 } from "@/modules/roles";
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, watch } from "vue";
 import GodFather from "@/components/mafia/roles/GodFather.vue"
 import StrongMan from "@/components/mafia/roles/StrongMan.vue"
 import Nato from "@/components/mafia/roles/Nato.vue";
@@ -59,7 +59,7 @@ import Negahban from "@/components/mafia/roles/Negahban.vue";
 let data = new mafia();
 let name = ref();
 let users = ref();
-let roles = reactive({
+let roles = data.getRoles() ? reactive(data.getRoles()) : reactive({
 	godFather: {
 		active: false,
 		open: false,
@@ -301,11 +301,15 @@ const filteredRoles = computed(() => _.orderBy(_.filter(roles, (x) => !x.card.ro
 
 users.value = data.getUsers();
 
-function updateRoles() {
-	console.log('updateRoles');
-	name.value = "";
-	// users.value = data.updateUsers(users.value);
-}
+watch(
+	() => roles,
+	(newValue, oldValue) => {
+		// newValue === oldValue
+		name.value = "";
+		data.updateRoles(roles)
+	},
+	{ deep: true }
+)
 
 function getComponent(component) {
 	return {
@@ -391,7 +395,7 @@ function getComponent(component) {
 			<div class="mt-5" v-if="Object.keys(roles).length == 0">
 				کاربری وجود ندارد
 			</div>
-			<div class="mt-5 grid grid-cols-1 gap-3" @change="updateRoles()" v-else>
+			<div class="mt-5 grid grid-cols-1 gap-3" v-else>
 				<template v-for="role in filteredRoles" :key="role.card.class">
 					<component :is='getComponent(role.card.roleComponent)' :role="role"></component>
 				</template>

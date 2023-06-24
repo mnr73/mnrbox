@@ -14,10 +14,16 @@ class mafia {
 		localStorage.setItem("mafia", JSON.stringify(this.mafia));
 	}
 
-	updateUsers(users){
+	updateUsers(users) {
 		this.mafia.users = users
 		this.update()
 		return this.getUsers();
+	}
+
+	updateRoles(roles) {
+		this.mafia.roles = roles
+		this.update()
+		return this.getRoles();
 	}
 
 	// addUser(name) {
@@ -31,9 +37,13 @@ class mafia {
 	// 	return this.getUsers();
 	// }
 
-	getUsers(){
-		this.mafia.users = _.orderBy(this.mafia.users,'active','desc')
+	getUsers() {
+		this.mafia.users = _.orderBy(this.mafia.users, 'active', 'desc')
 		return this.mafia.users;
+	}
+
+	getRoles() {
+		return this.mafia.roles;
 	}
 }
 
