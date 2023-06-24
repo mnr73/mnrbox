@@ -297,12 +297,13 @@ let roles = reactive({
 	},
 });
 
-const sortedRoles = computed(() => _.orderBy(roles, 'active', 'desc'))
+const filteredRoles = computed(() => _.orderBy(_.filter(roles, (x) => !x.card.roleName.search(name.value)), 'active', 'desc'))
 
 users.value = data.getUsers();
 
 function updateRoles() {
 	console.log('updateRoles');
+	name.value = "";
 	// users.value = data.updateUsers(users.value);
 }
 
@@ -391,7 +392,7 @@ function getComponent(component) {
 				کاربری وجود ندارد
 			</div>
 			<div class="mt-5 grid grid-cols-1 gap-3" @change="updateRoles()" v-else>
-				<template v-for="role in sortedRoles" :key="role.card.class">
+				<template v-for="role in filteredRoles" :key="role.card.class">
 					<component :is='getComponent(role.card.roleComponent)' :role="role"></component>
 				</template>
 			</div>
