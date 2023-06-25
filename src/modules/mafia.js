@@ -26,6 +26,12 @@ class mafia {
 		return this.getRoles();
 	}
 
+	deleteRoles() {
+		console.log('test');
+		delete this.mafia.roles
+		this.update()
+	}
+
 	// addUser(name) {
 	// 	name = trim(name)
 	// 	if(!name) return
