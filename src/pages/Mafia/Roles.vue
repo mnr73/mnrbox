@@ -59,257 +59,268 @@ import Negahban from "@/components/mafia/roles/Negahban.vue";
 let data = new mafia();
 let name = ref();
 let users = ref();
-let roles = data.getRoles() ? reactive(data.getRoles()) : reactive({
-	godFather: {
-		active: false,
-		open: false,
-		card: new godFather().card,
-	},
-	strongMan: {
-		active: false,
-		open: false,
-		card: new strongMan().card,
-	},
-	nato: {
-		active: false,
-		open: false,
-		card: new nato().card,
-	},
-	natasha: {
-		active: false,
-		open: false,
-		card: new natasha().card,
-	},
-	dozd: {
-		active: false,
-		open: false,
-		card: new dozd().card,
-	},
-	afsoongar: {
-		active: false,
-		open: false,
-		card: new afsoongar().card,
-	},
-	terrorist: {
-		active: false,
-		open: false,
-		card: new terrorist().card,
-	},
-	mashooghe: {
-		active: false,
-		open: false,
-		card: new mashooghe().card,
-	},
-	bazjoo: {
-		active: false,
-		open: false,
-		card: new bazjoo().card,
-	},
-	samSaz: {
-		active: false,
-		open: false,
-		card: new samSaz().card,
-	},
-	negotiator: {
-		active: false,
-		open: false,
-		card: new negotiator().card,
-	},
-	kharabKar: {
-		active: false,
-		open: false,
-		card: new kharabKar().card,
-	},
-	doctorLekter: {
-		active: false,
-		open: false,
-		card: new doctorLekter().card,
-	},
-	groganGir: {
-		active: false,
-		open: false,
-		card: new groganGir().card,
-	},
-	spy: {
-		active: false,
-		open: false,
-		card: new spy().card,
-	},
-	sharlatan: {
-		active: false,
-		open: false,
-		card: new sharlatan().card,
-	},
-	simpleMafia1: {
-		active: false,
-		open: false,
-		card: new simpleMafia1().card,
-	},
-	simpleMafia2: {
-		active: false,
-		open: false,
-		card: new simpleMafia2().card,
-	},
-	simpleMafia3: {
-		active: false,
-		open: false,
-		card: new simpleMafia3().card,
-	},
-	doctor: {
-		active: false,
-		open: false,
-		card: new doctor().card,
-	},
-	detective: {
-		active: false,
-		open: false,
-		card: new detective().card,
-	},
-	sniper: {
-		active: false,
-		open: false,
-		card: new sniper().card,
-	},
-	farmande: {
-		active: false,
-		open: false,
-		card: new farmande().card,
-	},
-	bomber: {
-		active: false,
-		open: false,
-		card: new bomber().card,
-	},
-	takavar1: {
-		active: false,
-		open: false,
-		card: new takavar1().card,
-	},
-	takavar2: {
-		active: false,
-		open: false,
-		card: new takavar2().card,
-	},
-	takavar3: {
-		active: false,
-		open: false,
-		card: new takavar3().card,
-	},
-	saghi: {
-		active: false,
-		open: false,
-		card: new saghi().card,
-	},
-	fadayi: {
-		active: false,
-		open: false,
-		card: new fadayi().card,
-	},
-	janSakht: {
-		active: false,
-		open: false,
-		card: new janSakht().card,
-	},
-	keshish: {
-		active: false,
-		open: false,
-		card: new keshish().card,
-	},
-	tofangdar: {
-		active: false,
-		open: false,
-		card: new tofangdar().card,
-	},
-	ghazi: {
-		active: false,
-		open: false,
-		card: new ghazi().card,
-	},
-	shahrdar: {
-		active: false,
-		open: false,
-		card: new shahrdar().card,
-	},
-	framason: {
-		active: false,
-		open: false,
-		card: new framason().card,
-	},
-	tiler: {
-		active: false,
-		open: false,
-		card: new tiler().card,
-	},
-	royinTan: {
-		active: false,
-		open: false,
-		card: new royinTan().card,
-	},
-	cowboy: {
-		active: false,
-		open: false,
-		card: new cowboy().card,
-	},
-	KhabGard: {
-		active: false,
-		open: false,
-		card: new khabGard().card,
-	},
-	ahangar: {
-		active: false,
-		open: false,
-		card: new ahangar().card,
-	},
-	negahban: {
-		active: false,
-		open: false,
-		card: new negahban().card,
-	},
-	citizen1: {
-		active: false,
-		open: false,
-		card: new citizen1().card,
-	},
-	citizen2: {
-		active: false,
-		open: false,
-		card: new citizen2().card,
-	},
-	citizen3: {
-		active: false,
-		open: false,
-		card: new citizen3().card,
-	},
-	killer: {
-		active: false,
-		open: false,
-		card: new killer().card,
-	},
-	joker: {
-		active: false,
-		open: false,
-		card: new joker().card,
-	},
-	nostradamus: {
-		active: false,
-		open: false,
-		card: new nostradamus().card,
-	},
-});
+let roles = ref()
 
-const filteredRoles = computed(() => _.orderBy(_.filter(roles, (x) => !x.card.roleName.search(name.value)), 'active', 'desc'))
+setRoles()
+
+function setRoles() {
+	roles.value = data.getRoles() || {
+		godFather: {
+			active: false,
+			open: false,
+			card: new godFather().card,
+		},
+		strongMan: {
+			active: false,
+			open: false,
+			card: new strongMan().card,
+		},
+		nato: {
+			active: false,
+			open: false,
+			card: new nato().card,
+		},
+		natasha: {
+			active: false,
+			open: false,
+			card: new natasha().card,
+		},
+		dozd: {
+			active: false,
+			open: false,
+			card: new dozd().card,
+		},
+		afsoongar: {
+			active: false,
+			open: false,
+			card: new afsoongar().card,
+		},
+		terrorist: {
+			active: false,
+			open: false,
+			card: new terrorist().card,
+		},
+		mashooghe: {
+			active: false,
+			open: false,
+			card: new mashooghe().card,
+		},
+		bazjoo: {
+			active: false,
+			open: false,
+			card: new bazjoo().card,
+		},
+		samSaz: {
+			active: false,
+			open: false,
+			card: new samSaz().card,
+		},
+		negotiator: {
+			active: false,
+			open: false,
+			card: new negotiator().card,
+		},
+		kharabKar: {
+			active: false,
+			open: false,
+			card: new kharabKar().card,
+		},
+		doctorLekter: {
+			active: false,
+			open: false,
+			card: new doctorLekter().card,
+		},
+		groganGir: {
+			active: false,
+			open: false,
+			card: new groganGir().card,
+		},
+		spy: {
+			active: false,
+			open: false,
+			card: new spy().card,
+		},
+		sharlatan: {
+			active: false,
+			open: false,
+			card: new sharlatan().card,
+		},
+		simpleMafia1: {
+			active: false,
+			open: false,
+			card: new simpleMafia1().card,
+		},
+		simpleMafia2: {
+			active: false,
+			open: false,
+			card: new simpleMafia2().card,
+		},
+		simpleMafia3: {
+			active: false,
+			open: false,
+			card: new simpleMafia3().card,
+		},
+		doctor: {
+			active: false,
+			open: false,
+			card: new doctor().card,
+		},
+		detective: {
+			active: false,
+			open: false,
+			card: new detective().card,
+		},
+		sniper: {
+			active: false,
+			open: false,
+			card: new sniper().card,
+		},
+		farmande: {
+			active: false,
+			open: false,
+			card: new farmande().card,
+		},
+		bomber: {
+			active: false,
+			open: false,
+			card: new bomber().card,
+		},
+		takavar1: {
+			active: false,
+			open: false,
+			card: new takavar1().card,
+		},
+		takavar2: {
+			active: false,
+			open: false,
+			card: new takavar2().card,
+		},
+		takavar3: {
+			active: false,
+			open: false,
+			card: new takavar3().card,
+		},
+		saghi: {
+			active: false,
+			open: false,
+			card: new saghi().card,
+		},
+		fadayi: {
+			active: false,
+			open: false,
+			card: new fadayi().card,
+		},
+		janSakht: {
+			active: false,
+			open: false,
+			card: new janSakht().card,
+		},
+		keshish: {
+			active: false,
+			open: false,
+			card: new keshish().card,
+		},
+		tofangdar: {
+			active: false,
+			open: false,
+			card: new tofangdar().card,
+		},
+		ghazi: {
+			active: false,
+			open: false,
+			card: new ghazi().card,
+		},
+		shahrdar: {
+			active: false,
+			open: false,
+			card: new shahrdar().card,
+		},
+		framason: {
+			active: false,
+			open: false,
+			card: new framason().card,
+		},
+		tiler: {
+			active: false,
+			open: false,
+			card: new tiler().card,
+		},
+		royinTan: {
+			active: false,
+			open: false,
+			card: new royinTan().card,
+		},
+		cowboy: {
+			active: false,
+			open: false,
+			card: new cowboy().card,
+		},
+		KhabGard: {
+			active: false,
+			open: false,
+			card: new khabGard().card,
+		},
+		ahangar: {
+			active: false,
+			open: false,
+			card: new ahangar().card,
+		},
+		negahban: {
+			active: false,
+			open: false,
+			card: new negahban().card,
+		},
+		citizen1: {
+			active: false,
+			open: false,
+			card: new citizen1().card,
+		},
+		citizen2: {
+			active: false,
+			open: false,
+			card: new citizen2().card,
+		},
+		citizen3: {
+			active: false,
+			open: false,
+			card: new citizen3().card,
+		},
+		killer: {
+			active: false,
+			open: false,
+			card: new killer().card,
+		},
+		joker: {
+			active: false,
+			open: false,
+			card: new joker().card,
+		},
+		nostradamus: {
+			active: false,
+			open: false,
+			card: new nostradamus().card,
+		},
+	}
+}
+
+const filteredRoles = computed(() => _.orderBy(_.filter(roles.value, (x) => !x.card.roleName.search(name.value)), 'active', 'desc'))
 
 users.value = data.getUsers();
 
 watch(
-	() => roles,
+	() => roles.value,
 	(newValue, oldValue) => {
 		// newValue === oldValue
 		name.value = "";
-		data.updateRoles(roles)
+		data.updateRoles(roles.value)
 	},
 	{ deep: true }
 )
+
+function deleteRoles() {
+	data.deleteRoles()
+	setRoles()
+}
 
 function getComponent(component) {
 	return {
@@ -364,12 +375,15 @@ function getComponent(component) {
 			class="shadow-sm w-full border border-red-300 outline-none px-2 rounded-md h-14" />
 		<hr class="my-4" />
 		<div class="bg-white sm:p-5 p-2 border rounded-sm">
-			<h2 class="font-bold">
-				نقش ها (<span>{{ _.filter(roles, "active").length }}</span> از
-				<span>{{ Object.keys(roles).length }}</span>)
-				-
-				<span class="text-slate-400">بازیکن ها {{ _.filter(users, 'active')?.length || 0 }}</span>
-			</h2>
+			<div class="flex justify-between">
+				<h2 class="font-bold">
+					نقش ها (<span>{{ _.filter(roles, "active").length }}</span> از
+					<span>{{ Object.keys(roles).length }}</span>)
+					-
+					<span class="text-slate-400">بازیکن ها {{ _.filter(users, 'active')?.length || 0 }}</span>
+				</h2>
+				<button class="bg-red-300 text-red-800 px-2 rounded-md" @click="deleteRoles()">ریست</button>
+			</div>
 			<div class="grid grid-cols-4 gap-2 mt-2">
 				<div class="bg-red-500 p-2 rounded-md text-white text-center">
 					{{ _.filter(roles, {
