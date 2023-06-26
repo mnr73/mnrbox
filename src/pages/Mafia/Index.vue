@@ -23,7 +23,7 @@ users.value = data.getUsers();
 			</router-link>
 		</div>
 		<div>
-			<router-link to="/mafia/users" class="sm:w-60 max-w-full block mx-auto bg-gray-100 rounded-2xl shadow-md">
+			<router-link to="/mafia/setting" class="sm:w-60 max-w-full block mx-auto bg-gray-100 rounded-2xl shadow-md">
 				<div class="w-full rounded-2xl p-5 bg-red-500 text-white">تنظیمات</div>
 			</router-link>
 		</div>
