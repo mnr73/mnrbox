@@ -27,7 +27,7 @@ watch(
 </script>
 <template>
 	<div class="sm:p-5 p-2">
-		<div class="bg-white sm:p-5 p-2 rounded-md">
+		<div class="bg-white sm:p-5 p-2 rounded-sm border">
 			<MnrCheckSlider v-model:checked="settings.zeroNight">شب قبل از معارفه. در بعضی از بازی ها مافیا قبل از روز معارفه
 				بیدار شده و یک دیگر را می‌شناسند.
 			</MnrCheckSlider>
