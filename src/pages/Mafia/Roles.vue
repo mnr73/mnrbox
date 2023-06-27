@@ -303,6 +303,7 @@ watch(
 		// newValue === oldValue
 		name.value = "";
 		data.updateRoles(roles.value)
+		data.updatePlayers(_.map(_.filter(roles.value, 'active'), 'card'))
 	},
 	{ deep: true }
 )

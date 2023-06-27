@@ -21,8 +21,12 @@ class mafia {
 	}
 
 	getUsers() {
-		this.mafia.users = _.orderBy(this.mafia.users, 'active', 'desc')
+		// this.mafia.users = _.orderBy(this.mafia.users, 'active', 'desc')
 		return this.mafia.users;
+	}
+
+	getActiveUsers() {
+		return _.filter(this.getUsers(), 'active');
 	}
 
 	updateRoles(roles) {
@@ -38,6 +42,16 @@ class mafia {
 
 	getRoles() {
 		return this.mafia.roles;
+	}
+
+	updatePlayers(players) {
+		this.mafia.players = players
+		this.update()
+		return this.getRoles();
+	}
+
+	getPlayers() {
+		return this.mafia.players;
 	}
 
 	updateSetting(setting) {

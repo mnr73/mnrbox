@@ -6,8 +6,11 @@ import _ from "lodash";
 
 let data = new mafia();
 let users = ref();
+let players = ref();
 
 users.value = data.getUsers();
+players.value = data.getPlayers();
+
 </script>
 <template>
 	<div class="grid sm:grid-cols-3 grid-cols-1 sm:mt-20 text-center gap-5 p-5">
@@ -19,7 +22,8 @@ users.value = data.getUsers();
 		</div>
 		<div>
 			<router-link to="/mafia/roles" class="sm:w-60 max-w-full block mx-auto bg-gray-100 rounded-2xl shadow-md">
-				<div class="w-full rounded-2xl p-5 bg-red-500 text-white">نقش ها</div>
+				<div class="w-full rounded-2xl p-5 bg-red-500 text-white">نقش ها (<span>{{ players?.length ||
+					0 }}</span>)</div>
 			</router-link>
 		</div>
 		<div>
@@ -29,7 +33,7 @@ users.value = data.getUsers();
 		</div>
 	</div>
 	<div class="mt-20">
-		<router-link to="/mafia/users"
+		<router-link to="/mafia/start/set-roles"
 			class="bg-red-500 mx-auto w-32 h-32 flex items-center justify-center text-white rounded-full shadow-lg">شروع</router-link>
 	</div>
 </template>
