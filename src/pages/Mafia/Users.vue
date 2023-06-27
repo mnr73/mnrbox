@@ -1,7 +1,7 @@
 <script setup>
 import { Icon } from "@iconify/vue";
 import mafia from "../../modules/mafia";
-import { ref, reactive } from "vue";
+import { ref, reactive, computed } from "vue";
 import _ from "lodash";
 
 let data = new mafia();
@@ -12,6 +12,7 @@ users.value = data.getUsers();
 
 function addUser(n) {
 	users.value.push({
+		id: users.value.length + 1 + '-' + (Math.random() + 1).toString(36).substring(5),
 		name: n,
 		active: true,
 	});
@@ -27,9 +28,11 @@ function removeUser(i) {
 function updateUsers() {
 	users.value = data.updateUsers(users.value);
 }
+
+const filteredUsers = computed(() => _.orderBy(_.filter(users.value, (x) => !x.name.search(name.value)), 'active', 'desc'))
 </script>
 <template>
-	<div class="p-5">
+	<div class="sm:p-5 p-2">
 		<form class="flex gap-2 h-14" @submit.prevent="addUser(name)">
 			<button class="bg-red-500 aspect-square text-lg text-white rounded-md">
 				اضافه
@@ -37,12 +40,13 @@ function updateUsers() {
 			<input type="text" v-model="name" class="shadow-sm w-full border border-red-300 outline-none px-2 rounded-md" />
 		</form>
 		<hr class="my-4" />
-		<div class="bg-white p-5 border rounded-sm">
+		<div class="bg-white sm:p-5 p-2 border rounded-sm">
 			<h2 class="font-bold">بازیکنان (<span>{{ _.filter(users, 'active').length }}</span> از
-				<span>{{ users.length }}</span>)</h2>
+				<span>{{ users.length }}</span>)
+			</h2>
 			<div class="mt-5" v-if="users.length == 0">کاربری وجود ندارد</div>
 			<div class="mt-5 grid grid-cols-1 gap-2" v-else>
-				<div v-for="(user, index) in users" :key="index"
+				<div v-for="(user, index) in filteredUsers" :key="user.id"
 					class="border rounded-md h-10 bg-gray-50 flex border-r-4 items-center" :class="{
 						'opacity-70': !user.active,
 						'border-r-red-500': user.active,
