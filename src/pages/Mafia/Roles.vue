@@ -2,17 +2,7 @@
 import { Icon } from "@iconify/vue";
 import mafia from "@/modules/mafia";
 import _ from "lodash";
-import {
-	godFather, strongMan, nato, natasha, dozd, afsoongar, terrorist, mashooghe,
-	bazjoo, samSaz, negotiator, kharabKar, doctorLekter, groganGir,
-	spy, sharlatan, simpleMafia1, simpleMafia2, simpleMafia3,
-
-	doctor, detective, sniper, farmande, bomber, takavar1, takavar2, takavar3, saghi,
-	fadayi, janSakht, keshish, tofangdar, ghazi, shahrdar, framason, tiler,
-	cowboy, ahangar, khabGard, royinTan, negahban, citizen1, citizen2, citizen3,
-
-	killer, joker, nostradamus
-} from "@/modules/roles";
+import * as role from "@/modules/roles";
 import { ref, reactive, computed, watch } from "vue";
 import GodFather from "@/components/mafia/roles/GodFather.vue"
 import StrongMan from "@/components/mafia/roles/StrongMan.vue"
@@ -68,237 +58,237 @@ function setRoles() {
 		godFather: {
 			active: false,
 			open: false,
-			card: new godFather().card,
+			card: new role.godFather().card,
 		},
 		strongMan: {
 			active: false,
 			open: false,
-			card: new strongMan().card,
+			card: new role.strongMan().card,
 		},
 		nato: {
 			active: false,
 			open: false,
-			card: new nato().card,
+			card: new role.nato().card,
 		},
 		natasha: {
 			active: false,
 			open: false,
-			card: new natasha().card,
+			card: new role.natasha().card,
 		},
 		dozd: {
 			active: false,
 			open: false,
-			card: new dozd().card,
+			card: new role.dozd().card,
 		},
 		afsoongar: {
 			active: false,
 			open: false,
-			card: new afsoongar().card,
+			card: new role.afsoongar().card,
 		},
 		terrorist: {
 			active: false,
 			open: false,
-			card: new terrorist().card,
+			card: new role.terrorist().card,
 		},
 		mashooghe: {
 			active: false,
 			open: false,
-			card: new mashooghe().card,
+			card: new role.mashooghe().card,
 		},
 		bazjoo: {
 			active: false,
 			open: false,
-			card: new bazjoo().card,
+			card: new role.bazjoo().card,
 		},
 		samSaz: {
 			active: false,
 			open: false,
-			card: new samSaz().card,
+			card: new role.samSaz().card,
 		},
 		negotiator: {
 			active: false,
 			open: false,
-			card: new negotiator().card,
+			card: new role.negotiator().card,
 		},
 		kharabKar: {
 			active: false,
 			open: false,
-			card: new kharabKar().card,
+			card: new role.kharabKar().card,
 		},
 		doctorLekter: {
 			active: false,
 			open: false,
-			card: new doctorLekter().card,
+			card: new role.doctorLekter().card,
 		},
 		groganGir: {
 			active: false,
 			open: false,
-			card: new groganGir().card,
+			card: new role.groganGir().card,
 		},
 		spy: {
 			active: false,
 			open: false,
-			card: new spy().card,
+			card: new role.spy().card,
 		},
 		sharlatan: {
 			active: false,
 			open: false,
-			card: new sharlatan().card,
+			card: new role.sharlatan().card,
 		},
 		simpleMafia1: {
 			active: false,
 			open: false,
-			card: new simpleMafia1().card,
+			card: new role.simpleMafia1().card,
 		},
 		simpleMafia2: {
 			active: false,
 			open: false,
-			card: new simpleMafia2().card,
+			card: new role.simpleMafia2().card,
 		},
 		simpleMafia3: {
 			active: false,
 			open: false,
-			card: new simpleMafia3().card,
+			card: new role.simpleMafia3().card,
 		},
 		doctor: {
 			active: false,
 			open: false,
-			card: new doctor().card,
+			card: new role.doctor().card,
 		},
 		detective: {
 			active: false,
 			open: false,
-			card: new detective().card,
+			card: new role.detective().card,
 		},
 		sniper: {
 			active: false,
 			open: false,
-			card: new sniper().card,
+			card: new role.sniper().card,
 		},
 		farmande: {
 			active: false,
 			open: false,
-			card: new farmande().card,
+			card: new role.farmande().card,
 		},
 		bomber: {
 			active: false,
 			open: false,
-			card: new bomber().card,
+			card: new role.bomber().card,
 		},
 		takavar1: {
 			active: false,
 			open: false,
-			card: new takavar1().card,
+			card: new role.takavar1().card,
 		},
 		takavar2: {
 			active: false,
 			open: false,
-			card: new takavar2().card,
+			card: new role.takavar2().card,
 		},
 		takavar3: {
 			active: false,
 			open: false,
-			card: new takavar3().card,
+			card: new role.takavar3().card,
 		},
 		saghi: {
 			active: false,
 			open: false,
-			card: new saghi().card,
+			card: new role.saghi().card,
 		},
 		fadayi: {
 			active: false,
 			open: false,
-			card: new fadayi().card,
+			card: new role.fadayi().card,
 		},
 		janSakht: {
 			active: false,
 			open: false,
-			card: new janSakht().card,
+			card: new role.janSakht().card,
 		},
 		keshish: {
 			active: false,
 			open: false,
-			card: new keshish().card,
+			card: new role.keshish().card,
 		},
 		tofangdar: {
 			active: false,
 			open: false,
-			card: new tofangdar().card,
+			card: new role.tofangdar().card,
 		},
 		ghazi: {
 			active: false,
 			open: false,
-			card: new ghazi().card,
+			card: new role.ghazi().card,
 		},
 		shahrdar: {
 			active: false,
 			open: false,
-			card: new shahrdar().card,
+			card: new role.shahrdar().card,
 		},
 		framason: {
 			active: false,
 			open: false,
-			card: new framason().card,
+			card: new role.framason().card,
 		},
 		tiler: {
 			active: false,
 			open: false,
-			card: new tiler().card,
+			card: new role.tiler().card,
 		},
 		royinTan: {
 			active: false,
 			open: false,
-			card: new royinTan().card,
+			card: new role.royinTan().card,
 		},
 		cowboy: {
 			active: false,
 			open: false,
-			card: new cowboy().card,
+			card: new role.cowboy().card,
 		},
 		KhabGard: {
 			active: false,
 			open: false,
-			card: new khabGard().card,
+			card: new role.khabGard().card,
 		},
 		ahangar: {
 			active: false,
 			open: false,
-			card: new ahangar().card,
+			card: new role.ahangar().card,
 		},
 		negahban: {
 			active: false,
 			open: false,
-			card: new negahban().card,
+			card: new role.negahban().card,
 		},
 		citizen1: {
 			active: false,
 			open: false,
-			card: new citizen1().card,
+			card: new role.citizen1().card,
 		},
 		citizen2: {
 			active: false,
 			open: false,
-			card: new citizen2().card,
+			card: new role.citizen2().card,
 		},
 		citizen3: {
 			active: false,
 			open: false,
-			card: new citizen3().card,
+			card: new role.citizen3().card,
 		},
 		killer: {
 			active: false,
 			open: false,
-			card: new killer().card,
+			card: new role.killer().card,
 		},
 		joker: {
 			active: false,
 			open: false,
-			card: new joker().card,
+			card: new role.joker().card,
 		},
 		nostradamus: {
 			active: false,
 			open: false,
-			card: new nostradamus().card,
+			card: new role.nostradamus().card,
 		},
 	}
 }

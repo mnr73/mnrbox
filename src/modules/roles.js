@@ -35,7 +35,7 @@ class roles {
  * 					mafia roles
  * ================================
  */
-class godFather extends roles {
+export class godFather extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "گاد فادر"
@@ -46,7 +46,7 @@ class godFather extends roles {
 	}
 }
 
-class strongMan extends roles {
+export class strongMan extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "مرد قوی"
@@ -58,7 +58,7 @@ class strongMan extends roles {
 	}
 }
 
-class nato extends roles {
+export class nato extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "ناتو"
@@ -68,7 +68,7 @@ class nato extends roles {
 	}
 }
 
-class natasha extends roles {
+export class natasha extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "ناتاشا"
@@ -80,7 +80,7 @@ class natasha extends roles {
 	}
 }
 
-class dozd extends roles {
+export class dozd extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "دزد"
@@ -91,7 +91,7 @@ class dozd extends roles {
 	}
 }
 
-class afsoongar extends roles {
+export class afsoongar extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "افسونگر"
@@ -102,7 +102,7 @@ class afsoongar extends roles {
 	}
 }
 
-class terrorist extends roles {
+export class terrorist extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "تروریست"
@@ -113,7 +113,7 @@ class terrorist extends roles {
 	}
 }
 
-class mashooghe extends roles {
+export class mashooghe extends roles {
 	constructor() {
 		super();
 		this.card.roleName = "معشوقه"
@@ -125,7 +125,7 @@ class mashooghe extends roles {
 	}
 }
 
-class bazjoo extends roles {
+export class bazjoo extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "بازجو"
@@ -135,7 +135,7 @@ class bazjoo extends roles {
 	}
 }
 
-class samSaz extends roles {
+export class samSaz extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "سم ساز"
@@ -146,7 +146,7 @@ class samSaz extends roles {
 	}
 }
 
-class negotiator extends roles {
+export class negotiator extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "مذاکره کننده"
@@ -156,7 +156,7 @@ class negotiator extends roles {
 	}
 }
 
-class kharabKar extends roles {
+export class kharabKar extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "خرابکار"
@@ -170,7 +170,7 @@ class kharabKar extends roles {
 	}
 }
 
-class doctorLekter extends roles {
+export class doctorLekter extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "دکتر لکتر"
@@ -180,7 +180,7 @@ class doctorLekter extends roles {
 	}
 }
 
-class groganGir extends roles {
+export class groganGir extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "گروگان گیر"
@@ -190,7 +190,7 @@ class groganGir extends roles {
 	}
 }
 
-class spy extends roles {
+export class spy extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "جاسوس"
@@ -201,7 +201,7 @@ class spy extends roles {
 	}
 }
 
-class sharlatan extends roles {
+export class sharlatan extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "شارلاتان"
@@ -212,7 +212,7 @@ class sharlatan extends roles {
 	}
 }
 
-class simpleMafia1 extends roles {
+export class simpleMafia1 extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "مافیا ساده 1"
@@ -220,7 +220,7 @@ class simpleMafia1 extends roles {
 		this.card.side = "mafia"
 	}
 }
-class simpleMafia2 extends roles {
+export class simpleMafia2 extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "مافیا ساده 2"
@@ -228,7 +228,7 @@ class simpleMafia2 extends roles {
 		this.card.side = "mafia"
 	}
 }
-class simpleMafia3 extends roles {
+export class simpleMafia3 extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "مافیا ساده 3"
@@ -243,7 +243,7 @@ class simpleMafia3 extends roles {
  * ================================
  */
 
-class doctor extends roles {
+export class doctor extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "دکتر"
@@ -258,7 +258,7 @@ class doctor extends roles {
 	}
 }
 
-class detective extends roles {
+export class detective extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "کاراگاه"
@@ -268,7 +268,7 @@ class detective extends roles {
 	}
 }
 
-class sniper extends roles {
+export class sniper extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "اسنایپر"
@@ -278,7 +278,7 @@ class sniper extends roles {
 	}
 }
 
-class farmande extends roles {
+export class farmande extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "فرمانده"
@@ -288,7 +288,7 @@ class farmande extends roles {
 	}
 }
 
-class bomber extends roles {
+export class bomber extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "بمبر"
@@ -298,7 +298,7 @@ class bomber extends roles {
 	}
 }
 
-class takavar1 extends roles {
+export class takavar1 extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "تکاور 1"
@@ -308,7 +308,7 @@ class takavar1 extends roles {
 	}
 }
 
-class takavar2 extends roles {
+export class takavar2 extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "تکاور 2"
@@ -318,7 +318,7 @@ class takavar2 extends roles {
 	}
 }
 
-class takavar3 extends roles {
+export class takavar3 extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "تکاور 3"
@@ -328,7 +328,7 @@ class takavar3 extends roles {
 	}
 }
 
-class saghi extends roles {
+export class saghi extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "ساقی"
@@ -337,7 +337,7 @@ class saghi extends roles {
 	}
 }
 
-class fadayi extends roles {
+export class fadayi extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "فدایی"
@@ -346,7 +346,7 @@ class fadayi extends roles {
 	}
 }
 
-class janSakht extends roles {
+export class janSakht extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "جان ساخت"
@@ -356,7 +356,7 @@ class janSakht extends roles {
 		this.card.heart = { default: 1, value: 1 }
 	}
 }
-class keshish extends roles {
+export class keshish extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "کشیش"
@@ -369,7 +369,7 @@ class keshish extends roles {
 		]
 	}
 }
-class tofangdar extends roles {
+export class tofangdar extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "تفنگدار"
@@ -379,7 +379,7 @@ class tofangdar extends roles {
 		this.card.everyNight = { default: 4, value: 4 }
 	}
 }
-class ghazi extends roles {
+export class ghazi extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "قاضی"
@@ -387,7 +387,7 @@ class ghazi extends roles {
 		this.card.side = "city"
 	}
 }
-class shahrdar extends roles {
+export class shahrdar extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "شهردارد"
@@ -396,7 +396,7 @@ class shahrdar extends roles {
 		this.card.count = { default: 1, value: 1 }
 	}
 }
-class framason extends roles {
+export class framason extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "فراماسون"
@@ -404,7 +404,7 @@ class framason extends roles {
 		this.card.side = "city"
 	}
 }
-class tiler extends roles {
+export class tiler extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "تایلر"
@@ -412,7 +412,7 @@ class tiler extends roles {
 		this.card.side = "city"
 	}
 }
-class royinTan extends roles {
+export class royinTan extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "رویین تن"
@@ -420,7 +420,7 @@ class royinTan extends roles {
 		this.card.side = "city"
 	}
 }
-class cowboy extends roles {
+export class cowboy extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "کابوی"
@@ -428,7 +428,7 @@ class cowboy extends roles {
 		this.card.side = "city"
 	}
 }
-class khabGard extends roles {
+export class khabGard extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "خوابگرد"
@@ -436,7 +436,7 @@ class khabGard extends roles {
 		this.card.side = "city"
 	}
 }
-class ahangar extends roles {
+export class ahangar extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "آهنگر"
@@ -444,7 +444,7 @@ class ahangar extends roles {
 		this.card.side = "city"
 	}
 }
-class negahban extends roles {
+export class negahban extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "نگهبان"
@@ -457,7 +457,7 @@ class negahban extends roles {
 		]
 	}
 }
-class citizen1 extends roles {
+export class citizen1 extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "شهر ساده 1"
@@ -465,7 +465,7 @@ class citizen1 extends roles {
 		this.card.side = "city"
 	}
 }
-class citizen2 extends roles {
+export class citizen2 extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "شهر ساده 2"
@@ -473,7 +473,7 @@ class citizen2 extends roles {
 		this.card.side = "city"
 	}
 }
-class citizen3 extends roles {
+export class citizen3 extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "شهر ساده 3"
@@ -481,7 +481,7 @@ class citizen3 extends roles {
 		this.card.side = "city"
 	}
 }
-class killer extends roles {
+export class killer extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "قاتل"
@@ -492,7 +492,7 @@ class killer extends roles {
 		this.card.heart = { default: 100, value: 100 }
 	}
 }
-class joker extends roles {
+export class joker extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "جوکر"
@@ -502,7 +502,7 @@ class joker extends roles {
 		this.card.heart = { default: 100, value: 100 }
 	}
 }
-class nostradamus extends roles {
+export class nostradamus extends roles {
 	constructor() {
 		super()
 		this.card.roleName = "نوستراداموس"
@@ -511,15 +511,3 @@ class nostradamus extends roles {
 		this.card.heart = { default: 100, value: 100 }
 	}
 }
-
-export {
-	godFather, strongMan, nato, natasha, dozd, afsoongar, terrorist, mashooghe,
-	bazjoo, samSaz, negotiator, kharabKar, doctorLekter, groganGir,
-	spy, sharlatan, simpleMafia1, simpleMafia2, simpleMafia3,
-
-	doctor, detective, sniper, farmande, bomber, takavar1, takavar2, takavar3, saghi,
-	fadayi, janSakht, keshish, tofangdar, ghazi, shahrdar, framason, tiler,
-	cowboy, ahangar, khabGard, royinTan, negahban, citizen1, citizen2, citizen3,
-
-	killer, joker, nostradamus
-};
