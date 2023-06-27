@@ -15,8 +15,6 @@ const data = new mafia;
 
 settings.value = data.getSetting() || settings.value
 
-console.log(settings.value);
-
 watch(
 	() => settings.value,
 	(newValue, oldValue) => {

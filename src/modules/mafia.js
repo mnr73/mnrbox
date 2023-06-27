@@ -32,7 +32,6 @@ class mafia {
 	}
 
 	deleteRoles() {
-		console.log('test');
 		delete this.mafia.roles
 		this.update()
 	}
