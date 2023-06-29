@@ -50,6 +50,14 @@ const routes = [
 		}
 	},
 	{
+		path: "/mafia/start/assign-roles",
+		component: () => import("./pages/Mafia/AssignRoles.vue"),
+		name: "mafia-start-assign-roles",
+		meta: {
+			layout: "mafia",
+		}
+	},
+	{
 		path: "/:notFound*",
 		name: "404",
 		component: () => import("./pages/Page404.vue"),

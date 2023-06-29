@@ -6,6 +6,7 @@ import { ref, watch, computed } from "vue";
 import mafia from "@/modules/mafia";
 import MnrSelect from "@/components/mnr/MnrSelect.vue";
 import _ from "lodash";
+import Bottom from "@/components/Bottom.vue";
 
 const data = new mafia;
 const users = ref();
@@ -41,7 +42,7 @@ function resetRoles() {
 <template>
 	<div class="sm:p-5 p-2">
 		<div class="flex justify-between p-2">
-			<h2 class="font-bold">تقسیم نقش ها</h2>
+			<h2 class="font-bold">تعیین نقش ها</h2>
 			<button class="bg-red-300 text-red-800 px-2 rounded-md" @click="resetRoles()">ریست</button>
 		</div>
 		<div class="bg-white sm:p-5 p-2 rounded-sm border mb-2" v-for="(role, index) in roles" :key="index">
@@ -55,5 +56,12 @@ function resetRoles() {
 				:options="role.userId ? [...userOptions, { id: role.userId, name: role.userName, active: true }] : userOptions"
 				oValue="id" oText="name" v-model="role.userId" dValue="" dText="تصادفی" />
 		</div>
+		<Bottom>
+			<div class="p-1">
+				<router-link to="/mafia/start/assign-roles" class="bg-red-600 text-white rounded-md p-2 w-full block text-center">
+					تقسیم نقش ها
+				</router-link>
+			</div>
+		</Bottom>
 	</div>
 </template>
