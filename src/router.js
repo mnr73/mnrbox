@@ -58,6 +58,14 @@ const routes = [
 		}
 	},
 	{
+		path: "/mafia/game",
+		component: () => import("./pages/Mafia/Game.vue"),
+		name: "mafia-game",
+		meta: {
+			layout: "mafia",
+		}
+	},
+	{
 		path: "/:notFound*",
 		name: "404",
 		component: () => import("./pages/Page404.vue"),

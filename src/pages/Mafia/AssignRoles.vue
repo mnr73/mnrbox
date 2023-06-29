@@ -62,7 +62,9 @@ const openUser = computed(() => {
 		</div>
 		<Bottom>
 			<div class="p-1">
-				<button class="bg-red-600 text-white rounded-md p-2 w-full">شروع بازی</button>
+				<router-link to="/mafia/game" class="bg-red-600 text-white rounded-md p-2 w-full block text-center">
+					شروع بازی
+				</router-link>
 			</div>
 		</Bottom>
 	</div>
