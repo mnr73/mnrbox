@@ -50,13 +50,14 @@ const openUser = computed(() => {
 				<div class="text-lg">{{ user.name }}</div>
 			</div>
 		</div>
-		<div v-show="openUser"
+		<div v-show="openUser" @click.self="openUser.seen = true; openUser.open = false"
 			class="fixed w-full h-screen bg-black bg-opacity-30 top-0 left-0 z-50 flex items-center justify-center">
 			<div class="w-11/12 h-2/6 bg-white shadow-lg rounded-md flex flex-col gap-10 items-center justify-center">
 				<div class="">{{ openUser?.name }}</div>
 				<div class="">{{ _.find(roles, ['userId', openUser?.id])?.roleName }}</div>
-				<button class="bg-red-600 text-white p-2 rounded-md" @click="openUser.seen = true; openUser.open = false">متوجه
-					شدم</button>
+				<button class="bg-red-600 text-white p-2 rounded-md" @click="openUser.seen = true; openUser.open = false">
+					متوجه شدم
+				</button>
 			</div>
 		</div>
 		<Bottom>
