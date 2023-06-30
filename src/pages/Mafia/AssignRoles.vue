@@ -44,7 +44,7 @@ const openUser = computed(() => {
 			<h2 class="font-bold">تقسیم نقش ها</h2>
 		</div>
 		<div class="flex flex-wrap gap-2 justify-center">
-			<div class="bg-white p-3 w-24 rounded-md border-t-4 flex-grow text-center "
+			<div class="bg-white p-3 w-24 rounded-md border-t-4 flex-grow text-center cursor-pointer"
 				:class="{ 'opacity-70': user.seen, 'border-sky-500 shadow-md': !user.seen }"
 				v-for="user in _.sortBy(users, 'seen')" :key="user.id" @click="user.open = true">
 				<div class="text-lg">{{ user.name }}</div>
@@ -52,7 +52,8 @@ const openUser = computed(() => {
 		</div>
 		<div v-show="openUser" @click.self="openUser.seen = true; openUser.open = false"
 			class="fixed w-full h-screen bg-black bg-opacity-30 top-0 left-0 z-50 flex items-center justify-center">
-			<div class="w-11/12 h-2/6 bg-white shadow-lg rounded-md flex flex-col gap-10 items-center justify-center">
+			<div
+				class="w-11/12 h-2/6 max-w-screen-sm bg-white shadow-lg rounded-md flex flex-col gap-10 items-center justify-center">
 				<div class="">{{ openUser?.name }}</div>
 				<div class="">{{ _.find(roles, ['userId', openUser?.id])?.roleName }}</div>
 				<button class="bg-red-600 text-white p-2 rounded-md" @click="openUser.seen = true; openUser.open = false">
