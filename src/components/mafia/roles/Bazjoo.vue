@@ -1,8 +1,6 @@
 <script setup>
 
 import MnrNumber from '@/components/mnr/MnrNumber.vue';
-import RoleWrapper from '../RoleWrapper.vue';
-import { Icon } from '@iconify/vue';
 
 defineProps({
 	role: Object
@@ -10,17 +8,21 @@ defineProps({
 </script>
 
 <template>
-	<RoleWrapper :role="role">
-		<template #icon>
-			<Icon icon="solar:eye-scan-bold" class="inline-block w-7 h-full" />
-		</template>
+	<template v-if="role?.mode == 'select'">
 		<p>
 			<span class="text-red-600 font-bold">بازجو</span> در ساید <span class="text-red-600 font-bold">مافیا</span> بازی
 			می‌کند. بازجو هرشب بیدار می‌شود و یک نفر را به گاد نشان می‌دهد. گاد نقش آن شخص و کاری که در آن شب کرده را به بازجو
 			می‌گوید.
 		</p>
 		<hr class="my-2">
-		<MnrNumber placeholder="تعداد بازجویی" title="تعداد بازجویی" :min="0" :max="100" v-model="role.card.count.value">
+		<MnrNumber placeholder="تعداد بازجویی" title="تعداد بازجویی" :min="0" :max="100" v-model="role.count.value">
 		</MnrNumber>
-	</RoleWrapper>
+	</template>
+	<div class="rounded-md overflow-hidden shadow-md" v-else>
+		<div class="p-2 bg-slate-100 font-bold border-b">{{ role.userName }} <span class="text-slate-400 font-thin">({{
+			role.roleName
+		}})</span>
+		</div>
+		<div class="p-2">body</div>
+	</div>
 </template>

@@ -1,7 +1,5 @@
 <script setup>
 
-import RoleWrapper from '../RoleWrapper.vue';
-import { Icon } from '@iconify/vue';
 import MnrNumber from '@/components/mnr/MnrNumber.vue';
 
 defineProps({
@@ -10,18 +8,22 @@ defineProps({
 </script>
 
 <template>
-	<RoleWrapper :role="role">
-		<template #icon>
-			<Icon icon="game-icons:duality-mask" class="inline-block w-7 h-full" />
-		</template>
+	<template v-if="role?.mode == 'select'">
 		<p>
 			<span class="text-red-600 font-bold">شارلاتان</span> در ساید <span class="text-red-600 font-bold">مافیا</span> بازی
 			می‌کند. او یکی از اعضای تیم مافیا یا شهروند را انتخاب می‌کند و استعلام آن شخص برای کاراگاه برعکس می‌شود.
 		</p>
 		<hr class="my-2">
-		<MnrNumber placeholder="شارلاتانی" title="تعداد شارلاتانی" :min="0" :max="100" v-model="role.card.count.value">
+		<MnrNumber placeholder="شارلاتانی" title="تعداد شارلاتانی" :min="0" :max="100" v-model="role.count.value">
 		</MnrNumber>
-		<MnrNumber placeholder="شارلاتانی خودش" title="شارلاتانی خودش" :min="0" :max="100" v-model="role.card.self.value">
+		<MnrNumber placeholder="شارلاتانی خودش" title="شارلاتانی خودش" :min="0" :max="100" v-model="role.self.value">
 		</MnrNumber>
-	</RoleWrapper>
+	</template>
+	<div class="rounded-md overflow-hidden shadow-md" v-else>
+		<div class="p-2 bg-slate-100 font-bold border-b">{{ role.userName }} <span class="text-slate-400 font-thin">({{
+			role.roleName
+		}})</span>
+		</div>
+		<div class="p-2">body</div>
+	</div>
 </template>

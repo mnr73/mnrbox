@@ -10,10 +10,7 @@ defineProps({
 </script>
 
 <template>
-	<RoleWrapper :role="role">
-		<template #icon>
-			<Icon icon="mdi:redhat" class="inline-block w-7 h-full" />
-		</template>
+	<template v-if="role?.mode == 'select'">
 		<p><span class="text-red-600 font-bold">گادفادر</span> در ساید <span class="text-red-600 font-bold">مافیا</span> بازی
 			میکند و تا زمانی که زنده است حق تیر <span class="text-red-600 font-bold">مافیا</span> با
 			<span class="text-red-600 font-bold">گادفادر</span> است و زمانی که کشته شد یا از شهر
@@ -27,8 +24,15 @@ defineProps({
 		</ul>
 		<hr class="my-2">
 		<MnrNumber placeholder="استعلام منفی" title="تعداد استعلام منفی" :min="0" :max="100"
-			v-model="role.card.negativeInquiry.value"></MnrNumber>
-		<MnrNumber placeholder="جان اضافه" title="تعداد جان اضافه" :min="0" :max="100" v-model="role.card.heart.value"
+			v-model="role.negativeInquiry.value"></MnrNumber>
+		<MnrNumber placeholder="جان اضافه" title="تعداد جان اضافه" :min="0" :max="100" v-model="role.heart.value"
 			class="mt-3"></MnrNumber>
-	</RoleWrapper>
+	</template>
+	<div class="rounded-md overflow-hidden shadow-md" v-else>
+		<div class="p-2 bg-slate-100 font-bold border-b">{{ role.userName }} <span class="text-slate-400 font-thin">({{
+			role.roleName
+		}})</span>
+		</div>
+		<div class="p-2">body</div>
+	</div>
 </template>

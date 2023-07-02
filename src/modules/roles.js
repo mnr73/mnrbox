@@ -1,12 +1,14 @@
 class roles {
 	card = {
-		'dead': false,
-		'getOut': false,
-		'beSimple': false,
-		'userName': "",
-		'userId': "",
-		'roleName': "",
-		'roleComponent': "",
+		dead: false,
+		getOut: false,
+		beSimple: false,
+		mode: "select",
+		userName: "",
+		userId: "",
+		roleName: "",
+		roleComponent: "",
+		nightAwake: true,
 	}
 
 	constructor() {
@@ -41,6 +43,7 @@ export class godFather extends roles {
 		this.card.roleName = "گاد فادر"
 		this.card.roleComponent = "GodFather"
 		this.card.side = "mafia"
+		this.card.icon = "mdi:redhat"
 		this.card.negativeInquiry = { default: 100, value: 100 }
 		this.card.heart = { default: 0, value: 0 }
 	}
@@ -52,6 +55,7 @@ export class strongMan extends roles {
 		this.card.roleName = "مرد قوی"
 		this.card.roleComponent = "StrongMan"
 		this.card.side = "mafia"
+		this.card.icon = "game-icons:biceps"
 		this.card.shot = { default: 1, value: 1 }
 		this.card.sameShot = { default: false, value: false }
 		this.card.heart = { default: 0, value: 0 }
@@ -63,8 +67,9 @@ export class nato extends roles {
 		super()
 		this.card.roleName = "ناتو"
 		this.card.roleComponent = "Nato"
-		this.card.side = "mafia",
-			this.card.failsCount = { default: 3, value: 3 }
+		this.card.side = "mafia"
+		this.card.icon = "fa-solid:theater-masks"
+		this.card.failsCount = { default: 3, value: 3 }
 	}
 }
 
@@ -74,6 +79,7 @@ export class natasha extends roles {
 		this.card.roleName = "ناتاشا"
 		this.card.roleComponent = "Natasha"
 		this.card.side = "mafia"
+		this.card.icon = "game-icons:cowled"
 		this.card.noVote = { default: true, value: true }
 		this.card.noKick = { default: false, value: false }
 		this.card.alone = { default: true, value: true }
@@ -86,6 +92,7 @@ export class dozd extends roles {
 		this.card.roleName = "دزد"
 		this.card.roleComponent = "Dozd"
 		this.card.side = "mafia"
+		this.card.icon = "game-icons:balaclava"
 		this.card.gone = { default: false, value: false }
 		this.card.alone = { default: true, value: true }
 	}
@@ -97,6 +104,7 @@ export class afsoongar extends roles {
 		this.card.roleName = "افسونگر"
 		this.card.roleComponent = "Afsoongar"
 		this.card.side = "mafia"
+		this.card.icon = "game-icons:burning-skull"
 		this.card.silent = { default: true, value: true }
 		this.card.fastNight = { default: true, value: true }
 	}
@@ -108,6 +116,7 @@ export class terrorist extends roles {
 		this.card.roleName = "تروریست"
 		this.card.roleComponent = "Terrorist"
 		this.card.side = "mafia"
+		this.card.icon = "game-icons:ak47"
 		this.card.afterVote = { default: true, value: true }
 		this.card.alone = { default: false, value: false }
 	}
@@ -119,6 +128,7 @@ export class mashooghe extends roles {
 		this.card.roleName = "معشوقه"
 		this.card.roleComponent = "Mashooghe"
 		this.card.side = "mafia"
+		this.card.icon = "game-icons:evil-love"
 		this.card.byVote = { default: true, value: true }
 		this.card.inDay = { default: true, value: true }
 		this.card.inNight = { default: true, value: true }
@@ -131,6 +141,7 @@ export class bazjoo extends roles {
 		this.card.roleName = "بازجو"
 		this.card.roleComponent = "Bazjoo"
 		this.card.side = "mafia"
+		this.card.icon = "solar:eye-scan-bold"
 		this.card.count = { default: 3, value: 3 }
 	}
 }
@@ -141,6 +152,7 @@ export class samSaz extends roles {
 		this.card.roleName = "سم ساز"
 		this.card.roleComponent = "SamSaz"
 		this.card.side = "mafia"
+		this.card.icon = "game-icons:dripping-tube"
 		this.card.count = { default: 2, value: 2 }
 		this.card.days = { default: 3, value: 3 }
 	}
@@ -152,6 +164,7 @@ export class negotiator extends roles {
 		this.card.roleName = "مذاکره کننده"
 		this.card.roleComponent = "Negotiator"
 		this.card.side = "mafia"
+		this.card.icon = "game-icons:pay-money"
 		this.card.framason = { default: false, value: false }
 	}
 }
@@ -162,6 +175,7 @@ export class kharabKar extends roles {
 		this.card.roleName = "خرابکار"
 		this.card.roleComponent = "KharabKar"
 		this.card.side = "mafia"
+		this.card.icon = "game-icons:luger"
 		this.card.counts = [
 			{ players: 20, defaultPlayers: 20, default: 3, value: 3 },
 			{ players: 15, defaultPlayers: 15, default: 2, value: 2 },
@@ -176,6 +190,7 @@ export class doctorLekter extends roles {
 		this.card.roleName = "دکتر لکتر"
 		this.card.roleComponent = "DoctorLekter"
 		this.card.side = "mafia"
+		this.card.icon = "game-icons:plague-doctor-profile"
 		this.card.self = { default: 100, value: 100 }
 	}
 }
@@ -186,6 +201,7 @@ export class groganGir extends roles {
 		this.card.roleName = "گروگان گیر"
 		this.card.roleComponent = "GroganGir"
 		this.card.side = "mafia"
+		this.card.icon = "game-icons:usable"
 		this.card.alone = { default: true, value: true }
 	}
 }
@@ -196,6 +212,7 @@ export class spy extends roles {
 		this.card.roleName = "جاسوس"
 		this.card.roleComponent = "Spy"
 		this.card.side = "mafia"
+		this.card.icon = "game-icons:spy"
 		this.card.negativeInquiry = { default: 100, value: 100 }
 		this.card.exitWithFramason = { default: false, value: false }
 	}
@@ -207,6 +224,7 @@ export class sharlatan extends roles {
 		this.card.roleName = "شارلاتان"
 		this.card.roleComponent = "Sharlatan"
 		this.card.side = "mafia"
+		this.card.icon = "game-icons:duality-mask"
 		this.card.count = { default: 100, value: 100 }
 		this.card.self = { default: 1, value: 1 }
 	}
@@ -218,6 +236,7 @@ export class simpleMafia1 extends roles {
 		this.card.roleName = "مافیا ساده 1"
 		this.card.roleComponent = "SimpleMafia"
 		this.card.side = "mafia"
+		this.card.icon = "game-icons:bully-minion"
 	}
 }
 export class simpleMafia2 extends roles {
@@ -226,6 +245,7 @@ export class simpleMafia2 extends roles {
 		this.card.roleName = "مافیا ساده 2"
 		this.card.roleComponent = "SimpleMafia"
 		this.card.side = "mafia"
+		this.card.icon = "game-icons:bully-minion"
 	}
 }
 export class simpleMafia3 extends roles {
@@ -234,6 +254,7 @@ export class simpleMafia3 extends roles {
 		this.card.roleName = "مافیا ساده 3"
 		this.card.roleComponent = "SimpleMafia"
 		this.card.side = "mafia"
+		this.card.icon = "game-icons:bully-minion"
 	}
 }
 
@@ -249,6 +270,7 @@ export class doctor extends roles {
 		this.card.roleName = "دکتر"
 		this.card.roleComponent = "Doctor"
 		this.card.side = "city"
+		this.card.icon = "game-icons:love-injection"
 		this.card.counts = [
 			{ players: 20, defaultPlayers: 20, default: 3, value: 3 },
 			{ players: 15, defaultPlayers: 15, default: 2, value: 2 },
@@ -264,6 +286,7 @@ export class detective extends roles {
 		this.card.roleName = "کاراگاه"
 		this.card.roleComponent = "Detective"
 		this.card.side = "city"
+		this.card.icon = "ic:round-search"
 		this.card.count = { default: 100, value: 100 }
 	}
 }
@@ -274,6 +297,7 @@ export class sniper extends roles {
 		this.card.roleName = "اسنایپر"
 		this.card.roleComponent = "Sniper"
 		this.card.side = "city"
+		this.card.icon = "fe:target"
 		this.card.count = { default: 100, value: 100 }
 	}
 }
@@ -284,6 +308,7 @@ export class farmande extends roles {
 		this.card.roleName = "فرمانده"
 		this.card.roleComponent = "Farmande"
 		this.card.side = "city"
+		this.card.icon = "game-icons:police-officer-head"
 		this.card.dieOnFail = { default: true, value: true }
 	}
 }
@@ -294,6 +319,7 @@ export class bomber extends roles {
 		this.card.roleName = "بمبر"
 		this.card.roleComponent = "Bomber"
 		this.card.side = "city"
+		this.card.icon = "game-icons:rolling-bomb"
 		this.card.count = { default: 5, value: 5 }
 	}
 }
@@ -304,6 +330,7 @@ export class takavar1 extends roles {
 		this.card.roleName = "تکاور 1"
 		this.card.roleComponent = "Takavar"
 		this.card.side = "city"
+		this.card.icon = "game-icons:ak47u"
 		this.card.sniperShot = { default: true, value: true }
 	}
 }
@@ -314,6 +341,7 @@ export class takavar2 extends roles {
 		this.card.roleName = "تکاور 2"
 		this.card.roleComponent = "Takavar"
 		this.card.side = "city"
+		this.card.icon = "game-icons:ak47u"
 		// this.card.sniperShot = { default: true, value: true }
 	}
 }
@@ -324,6 +352,7 @@ export class takavar3 extends roles {
 		this.card.roleName = "تکاور 3"
 		this.card.roleComponent = "Takavar"
 		this.card.side = "city"
+		this.card.icon = "game-icons:ak47u"
 		this.card.sniperShot = { default: true, value: true }
 	}
 }
@@ -334,6 +363,7 @@ export class saghi extends roles {
 		this.card.roleName = "ساقی"
 		this.card.roleComponent = "Saghi"
 		this.card.side = "city"
+		this.card.icon = "game-icons:drink-me"
 	}
 }
 
@@ -343,6 +373,8 @@ export class fadayi extends roles {
 		this.card.roleName = "فدایی"
 		this.card.roleComponent = "Fadayi"
 		this.card.side = "city"
+		this.card.icon = "game-icons:hand-bandage"
+		this.card.nightAwake = false
 	}
 }
 
@@ -352,6 +384,7 @@ export class janSakht extends roles {
 		this.card.roleName = "جان ساخت"
 		this.card.roleComponent = "JanSakht"
 		this.card.side = "city"
+		this.card.icon = "game-icons:horned-helm"
 		this.card.inquiry = { default: 2, value: 2 }
 		this.card.heart = { default: 1, value: 1 }
 	}
@@ -362,6 +395,7 @@ export class keshish extends roles {
 		this.card.roleName = "کشیش"
 		this.card.roleComponent = "Keshish"
 		this.card.side = "city"
+		this.card.icon = "game-icons:robe"
 		this.card.counts = [
 			{ players: 20, defaultPlayers: 20, default: 3, value: 3 },
 			{ players: 15, defaultPlayers: 15, default: 2, value: 2 },
@@ -375,6 +409,7 @@ export class tofangdar extends roles {
 		this.card.roleName = "تفنگدار"
 		this.card.roleComponent = "Tofangdar"
 		this.card.side = "city"
+		this.card.icon = "game-icons:revolver"
 		this.card.count = { default: 3, value: 3 }
 		this.card.everyNight = { default: 4, value: 4 }
 	}
@@ -385,6 +420,8 @@ export class ghazi extends roles {
 		this.card.roleName = "قاضی"
 		this.card.roleComponent = "Ghazi"
 		this.card.side = "city"
+		this.card.icon = "game-icons:scales"
+		this.card.nightAwake = false
 	}
 }
 export class shahrdar extends roles {
@@ -393,7 +430,9 @@ export class shahrdar extends roles {
 		this.card.roleName = "شهردارد"
 		this.card.roleComponent = "Shahrdar"
 		this.card.side = "city"
+		this.card.icon = "game-icons:castle"
 		this.card.count = { default: 1, value: 1 }
+		this.card.nightAwake = false
 	}
 }
 export class framason extends roles {
@@ -402,6 +441,7 @@ export class framason extends roles {
 		this.card.roleName = "فراماسون"
 		this.card.roleComponent = "Framason"
 		this.card.side = "city"
+		this.card.icon = "game-icons:pentacle"
 	}
 }
 export class tiler extends roles {
@@ -410,6 +450,7 @@ export class tiler extends roles {
 		this.card.roleName = "تایلر"
 		this.card.roleComponent = "Tiler"
 		this.card.side = "city"
+		this.card.icon = "game-icons:ram-profile"
 	}
 }
 export class royinTan extends roles {
@@ -418,6 +459,8 @@ export class royinTan extends roles {
 		this.card.roleName = "رویین تن"
 		this.card.roleComponent = "RoyinTan"
 		this.card.side = "city"
+		this.card.icon = "game-icons:android-mask"
+		this.card.nightAwake = false
 	}
 }
 export class cowboy extends roles {
@@ -426,6 +469,8 @@ export class cowboy extends roles {
 		this.card.roleName = "کابوی"
 		this.card.roleComponent = "Cowboy"
 		this.card.side = "city"
+		this.card.icon = "game-icons:outback-hat"
+		this.card.nightAwake = false
 	}
 }
 export class khabGard extends roles {
@@ -434,6 +479,7 @@ export class khabGard extends roles {
 		this.card.roleName = "خوابگرد"
 		this.card.roleComponent = "KhabGard"
 		this.card.side = "city"
+		this.card.icon = "game-icons:coma"
 	}
 }
 export class ahangar extends roles {
@@ -442,6 +488,7 @@ export class ahangar extends roles {
 		this.card.roleName = "آهنگر"
 		this.card.roleComponent = "Ahangar"
 		this.card.side = "city"
+		this.card.icon = "game-icons:anvil-impact"
 	}
 }
 export class negahban extends roles {
@@ -450,6 +497,7 @@ export class negahban extends roles {
 		this.card.roleName = "نگهبان"
 		this.card.roleComponent = "Negahban"
 		this.card.side = "city"
+		this.card.icon = "game-icons:winged-sword"
 		this.card.counts = [
 			{ players: 30, defaultPlayers: 30, default: 3, value: 3 },
 			{ players: 20, defaultPlayers: 20, default: 2, value: 2 },
@@ -463,6 +511,8 @@ export class citizen1 extends roles {
 		this.card.roleName = "شهر ساده 1"
 		this.card.roleComponent = "Citizen"
 		this.card.side = "city"
+		this.card.icon = "quill:user-happy"
+		this.card.nightAwake = false
 	}
 }
 export class citizen2 extends roles {
@@ -471,6 +521,8 @@ export class citizen2 extends roles {
 		this.card.roleName = "شهر ساده 2"
 		this.card.roleComponent = "Citizen"
 		this.card.side = "city"
+		this.card.icon = "quill:user-happy"
+		this.card.nightAwake = false
 	}
 }
 export class citizen3 extends roles {
@@ -479,6 +531,8 @@ export class citizen3 extends roles {
 		this.card.roleName = "شهر ساده 3"
 		this.card.roleComponent = "Citizen"
 		this.card.side = "city"
+		this.card.icon = "quill:user-happy"
+		this.card.nightAwake = false
 	}
 }
 export class killer extends roles {
@@ -487,6 +541,7 @@ export class killer extends roles {
 		this.card.roleName = "قاتل"
 		this.card.roleComponent = "Killer"
 		this.card.side = "independent"
+		this.card.icon = "game-icons:grim-reaper"
 		this.card.justOdd = { default: true, value: true }
 		this.card.deepShot = { default: true, value: true }
 		this.card.heart = { default: 100, value: 100 }
@@ -498,8 +553,10 @@ export class joker extends roles {
 		this.card.roleName = "جوکر"
 		this.card.roleComponent = "Joker"
 		this.card.side = "independent"
+		this.card.icon = "game-icons:mouth-watering"
 		this.card.count = { default: 4, value: 4 }
 		this.card.heart = { default: 100, value: 100 }
+		this.card.nightAwake = false
 	}
 }
 export class nostradamus extends roles {
@@ -508,6 +565,7 @@ export class nostradamus extends roles {
 		this.card.roleName = "نوستراداموس"
 		this.card.roleComponent = "Nostradamus"
 		this.card.side = "gray"
+		this.card.icon = "game-icons:crystal-ball"
 		this.card.heart = { default: 100, value: 100 }
 	}
 }

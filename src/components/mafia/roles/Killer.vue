@@ -1,8 +1,6 @@
 <script setup>
 
 import MnrCheckSlider from '@/components/mnr/MnrCheckSlider.vue';
-import RoleWrapper from '../RoleWrapper.vue';
-import { Icon } from '@iconify/vue';
 import MnrNumber from '@/components/mnr/MnrNumber.vue';
 
 defineProps({
@@ -11,10 +9,7 @@ defineProps({
 </script>
 
 <template>
-	<RoleWrapper :role="role">
-		<template #icon>
-			<Icon icon="game-icons:grim-reaper" class="inline-block w-7 h-full" />
-		</template>
+	<template v-if="role?.mode == 'select'">
 		<p>
 			<span class="text-amber-600 font-bold">قاتل</span> در ساید <span class="text-amber-600 font-bold">مستقل</span>
 			بازی
@@ -22,10 +17,17 @@ defineProps({
 			بازی حفظ خود تا آخر بازی و حذف همه بازيکنان ميباشد و در اين صورت ميتواند يک نفره برنده کل بازی شود.
 		</p>
 		<hr class="my-2">
-		<MnrCheckSlider v-model:checked="role.card.justOdd.value" class="block w-full">فقط شب های ذوج (یک شب در میان)
+		<MnrCheckSlider v-model:checked="role.justOdd.value" class="block w-full">فقط شب های ذوج (یک شب در میان)
 		</MnrCheckSlider>
-		<MnrCheckSlider v-model:checked="role.card.deepShot.value" class="block w-full">شلیک عمیق (غیر قابل نجات دادت توسط
+		<MnrCheckSlider v-model:checked="role.deepShot.value" class="block w-full">شلیک عمیق (غیر قابل نجات دادت توسط
 			پزشک)</MnrCheckSlider>
-		<MnrNumber placeholder="جان اضافه" title="جان اضافه" :min="0" :max="100" v-model="role.card.heart.value"></MnrNumber>
-	</RoleWrapper>
+		<MnrNumber placeholder="جان اضافه" title="جان اضافه" :min="0" :max="100" v-model="role.heart.value"></MnrNumber>
+	</template>
+	<div class="rounded-md overflow-hidden shadow-md" v-else>
+		<div class="p-2 bg-slate-100 font-bold border-b">{{ role.userName }} <span class="text-slate-400 font-thin">({{
+			role.roleName
+		}})</span>
+		</div>
+		<div class="p-2">body</div>
+	</div>
 </template>

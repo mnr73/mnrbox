@@ -1,8 +1,6 @@
 <script setup>
 
 import MnrCheckSlider from '@/components/mnr/MnrCheckSlider.vue';
-import RoleWrapper from '../RoleWrapper.vue';
-import { Icon } from '@iconify/vue';
 
 defineProps({
 	role: Object
@@ -10,10 +8,7 @@ defineProps({
 </script>
 
 <template>
-	<RoleWrapper :role="role">
-		<template #icon>
-			<Icon icon="game-icons:pay-money" class="inline-block w-7 h-full" />
-		</template>
+	<template v-if="role?.mode == 'select'">
 		<p>
 			<span class="text-red-600 font-bold">مذاکره کننده</span> در ساید <span class="text-red-600 font-bold">مافیا</span>
 			بازی
@@ -25,6 +20,13 @@ defineProps({
 			<li>اگر مذاکره کننده یکی از اعضای ماسونی را انتخاب کند و مذاکره انجام شود مرگ ماسونی رخ خواهد داد</li>
 		</ul>
 		<hr class="my-2" />
-		<MnrCheckSlider v-model:checked="role.card.framason.value">مذاکره اعضای ماسونی</MnrCheckSlider>
-	</RoleWrapper>
+		<MnrCheckSlider v-model:checked="role.framason.value">مذاکره اعضای ماسونی</MnrCheckSlider>
+	</template>
+	<div class="rounded-md overflow-hidden shadow-md" v-else>
+		<div class="p-2 bg-slate-100 font-bold border-b">{{ role.userName }} <span class="text-slate-400 font-thin">({{
+			role.roleName
+		}})</span>
+		</div>
+		<div class="p-2">body</div>
+	</div>
 </template>

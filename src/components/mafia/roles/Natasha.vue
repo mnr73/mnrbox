@@ -1,8 +1,6 @@
 <script setup>
 
 import MnrCheckSlider from '@/components/mnr/MnrCheckSlider.vue';
-import RoleWrapper from '../RoleWrapper.vue';
-import { Icon } from '@iconify/vue';
 
 defineProps({
 	role: Object
@@ -10,21 +8,25 @@ defineProps({
 </script>
 
 <template>
-	<RoleWrapper :role="role">
-		<template #icon>
-			<Icon icon="game-icons:cowled" class="inline-block w-7 h-full" />
-		</template>
+	<template v-if="role?.mode == 'select'">
 		<p>
 			<span class="text-red-600 font-bold">ناتاشا</span> در ساید <span class="text-red-600 font-bold">مافیا</span> بازی
 			میکند. ناتاشا هر شب یک نفر را سایلنت می‌کند و شخص در روز بعد نمی‌تواند صحبت کند و همچنین در رای‌گیری نیز شرکت نخواهد
 			کرد. ناتاشا میتواند خود و افراد تیم مافیا را نیز سایلنت کند.
 		</p>
 		<hr class="my-2">
-		<MnrCheckSlider v-model:checked="role.card.alone.value" class="block w-full">بیدار شدن مستقل از مافیا</MnrCheckSlider>
-		<MnrCheckSlider v-model:checked="role.card.noVote.value" class="block w-full">شخص سایلنت شده نمیتواند رای دهد
+		<MnrCheckSlider v-model:checked="role.alone.value" class="block w-full">بیدار شدن مستقل از مافیا</MnrCheckSlider>
+		<MnrCheckSlider v-model:checked="role.noVote.value" class="block w-full">شخص سایلنت شده نمیتواند رای دهد
 		</MnrCheckSlider>
-		<MnrCheckSlider v-model:checked="role.card.noKick.value" class="block w-full">نمیتوان برای خروج شخص سایلنت شده
+		<MnrCheckSlider v-model:checked="role.noKick.value" class="block w-full">نمیتوان برای خروج شخص سایلنت شده
 			رای‌گیری کرد
 		</MnrCheckSlider>
-	</RoleWrapper>
+	</template>
+	<div class="rounded-md overflow-hidden shadow-md" v-else>
+		<div class="p-2 bg-slate-100 font-bold border-b">{{ role.userName }} <span class="text-slate-400 font-thin">({{
+			role.roleName
+		}})</span>
+		</div>
+		<div class="p-2">body</div>
+	</div>
 </template>

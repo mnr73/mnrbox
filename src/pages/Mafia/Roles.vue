@@ -5,6 +5,7 @@ import _ from "lodash";
 import * as role from "@/modules/roles";
 import { ref, reactive, computed, watch } from "vue";
 import * as rolesComponent from "@/modules/rolesComponent";
+import RoleWrapper from "@/components/mafia/RoleWrapper.vue";
 
 let data = new mafia();
 let name = ref();
@@ -89,7 +90,9 @@ function deleteRoles() {
 			</div>
 			<div class="mt-5 grid grid-cols-1 gap-3" v-else>
 				<template v-for="role in filteredRoles" :key="role.card.class">
-					<component :is='rolesComponent[role.card.roleComponent]' :role="role"></component>
+					<RoleWrapper :role="role">
+						<component :is='rolesComponent[role.card.roleComponent]' :role="role.card"></component>
+					</RoleWrapper>
 				</template>
 			</div>
 		</div>

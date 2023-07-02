@@ -1,7 +1,5 @@
 <script setup>
 
-import RoleWrapper from '../RoleWrapper.vue';
-import { Icon } from '@iconify/vue';
 import MnrNumber from '@/components/mnr/MnrNumber.vue';
 
 defineProps({
@@ -10,10 +8,7 @@ defineProps({
 </script>
 
 <template>
-	<RoleWrapper :role="role">
-		<template #icon>
-			<Icon icon="game-icons:crystal-ball" class="inline-block w-7 h-full" />
-		</template>
+	<template v-if="role?.mode == 'select'">
 		<p>
 			<span class="text-amber-600 font-bold">نوستراداموس</span> در ساید <span
 				class="text-amber-600 font-bold">خاکستری</span>
@@ -24,6 +19,13 @@ defineProps({
 			باشند او باید در ساید مافیا بازی کند. او با شلیک شب نمی‌میرد
 		</p>
 		<hr class="my-2">
-		<MnrNumber placeholder="جان اضافه" title="جان اضافه" :min="0" :max="100" v-model="role.card.heart.value"></MnrNumber>
-	</RoleWrapper>
+		<MnrNumber placeholder="جان اضافه" title="جان اضافه" :min="0" :max="100" v-model="role.heart.value"></MnrNumber>
+	</template>
+	<div class="rounded-md overflow-hidden shadow-md" v-else>
+		<div class="p-2 bg-slate-100 font-bold border-b">{{ role.userName }} <span class="text-slate-400 font-thin">({{
+			role.roleName
+		}})</span>
+		</div>
+		<div class="p-2">body</div>
+	</div>
 </template>

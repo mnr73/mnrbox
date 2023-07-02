@@ -1,8 +1,6 @@
 <script setup>
 
 import MnrCheckSlider from '@/components/mnr/MnrCheckSlider.vue';
-import RoleWrapper from '../RoleWrapper.vue';
-import { Icon } from '@iconify/vue';
 
 defineProps({
 	role: Object
@@ -10,20 +8,24 @@ defineProps({
 </script>
 
 <template>
-	<RoleWrapper :role="role">
-		<template #icon>
-			<Icon icon="game-icons:balaclava" class="inline-block w-7 h-full" />
-		</template>
+	<template v-if="role?.mode == 'select'">
 		<p>
 			<span class="text-red-600 font-bold">دزد</span> در ساید <span class="text-red-600 font-bold">مافیا</span> بازی
 			می‌کند. او مافیا را می‌شناسد ولی مستقل از مافیا بیدار می‌شود و هر شب قابلیت یک نفر را می‌دزدد و از آن روی یک نفر
 			استفاده می‌کند. قابلیت هایی که امکان دزدیده شدن نداشته باشند دست نخورده باقی مانده یا از بین می‌روند
 		</p>
 		<hr class="my-2" />
-		<MnrCheckSlider v-model:checked="role.card.gone.value" class="block w-full">نقش هایی که قابلیت دزدی ندارند غیر فعال
+		<MnrCheckSlider v-model:checked="role.gone.value" class="block w-full">نقش هایی که قابلیت دزدی ندارند غیر فعال
 			شوند
 		</MnrCheckSlider>
-		<MnrCheckSlider v-model:checked="role.card.alone.value" class="block w-full">بیدار شدن مستقل از مافیا
+		<MnrCheckSlider v-model:checked="role.alone.value" class="block w-full">بیدار شدن مستقل از مافیا
 		</MnrCheckSlider>
-	</RoleWrapper>
+	</template>
+	<div class="rounded-md overflow-hidden shadow-md" v-else>
+		<div class="p-2 bg-slate-100 font-bold border-b">{{ role.userName }} <span class="text-slate-400 font-thin">({{
+			role.roleName
+		}})</span>
+		</div>
+		<div class="p-2">body</div>
+	</div>
 </template>

@@ -1,8 +1,6 @@
 <script setup>
 
 import MnrCheckSlider from '@/components/mnr/MnrCheckSlider.vue';
-import RoleWrapper from '../RoleWrapper.vue';
-import { Icon } from '@iconify/vue';
 
 defineProps({
 	role: Object
@@ -10,10 +8,7 @@ defineProps({
 </script>
 
 <template>
-	<RoleWrapper :role="role">
-		<template #icon>
-			<Icon icon="game-icons:burning-skull" class="inline-block w-7 h-full" />
-		</template>
+	<template v-if="role?.mode == 'select'">
 		<p>
 			<span class="text-red-600 font-bold">افسونگر</span> در ساید <span class="text-red-600 font-bold">مافیا</span> بازی
 			می‌کند. افسونگر یک کلمه 4 حرفی را برای یک بازیکن انتخاب می‌کند. اگر بازیکن آن کلمه را در طول روز به کار ببرد آن شخص
@@ -24,7 +19,14 @@ defineProps({
 			<li><b>شب سریع</b>: اگر شخص کلمه را گفت بلافاصله شب می‌شود</li>
 		</ul>
 		<hr class="my-2">
-		<MnrCheckSlider v-model:checked="role.card.silent.value" class="block w-full">سایلنت</MnrCheckSlider>
-		<MnrCheckSlider v-model:checked="role.card.fastNight.value" class="block w-full">شب سریع</MnrCheckSlider>
-	</RoleWrapper>
+		<MnrCheckSlider v-model:checked="role.silent.value" class="block w-full">سایلنت</MnrCheckSlider>
+		<MnrCheckSlider v-model:checked="role.fastNight.value" class="block w-full">شب سریع</MnrCheckSlider>
+	</template>
+	<div class="rounded-md overflow-hidden shadow-md" v-else>
+		<div class="p-2 bg-slate-100 font-bold border-b">{{ role.userName }} <span class="text-slate-400 font-thin">({{
+			role.roleName
+		}})</span>
+		</div>
+		<div class="p-2">body</div>
+	</div>
 </template>

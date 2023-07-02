@@ -7,6 +7,7 @@ import mafia from "@/modules/mafia";
 import MnrSelect from "@/components/mnr/MnrSelect.vue";
 import _ from "lodash";
 import Bottom from "@/components/Bottom.vue";
+import * as rolesComponent from "@/modules/rolesComponent";
 
 const data = new mafia;
 const daysBox = ref(null);
@@ -99,6 +100,20 @@ const selectedStep = computed(() => {
 	return _.find(selectedRound.value?.steps, ['number', selectedRound.value?.stepNumber])
 })
 
+const getRoles = computed(() => {
+	_.each(roles.value, function (r) {
+		r.mode = selectedStep.value?.type
+	})
+
+	console.log(roles.value);
+	if (selectedStep.value?.type == 'night') {
+		return _.filter(roles.value, 'nightAwake')
+	}
+
+	return roles.value
+})
+
+
 function nextStep() {
 	if (selectedIndex.value == 0) {
 		if (selectedRound.value.stepNumber === 0) {
@@ -120,6 +135,8 @@ function nextStep() {
 }
 
 </script>
+
+
 <template>
 	<div class="overflow-x-auto sm:my-3 my-2 sm:px-5 px-2 text-sm" ref="daysBox">
 		<div class="flex gap-2">
@@ -153,59 +170,9 @@ function nextStep() {
 					نیست</button>
 			</div>
 		</div>
-		<div v-else-if="selectedStep?.type == 'day'" class="flex flex-col gap-3">
-			<template v-for="role in roles" :key="role.userId">
-				<div class="rounded-md overflow-hidden shadow-md">
-					<div class="p-2 bg-slate-100 font-bold border-b">{{ role.userName }} <span class="text-slate-400 font-thin">({{
-						role.roleName
-					}})</span>
-					</div>
-					<div class="p-2">body</div>
-				</div>
-			</template>
-		</div>
-		<div v-else-if="selectedStep?.type == 'night'" class="flex flex-col gap-3">
-			<template v-for="role in roles" :key="role.userId">
-				<div class="rounded-md overflow-hidden shadow-md">
-					<div class="p-2 bg-slate-100 font-bold border-b">{{ role.userName }} <span class="text-slate-400 font-thin">({{
-						role.roleName
-					}})</span>
-					</div>
-					<div class="p-2">body</div>
-				</div>
-			</template>
-		</div>
-		<div v-else-if="selectedStep?.type == 'vote_1'" class="flex flex-col gap-3">
-			<template v-for="role in roles" :key="role.userId">
-				<div class="rounded-md overflow-hidden shadow-md">
-					<div class="p-2 bg-slate-100 font-bold border-b">{{ role.userName }} <span class="text-slate-400 font-thin">({{
-						role.roleName
-					}})</span>
-					</div>
-					<div class="p-2">body</div>
-				</div>
-			</template>
-		</div>
-		<div v-else-if="selectedStep?.type == 'defense'" class="flex flex-col gap-3">
-			<template v-for="role in roles" :key="role.userId">
-				<div class="rounded-md overflow-hidden shadow-md">
-					<div class="p-2 bg-slate-100 font-bold border-b">{{ role.userName }} <span class="text-slate-400 font-thin">({{
-						role.roleName
-					}})</span>
-					</div>
-					<div class="p-2">body</div>
-				</div>
-			</template>
-		</div>
-		<div v-else-if="selectedStep?.type == 'vote_2'" class="flex flex-col gap-3">
-			<template v-for="role in roles" :key="role.userId">
-				<div class="rounded-md overflow-hidden shadow-md">
-					<div class="p-2 bg-slate-100 font-bold border-b">{{ role.userName }} <span class="text-slate-400 font-thin">({{
-						role.roleName
-					}})</span>
-					</div>
-					<div class="p-2">body</div>
-				</div>
+		<div v-else class="flex flex-col gap-3">
+			<template v-for="role in getRoles" :key="role.userId">
+				<component :is='rolesComponent[role.roleComponent]' :role="role"></component>
 			</template>
 		</div>
 	</div>

@@ -1,8 +1,6 @@
 <script setup>
 
 import MnrNumber from '@/components/mnr/MnrNumber.vue';
-import RoleWrapper from '../RoleWrapper.vue';
-import { Icon } from '@iconify/vue';
 
 defineProps({
 	role: Object
@@ -10,10 +8,7 @@ defineProps({
 </script>
 
 <template>
-	<RoleWrapper :role="role">
-		<template #icon>
-			<Icon icon="game-icons:robe" class="inline-block w-7 h-full" />
-		</template>
+	<template v-if="role?.mode == 'select'">
 		<p>
 			<span class="text-emerald-600 font-bold">کشیش</span> در ساید <span class="text-emerald-600 font-bold">شهر</span>
 			بازی
@@ -21,7 +16,7 @@ defineProps({
 			برداشته می‌شود. در غیر این صورت زمان اضافه برای صحبت دریافت می‌کنند.
 		</p>
 		<hr class="my-2" />
-		<div class="flex items-center gap-2 mt-2" v-for="(item, index) in role.card.counts" :key="index">
+		<div class="flex items-center gap-2 mt-2" v-for="(item, index) in role.counts" :key="index">
 			<MnrNumber class="flex-grow" placeholder="بازیکن" :min="0" :max="100" v-model="item.players">
 			</MnrNumber>
 			<div>بازیکن</div>
@@ -29,5 +24,12 @@ defineProps({
 			</MnrNumber>
 			<div>انتخاب</div>
 		</div>
-	</RoleWrapper>
+	</template>
+	<div class="rounded-md overflow-hidden shadow-md" v-else>
+		<div class="p-2 bg-slate-100 font-bold border-b">{{ role.userName }} <span class="text-slate-400 font-thin">({{
+			role.roleName
+		}})</span>
+		</div>
+		<div class="p-2">body</div>
+	</div>
 </template>

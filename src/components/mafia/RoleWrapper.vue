@@ -25,7 +25,7 @@ const props = defineProps({
 					'text-amber-600': props.role.card.side == 'independent',
 					'text-slate-600': props.role.card.side == 'gray',
 				}">
-					<slot name="icon"></slot> {{ props.role.card.roleName }}
+					<Icon :icon="props.role.card.icon" class="inline-block w-7 h-full" /> {{ props.role.card.roleName }}
 				</div>
 				<div class="h-full flex items-center">
 					<Icon icon="octicon:triangle-down-24" class="text-slate-600 h-full w-8 transition"
