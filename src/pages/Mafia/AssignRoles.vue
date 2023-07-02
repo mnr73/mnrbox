@@ -39,7 +39,7 @@ const openUser = computed(() => {
 
 </script>
 <template>
-	<div class="sm:p-5 p-2">
+	<div class="sm:p-5 p-2 pb-20">
 		<div class="flex justify-between p-2">
 			<h2 class="font-bold">تقسیم نقش ها</h2>
 		</div>

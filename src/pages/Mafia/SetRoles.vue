@@ -40,7 +40,7 @@ function resetRoles() {
 }
 </script>
 <template>
-	<div class="sm:p-5 p-2">
+	<div class="sm:p-5 p-2 pb-20">
 		<div class="flex justify-between p-2">
 			<h2 class="font-bold">تعیین نقش ها</h2>
 			<button class="bg-red-300 text-red-800 px-2 rounded-md" @click="resetRoles()">ریست</button>
