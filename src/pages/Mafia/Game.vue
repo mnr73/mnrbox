@@ -95,6 +95,10 @@ const selectedRound = computed(() => {
 	return rounds.value[selectedIndex.value]
 })
 
+const selectedStep = computed(() => {
+	return _.find(selectedRound.value?.steps, ['number', selectedRound.value?.stepNumber])
+})
+
 function nextStep() {
 	if (selectedIndex.value == 0) {
 		if (selectedRound.value.stepNumber === 0) {
@@ -120,7 +124,7 @@ function nextStep() {
 	<div class="overflow-x-auto sm:my-3 my-2 sm:px-5 px-2 text-sm" ref="daysBox">
 		<div class="flex gap-2">
 			<div class="bg-slate-700 text-white h-8 px-2 rounded-full flex items-center justify-center flex-shrink-0"
-				style="min-width: 2rem;" :class="{ 'bg-sky-600': selectedIndex == index }" v-for="(round, index) in rounds"
+				style="min-width: 2rem;" :class="{ '!bg-sky-600': selectedIndex == index }" v-for="(round, index) in rounds"
 				:key="index">{{ index || 'معارفه' }}
 			</div>
 			<div class="w-10 flex-shrink-0"></div>
@@ -138,9 +142,9 @@ function nextStep() {
 			<div class="w-1 flex-shrink-0"></div>
 		</div>
 	</div>
-	<div class="sm:p-5 p-2">
-		<div v-if="selectedIndex == 0 && selectedRound.stepNumber == 0">
-			<div class="p-4">در بعضی از سناریو ها تیم مافیا در شب قبل از معارفه بیدار شده و یک‌دیگر را می‌شناسند.</div>
+	<div class="sm:p-5 p-2 mb-60">
+		<div v-if="selectedIndex == 0 && selectedStep.type == 'night'">
+			<div class="p-4">در بعضی از سناریو ها تیم مافیا در شب قبل از معارفه بیدار شده و یک دیگر را می‌شناسند.</div>
 			<div class="flex gap-5 justify-center">
 				<button class="bg-slate-200 shadow-lg p-2 rounded-md"
 					:class="{ 'bg-sky-500 text-white': game.zeroNight === true }" @click="game.zeroNight = true">شناختند</button>
@@ -148,6 +152,61 @@ function nextStep() {
 					:class="{ 'bg-sky-500 text-white': game.zeroNight === false }" @click="game.zeroNight = false">لازم
 					نیست</button>
 			</div>
+		</div>
+		<div v-else-if="selectedStep?.type == 'day'" class="flex flex-col gap-3">
+			<template v-for="role in roles" :key="role.userId">
+				<div class="rounded-md overflow-hidden shadow-md">
+					<div class="p-2 bg-slate-100 font-bold border-b">{{ role.userName }} <span class="text-slate-400 font-thin">({{
+						role.roleName
+					}})</span>
+					</div>
+					<div class="p-2">body</div>
+				</div>
+			</template>
+		</div>
+		<div v-else-if="selectedStep?.type == 'night'" class="flex flex-col gap-3">
+			<template v-for="role in roles" :key="role.userId">
+				<div class="rounded-md overflow-hidden shadow-md">
+					<div class="p-2 bg-slate-100 font-bold border-b">{{ role.userName }} <span class="text-slate-400 font-thin">({{
+						role.roleName
+					}})</span>
+					</div>
+					<div class="p-2">body</div>
+				</div>
+			</template>
+		</div>
+		<div v-else-if="selectedStep?.type == 'vote_1'" class="flex flex-col gap-3">
+			<template v-for="role in roles" :key="role.userId">
+				<div class="rounded-md overflow-hidden shadow-md">
+					<div class="p-2 bg-slate-100 font-bold border-b">{{ role.userName }} <span class="text-slate-400 font-thin">({{
+						role.roleName
+					}})</span>
+					</div>
+					<div class="p-2">body</div>
+				</div>
+			</template>
+		</div>
+		<div v-else-if="selectedStep?.type == 'defense'" class="flex flex-col gap-3">
+			<template v-for="role in roles" :key="role.userId">
+				<div class="rounded-md overflow-hidden shadow-md">
+					<div class="p-2 bg-slate-100 font-bold border-b">{{ role.userName }} <span class="text-slate-400 font-thin">({{
+						role.roleName
+					}})</span>
+					</div>
+					<div class="p-2">body</div>
+				</div>
+			</template>
+		</div>
+		<div v-else-if="selectedStep?.type == 'vote_2'" class="flex flex-col gap-3">
+			<template v-for="role in roles" :key="role.userId">
+				<div class="rounded-md overflow-hidden shadow-md">
+					<div class="p-2 bg-slate-100 font-bold border-b">{{ role.userName }} <span class="text-slate-400 font-thin">({{
+						role.roleName
+					}})</span>
+					</div>
+					<div class="p-2">body</div>
+				</div>
+			</template>
 		</div>
 	</div>
 	<Bottom>
