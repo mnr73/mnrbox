@@ -105,9 +105,43 @@ const getRoles = computed(() => {
 		r.mode = selectedStep.value?.type
 	})
 
-	console.log(roles.value);
 	if (selectedStep.value?.type == 'night') {
-		return _.filter(roles.value, 'nightAwake')
+		let filtered = _.filter(roles.value, 'nightAwake')
+		console.log(filtered);
+		return {
+			beforeMafia: {
+				name: "قبل از مافیا",
+				roles: _.remove(filtered, (role) => {
+					return role.class == 'nostradamus' ||
+						role.class == 'saghi' ||
+						role.class == 'negahban'
+				})
+			},
+			mafia: {
+				name: "ساید مافیا",
+				roles: _.remove(filtered, (role) => {
+					return role.side == 'mafia' && role.alone?.value != true
+				})
+			},
+			aloneMafia: {
+				name: "مافیای مستقل",
+				roles: _.remove(filtered, (role) => {
+					return role.side == 'mafia' && role.alone?.value == true
+				})
+			},
+			cities: {
+				name: "ساید شهر",
+				roles: _.remove(filtered, (role) => {
+					return role.side == 'city'
+				})
+			},
+			independent: {
+				name: "ساید مستفل",
+				roles: _.remove(filtered, (role) => {
+					return role.side == 'independent'
+				})
+			},
+		}
 	}
 
 	return roles.value
@@ -171,7 +205,19 @@ function nextStep() {
 			</div>
 		</div>
 		<div v-else class="flex flex-col gap-3">
-			<template v-for="role in getRoles" :key="role.userId">
+			<div class="" v-if="selectedStep?.type == 'night'">
+				<template v-for="(roles, key) in getRoles" :key="key">
+					<div v-if="roles.roles?.length" class="my-5">
+						<h2 class="mb-2 font-bold text-lg text-sky-600">{{ roles.name }}</h2>
+						<div class="flex flex-col gap-3">
+							<component v-for="role in roles.roles" :key="role.userId" :is='rolesComponent[role.roleComponent]'
+								:role="role"></component>
+						</div>
+						<hr class="my-4">
+					</div>
+				</template>
+			</div>
+			<template v-else v-for="role in getRoles" :key="role.userId">
 				<component :is='rolesComponent[role.roleComponent]' :role="role"></component>
 			</template>
 		</div>
