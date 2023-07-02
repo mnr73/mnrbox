@@ -8,6 +8,7 @@ import MnrSelect from "@/components/mnr/MnrSelect.vue";
 import _ from "lodash";
 import Bottom from "@/components/Bottom.vue";
 import * as rolesComponent from "@/modules/rolesComponent";
+import RoleCard from "@/components/mafia/RoleCard.vue";
 
 const data = new mafia;
 const daysBox = ref(null);
@@ -208,17 +209,20 @@ function nextStep() {
 			<div class="" v-if="selectedStep?.type == 'night'">
 				<template v-for="(roles, key) in getRoles" :key="key">
 					<div v-if="roles.roles?.length" class="my-5">
-						<h2 class="mb-2 font-bold text-lg text-sky-600">{{ roles.name }}</h2>
+						<h2 class="mb-2 text-lg bg-sky-500 text-sky-200 p-2">{{ roles.name }}</h2>
 						<div class="flex flex-col gap-3">
-							<component v-for="role in roles.roles" :key="role.userId" :is='rolesComponent[role.roleComponent]'
-								:role="role"></component>
+							<RoleCard v-for="role in roles.roles" :key="role.userId" :role="role">
+								<component :is='rolesComponent[role.roleComponent]' :role="role"></component>
+							</RoleCard>
 						</div>
 						<hr class="my-4">
 					</div>
 				</template>
 			</div>
 			<template v-else v-for="role in getRoles" :key="role.userId">
-				<component :is='rolesComponent[role.roleComponent]' :role="role"></component>
+				<RoleCard :role="role">
+					<component :is='rolesComponent[role.roleComponent]' :role="role"></component>
+				</RoleCard>
 			</template>
 		</div>
 	</div>

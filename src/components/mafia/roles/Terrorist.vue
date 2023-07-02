@@ -20,11 +20,5 @@ defineProps({
 		</MnrCheckSlider>
 		<MnrCheckSlider v-model:checked="role.alone.value" class="block w-full">بیدار شدن مستقل از مافیا</MnrCheckSlider>
 	</template>
-	<div class="rounded-md overflow-hidden shadow-md" v-else>
-		<div class="p-2 bg-slate-100 font-bold border-b">{{ role.userName }} <span class="text-slate-400 font-thin">({{
-			role.roleName
-		}})</span>
-		</div>
-		<div class="p-2">body</div>
-	</div>
+	<div class="p-2" v-else>body</div>
 </template>

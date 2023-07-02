@@ -28,11 +28,5 @@ defineProps({
 		<MnrNumber placeholder="جان اضافه" title="تعداد جان اضافه" :min="0" :max="100" v-model="role.heart.value"
 			class="mt-3"></MnrNumber>
 	</template>
-	<div class="rounded-md overflow-hidden shadow-md" v-else>
-		<div class="p-2 bg-slate-100 font-bold border-b">{{ role.userName }} <span class="text-slate-400 font-thin">({{
-			role.roleName
-		}})</span>
-		</div>
-		<div class="p-2">body</div>
-	</div>
+	<div class="p-2" v-else>body</div>
 </template>

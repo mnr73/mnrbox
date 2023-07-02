@@ -18,11 +18,5 @@ defineProps({
 		<MnrNumber placeholder="تعداد سم" title="تعداد سم" :min="1" :max="100" v-model="role.count.value"></MnrNumber>
 		<MnrNumber placeholder="تعداد روز" title="تعداد روز" :min="2" :max="5" v-model="role.days.value"></MnrNumber>
 	</template>
-	<div class="rounded-md overflow-hidden shadow-md" v-else>
-		<div class="p-2 bg-slate-100 font-bold border-b">{{ role.userName }} <span class="text-slate-400 font-thin">({{
-			role.roleName
-		}})</span>
-		</div>
-		<div class="p-2">body</div>
-	</div>
+	<div class="p-2" v-else>body</div>
 </template>
