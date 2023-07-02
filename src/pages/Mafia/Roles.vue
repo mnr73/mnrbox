@@ -4,47 +4,7 @@ import mafia from "@/modules/mafia";
 import _ from "lodash";
 import * as role from "@/modules/roles";
 import { ref, reactive, computed, watch } from "vue";
-import GodFather from "@/components/mafia/roles/GodFather.vue"
-import StrongMan from "@/components/mafia/roles/StrongMan.vue"
-import Nato from "@/components/mafia/roles/Nato.vue";
-import Natasha from "@/components/mafia/roles/Natasha.vue";
-import Afsoongar from "@/components/mafia/roles/Afsoongar.vue";
-import Terrorist from "@/components/mafia/roles/Terrorist.vue";
-import Mashooghe from "@/components/mafia/roles/Mashooghe.vue";
-import Bazjoo from "@/components/mafia/roles/Bazjoo.vue";
-import SamSaz from "@/components/mafia/roles/SamSaz.vue";
-import Negotiator from "@/components/mafia/roles/Negotiator.vue";
-import KharabKar from "@/components/mafia/roles/KharabKar.vue";
-import DoctorLekter from "@/components/mafia/roles/DoctorLekter.vue";
-import GroganGir from "@/components/mafia/roles/GroganGir.vue";
-import Spy from "@/components/mafia/roles/Spy.vue";
-import Sharlatan from "@/components/mafia/roles/Sharlatan.vue";
-import SimpleMafia from "@/components/mafia/roles/SimpleMafia.vue";
-import Dozd from "@/components/mafia/roles/Dozd.vue";
-import Doctor from "@/components/mafia/roles/Doctor.vue";
-import Detective from "@/components/mafia/roles/Detective.vue";
-import Sniper from "@/components/mafia/roles/Sniper.vue";
-import Farmande from "@/components/mafia/roles/Farmande.vue";
-import Bomber from "@/components/mafia/roles/Bomber.vue";
-import Takavar from "@/components/mafia/roles/Takavar.vue";
-import Fadayi from "@/components/mafia/roles/Fadayi.vue";
-import JanSakht from "@/components/mafia/roles/JanSakht.vue";
-import Keshish from "@/components/mafia/roles/Keshish.vue";
-import Tofangdar from "@/components/mafia/roles/Tofangdar.vue";
-import Ghazi from "@/components/mafia/roles/Ghazi.vue";
-import Shahrdar from "@/components/mafia/roles/Shahrdar.vue";
-import Framason from "@/components/mafia/roles/Framason.vue";
-import Tiler from "@/components/mafia/roles/Tiler.vue";
-import RoyinTan from "@/components/mafia/roles/RoyinTan.vue";
-import Citizen from "@/components/mafia/roles/Citizen.vue";
-import Saghi from "@/components/mafia/roles/Saghi.vue";
-import Cowboy from "@/components/mafia/roles/Cowboy.vue";
-import KhabGard from "@/components/mafia/roles/KhabGard.vue";
-import Ahangar from "@/components/mafia/roles/Ahangar.vue";
-import Killer from "@/components/mafia/roles/Killer.vue";
-import Joker from "@/components/mafia/roles/Joker.vue";
-import Nostradamus from "@/components/mafia/roles/Nostradamus.vue";
-import Negahban from "@/components/mafia/roles/Negahban.vue";
+import * as rolesComponent from "@/modules/rolesComponent";
 
 let data = new mafia();
 let name = ref();
@@ -85,13 +45,6 @@ watch(
 function deleteRoles() {
 	data.deleteRoles()
 	setRoles()
-}
-
-function getComponent(component) {
-	return {
-		GodFather, StrongMan, Nato, Natasha, Afsoongar, Terrorist, Mashooghe, Bazjoo, SamSaz, Negotiator, KharabKar, DoctorLekter, GroganGir, Spy, Sharlatan, SimpleMafia, Dozd, Doctor, Detective, Sniper, Farmande, Bomber, Takavar, Fadayi, JanSakht, Keshish, Tofangdar, Ghazi, Shahrdar, Framason, Tiler, RoyinTan, Citizen, Saghi, Cowboy, KhabGard, Ahangar, Killer, Joker, Nostradamus, Negahban,
-	}[component]
-	// return eval(component)
 }
 </script>
 <template>
@@ -136,7 +89,7 @@ function getComponent(component) {
 			</div>
 			<div class="mt-5 grid grid-cols-1 gap-3" v-else>
 				<template v-for="role in filteredRoles" :key="role.card.class">
-					<component :is='getComponent(role.card.roleComponent)' :role="role"></component>
+					<component :is='rolesComponent[role.card.roleComponent]' :role="role"></component>
 				</template>
 			</div>
 		</div>
