@@ -108,7 +108,6 @@ const getRoles = computed(() => {
 
 	if (selectedStep.value?.type == 'night') {
 		let filtered = _.filter(roles.value, 'nightAwake')
-		console.log(filtered);
 		return {
 			beforeMafia: {
 				name: "قبل از مافیا",
