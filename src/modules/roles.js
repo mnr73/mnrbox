@@ -3,7 +3,6 @@ class roles {
 		dead: false,
 		getOut: false,
 		beSimple: false,
-		mode: "select",
 		userName: "",
 		userId: "",
 		roleName: "",
@@ -44,8 +43,9 @@ export class godFather extends roles {
 		this.card.roleComponent = "GodFather"
 		this.card.side = "mafia"
 		this.card.icon = "mdi:redhat"
-		this.card.negativeInquiry = { default: 100, value: 100 }
-		this.card.heart = { default: 0, value: 0 }
+		this.card.options = {
+			heart: 0
+		}
 	}
 }
 
@@ -56,9 +56,11 @@ export class strongMan extends roles {
 		this.card.roleComponent = "StrongMan"
 		this.card.side = "mafia"
 		this.card.icon = "game-icons:biceps"
-		this.card.shot = { default: 1, value: 1 }
-		this.card.sameShot = { default: false, value: false }
-		this.card.heart = { default: 0, value: 0 }
+		this.card.options = {
+			shot: 1,
+			sameShot: false,
+			heart: 0
+		}
 	}
 }
 
@@ -69,7 +71,10 @@ export class nato extends roles {
 		this.card.roleComponent = "Nato"
 		this.card.side = "mafia"
 		this.card.icon = "fa-solid:theater-masks"
-		this.card.failsCount = { default: 3, value: 3 }
+		this.card.options = {
+			count: 5,
+			failsCount: 3,
+		}
 	}
 }
 
@@ -80,9 +85,11 @@ export class natasha extends roles {
 		this.card.roleComponent = "Natasha"
 		this.card.side = "mafia"
 		this.card.icon = "game-icons:cowled"
-		this.card.noVote = { default: true, value: true }
-		this.card.noKick = { default: false, value: false }
-		this.card.alone = { default: true, value: true }
+		this.card.options = {
+			noVote: true,
+			noKick: false,
+			alone: true,
+		}
 	}
 }
 
@@ -93,8 +100,10 @@ export class dozd extends roles {
 		this.card.roleComponent = "Dozd"
 		this.card.side = "mafia"
 		this.card.icon = "game-icons:balaclava"
-		this.card.gone = { default: false, value: false }
-		this.card.alone = { default: true, value: true }
+		this.card.options = {
+			gone: false,
+			alone: true,
+		}
 	}
 }
 
@@ -105,8 +114,10 @@ export class afsoongar extends roles {
 		this.card.roleComponent = "Afsoongar"
 		this.card.side = "mafia"
 		this.card.icon = "game-icons:burning-skull"
-		this.card.silent = { default: true, value: true }
-		this.card.fastNight = { default: true, value: true }
+		this.card.options = {
+			silent: true,
+			fastNight: true,
+		}
 	}
 }
 
@@ -117,8 +128,10 @@ export class terrorist extends roles {
 		this.card.roleComponent = "Terrorist"
 		this.card.side = "mafia"
 		this.card.icon = "game-icons:ak47"
-		this.card.afterVote = { default: true, value: true }
-		this.card.alone = { default: false, value: false }
+		this.card.options = {
+			afterVote: true,
+			alone: false,
+		}
 	}
 }
 
@@ -129,9 +142,11 @@ export class mashooghe extends roles {
 		this.card.roleComponent = "Mashooghe"
 		this.card.side = "mafia"
 		this.card.icon = "game-icons:evil-love"
-		this.card.byVote = { default: true, value: true }
-		this.card.inDay = { default: true, value: true }
-		this.card.inNight = { default: true, value: true }
+		this.card.options = {
+			byVote: true,
+			inDay: true,
+			inNight: true,
+		}
 	}
 }
 
@@ -142,7 +157,9 @@ export class bazjoo extends roles {
 		this.card.roleComponent = "Bazjoo"
 		this.card.side = "mafia"
 		this.card.icon = "solar:eye-scan-bold"
-		this.card.count = { default: 3, value: 3 }
+		this.card.options = {
+			count: 1,
+		}
 	}
 }
 
@@ -153,8 +170,10 @@ export class samSaz extends roles {
 		this.card.roleComponent = "SamSaz"
 		this.card.side = "mafia"
 		this.card.icon = "game-icons:dripping-tube"
-		this.card.count = { default: 2, value: 2 }
-		this.card.days = { default: 3, value: 3 }
+		this.card.options = {
+			count: 2,
+			days: 3,
+		}
 	}
 }
 
@@ -165,7 +184,9 @@ export class negotiator extends roles {
 		this.card.roleComponent = "Negotiator"
 		this.card.side = "mafia"
 		this.card.icon = "game-icons:pay-money"
-		this.card.framason = { default: false, value: false }
+		this.card.options = {
+			framason: false,
+		}
 	}
 }
 
@@ -176,11 +197,13 @@ export class kharabKar extends roles {
 		this.card.roleComponent = "KharabKar"
 		this.card.side = "mafia"
 		this.card.icon = "game-icons:luger"
-		this.card.counts = [
-			{ players: 20, defaultPlayers: 20, default: 3, value: 3 },
-			{ players: 15, defaultPlayers: 15, default: 2, value: 2 },
-			{ players: 1, defaultPlayers: 1, default: 1, value: 1 },
-		]
+		this.card.options = {
+			counts: [
+				{ players: 20, value: 3 },
+				{ players: 15, value: 2 },
+				{ players: 1, value: 1 },
+			],
+		}
 	}
 }
 
@@ -191,7 +214,9 @@ export class doctorLekter extends roles {
 		this.card.roleComponent = "DoctorLekter"
 		this.card.side = "mafia"
 		this.card.icon = "game-icons:plague-doctor-profile"
-		this.card.self = { default: 100, value: 100 }
+		this.card.options = {
+			self: 100,
+		}
 	}
 }
 
@@ -202,7 +227,9 @@ export class groganGir extends roles {
 		this.card.roleComponent = "GroganGir"
 		this.card.side = "mafia"
 		this.card.icon = "game-icons:usable"
-		this.card.alone = { default: true, value: true }
+		this.card.options = {
+			alone: true,
+		}
 	}
 }
 
@@ -213,8 +240,9 @@ export class spy extends roles {
 		this.card.roleComponent = "Spy"
 		this.card.side = "mafia"
 		this.card.icon = "game-icons:spy"
-		this.card.negativeInquiry = { default: 100, value: 100 }
-		this.card.exitWithFramason = { default: false, value: false }
+		this.card.options = {
+			exitWithFramason: false,
+		}
 	}
 }
 
@@ -225,8 +253,10 @@ export class sharlatan extends roles {
 		this.card.roleComponent = "Sharlatan"
 		this.card.side = "mafia"
 		this.card.icon = "game-icons:duality-mask"
-		this.card.count = { default: 100, value: 100 }
-		this.card.self = { default: 1, value: 1 }
+		this.card.options = {
+			count: 100,
+			self: 1,
+		}
 	}
 }
 
@@ -271,12 +301,14 @@ export class doctor extends roles {
 		this.card.roleComponent = "Doctor"
 		this.card.side = "city"
 		this.card.icon = "game-icons:love-injection"
-		this.card.counts = [
-			{ players: 20, defaultPlayers: 20, default: 3, value: 3 },
-			{ players: 15, defaultPlayers: 15, default: 2, value: 2 },
-			{ players: 1, defaultPlayers: 1, default: 1, value: 1 },
-		]
-		this.card.self = { default: 1, value: 1 }
+		this.card.options = {
+			counts: [
+				{ players: 20, value: 3 },
+				{ players: 15, value: 2 },
+				{ players: 1, value: 1 },
+			],
+			self: 1
+		}
 	}
 }
 
@@ -287,7 +319,9 @@ export class detective extends roles {
 		this.card.roleComponent = "Detective"
 		this.card.side = "city"
 		this.card.icon = "ic:round-search"
-		this.card.count = { default: 100, value: 100 }
+		this.card.options = {
+			count: 100,
+		}
 	}
 }
 
@@ -298,7 +332,9 @@ export class sniper extends roles {
 		this.card.roleComponent = "Sniper"
 		this.card.side = "city"
 		this.card.icon = "fe:target"
-		this.card.count = { default: 100, value: 100 }
+		this.card.options = {
+			count: 100,
+		}
 	}
 }
 
@@ -309,7 +345,9 @@ export class farmande extends roles {
 		this.card.roleComponent = "Farmande"
 		this.card.side = "city"
 		this.card.icon = "game-icons:police-officer-head"
-		this.card.dieOnFail = { default: true, value: true }
+		this.card.options = {
+			dieOnFail: true,
+		}
 	}
 }
 
@@ -320,7 +358,9 @@ export class bomber extends roles {
 		this.card.roleComponent = "Bomber"
 		this.card.side = "city"
 		this.card.icon = "game-icons:rolling-bomb"
-		this.card.count = { default: 5, value: 5 }
+		this.card.options = {
+			count: 5,
+		}
 	}
 }
 
@@ -331,7 +371,9 @@ export class takavar1 extends roles {
 		this.card.roleComponent = "Takavar"
 		this.card.side = "city"
 		this.card.icon = "game-icons:ak47u"
-		this.card.sniperShot = { default: true, value: true }
+		this.card.options = {
+			sniperShot: false,
+		}
 	}
 }
 
@@ -342,7 +384,9 @@ export class takavar2 extends roles {
 		this.card.roleComponent = "Takavar"
 		this.card.side = "city"
 		this.card.icon = "game-icons:ak47u"
-		// this.card.sniperShot = { default: true, value: true }
+		this.card.options = {
+			sniperShot: false,
+		}
 	}
 }
 
@@ -353,7 +397,9 @@ export class takavar3 extends roles {
 		this.card.roleComponent = "Takavar"
 		this.card.side = "city"
 		this.card.icon = "game-icons:ak47u"
-		this.card.sniperShot = { default: true, value: true }
+		this.card.options = {
+			sniperShot: false,
+		}
 	}
 }
 
@@ -385,8 +431,10 @@ export class janSakht extends roles {
 		this.card.roleComponent = "JanSakht"
 		this.card.side = "city"
 		this.card.icon = "game-icons:horned-helm"
-		this.card.inquiry = { default: 2, value: 2 }
-		this.card.heart = { default: 1, value: 1 }
+		this.card.options = {
+			inquiry: 2,
+			heart: 1,
+		}
 	}
 }
 export class keshish extends roles {
@@ -396,11 +444,13 @@ export class keshish extends roles {
 		this.card.roleComponent = "Keshish"
 		this.card.side = "city"
 		this.card.icon = "game-icons:robe"
-		this.card.counts = [
-			{ players: 20, defaultPlayers: 20, default: 3, value: 3 },
-			{ players: 15, defaultPlayers: 15, default: 2, value: 2 },
-			{ players: 1, defaultPlayers: 1, default: 1, value: 1 },
-		]
+		this.card.options = {
+			counts: [
+				{ players: 20, value: 3 },
+				{ players: 15, value: 2 },
+				{ players: 1, value: 1 },
+			],
+		}
 	}
 }
 export class tofangdar extends roles {
@@ -410,8 +460,10 @@ export class tofangdar extends roles {
 		this.card.roleComponent = "Tofangdar"
 		this.card.side = "city"
 		this.card.icon = "game-icons:revolver"
-		this.card.count = { default: 3, value: 3 }
-		this.card.everyNight = { default: 4, value: 4 }
+		this.card.options = {
+			count: 3,
+			everyNight: 4,
+		}
 	}
 }
 export class ghazi extends roles {
@@ -431,7 +483,9 @@ export class shahrdar extends roles {
 		this.card.roleComponent = "Shahrdar"
 		this.card.side = "city"
 		this.card.icon = "game-icons:castle"
-		this.card.count = { default: 1, value: 1 }
+		this.card.options = {
+			count: 1,
+		}
 		this.card.nightAwake = false
 	}
 }
@@ -498,11 +552,13 @@ export class negahban extends roles {
 		this.card.roleComponent = "Negahban"
 		this.card.side = "city"
 		this.card.icon = "game-icons:winged-sword"
-		this.card.counts = [
-			{ players: 30, defaultPlayers: 30, default: 3, value: 3 },
-			{ players: 20, defaultPlayers: 20, default: 2, value: 2 },
-			{ players: 1, defaultPlayers: 1, default: 1, value: 1 },
-		]
+		this.card.options = {
+			counts: [
+				{ players: 30, value: 3 },
+				{ players: 20, value: 2 },
+				{ players: 1, value: 1 },
+			],
+		}
 	}
 }
 export class citizen1 extends roles {
@@ -542,9 +598,11 @@ export class killer extends roles {
 		this.card.roleComponent = "Killer"
 		this.card.side = "independent"
 		this.card.icon = "game-icons:grim-reaper"
-		this.card.justOdd = { default: true, value: true }
-		this.card.deepShot = { default: true, value: true }
-		this.card.heart = { default: 100, value: 100 }
+		this.card.options = {
+			justOdd: true,
+			deepShot: true,
+			heart: 100,
+		}
 	}
 }
 export class joker extends roles {
@@ -554,8 +612,10 @@ export class joker extends roles {
 		this.card.roleComponent = "Joker"
 		this.card.side = "independent"
 		this.card.icon = "game-icons:mouth-watering"
-		this.card.count = { default: 4, value: 4 }
-		this.card.heart = { default: 100, value: 100 }
+		this.card.options = {
+			count: 4,
+			heart: 100,
+		}
 		this.card.nightAwake = false
 	}
 }
@@ -566,6 +626,8 @@ export class nostradamus extends roles {
 		this.card.roleComponent = "Nostradamus"
 		this.card.side = "gray"
 		this.card.icon = "game-icons:crystal-ball"
-		this.card.heart = { default: 100, value: 100 }
+		this.card.options = {
+			heart: 100,
+		}
 	}
 }

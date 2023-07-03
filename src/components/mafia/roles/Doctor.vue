@@ -8,22 +8,19 @@ defineProps({
 </script>
 
 <template>
-	<template v-if="role?.mode == 'select'">
-		<p>
-			<span class="text-emerald-600 font-bold">دکتر</span> در ساید <span class="text-emerald-600 font-bold">شهر</span>
-			بازی
-			می‌کند. او شب بیدار می‌شود و یک یا چند نفر را انتخاب می‌کند. اگر آن شخص در شب تیر بخورد کشته نمی‌شود.
-		</p>
-		<hr class="my-2">
-		<div class="flex items-center gap-2 mt-2" v-for="(item, index) in role.counts" :key="index">
-			<MnrNumber class="flex-grow" placeholder="بازیکن" :min="0" :max="100" v-model="item.players">
-			</MnrNumber>
-			<div>بازیکن</div>
-			<MnrNumber class="flex-grow" placeholder="تعدا" :min="0" :max="100" v-model="item.value">
-			</MnrNumber>
-			<div>نجات</div>
-		</div>
-		<MnrNumber placeholder="نجات خود" title="نجات خود" :min="1" :max="100" v-model="role.self.value"></MnrNumber>
-	</template>
-	<div class="p-2" v-else>body</div>
+	<p>
+		<span class="text-emerald-600 font-bold">دکتر</span> در ساید <span class="text-emerald-600 font-bold">شهر</span>
+		بازی
+		می‌کند. او شب بیدار می‌شود و یک یا چند نفر را انتخاب می‌کند. اگر آن شخص در شب تیر بخورد کشته نمی‌شود.
+	</p>
+	<hr class="my-2">
+	<div class="flex items-center gap-2 mt-2" v-for="(item, index) in role.options.counts" :key="index">
+		<MnrNumber class="flex-grow" placeholder="بازیکن" :min="0" :max="100" v-model="item.players">
+		</MnrNumber>
+		<div>بازیکن</div>
+		<MnrNumber class="flex-grow" placeholder="تعدا" :min="0" :max="100" v-model="item.value">
+		</MnrNumber>
+		<div>نجات</div>
+	</div>
+	<MnrNumber placeholder="نجات خود" title="نجات خود" :min="1" :max="100" v-model="role.options.self"></MnrNumber>
 </template>
