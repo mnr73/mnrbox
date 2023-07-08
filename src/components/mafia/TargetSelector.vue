@@ -1,12 +1,39 @@
 <script setup>
 import { Icon } from "@iconify/vue";
+import { onMounted, ref } from "vue";
+import _ from "lodash";
+
+const selectedUsers = ref([]);
 
 const props = defineProps({
   selector: Object,
   list: Array,
+  step: Object,
 });
 
-defineEmits(["close"]);
+onMounted(function () {
+  selectedUsers.value = _.map(
+    _.filter(props.step.targets, ["user", props.selector.role]),
+    "target"
+  );
+});
+
+function select(user) {
+  if (_.remove(selectedUsers.value, (u) => u == user).length == 0) {
+    selectedUsers.value.push(user);
+  }
+  // emit("selectedList", selectedUsers.value);
+  _.remove(props.step.targets, ["user", props.selector.role]);
+  _.each(selectedUsers.value, (u) => {
+    props.step.targets.push({
+      user: props.selector.role,
+      target: u,
+      type: "test",
+    });
+  });
+}
+
+// const emit = defineEmits(["selectedList"]);
 </script>
 
 <template>
@@ -35,6 +62,10 @@ defineEmits(["close"]);
           class="bg-white p-3 rounded-md border border-t-4 flex-grow text-center cursor-pointer h-fit"
           v-for="(role, index) in props.list"
           :key="role.userId"
+          @click="select(role)"
+          :class="{
+            'border-sky-500': selectedUsers.find((user) => user == role),
+          }"
         >
           <div class="text-lg">
             <div>{{ role.userName }}</div>

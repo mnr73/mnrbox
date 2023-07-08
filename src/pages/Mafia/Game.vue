@@ -4,7 +4,8 @@ import mafia from "@/modules/mafia";
 import _ from "lodash";
 import Bottom from "@/components/Bottom.vue";
 import RoleCard from "@/components/mafia/RoleCard.vue";
-import TargetSelector from "@/components/TargetSelector.vue";
+import TargetSelector from "@/components/mafia/TargetSelector.vue";
+import { Icon } from "@iconify/vue";
 
 const data = new mafia();
 const daysBox = ref(null);
@@ -33,14 +34,14 @@ let rounds_structure = {
       type: "night",
       active: true,
       name: "شب",
-      target_by: {},
+      targets: [],
     },
     day: {
       number: 1,
       type: "day",
       active: false,
       name: "روز",
-      target_by: {},
+      targets: [],
     },
     vote_1: {
       number: 2,
@@ -48,13 +49,14 @@ let rounds_structure = {
       active: false,
       name: "رای 1",
       votes: {},
+      targets: [],
     },
     defense: {
       number: 3,
       type: "defense",
       active: false,
       name: "دفاع",
-      target_by: {},
+      targets: [],
     },
     vote_2: {
       number: 4,
@@ -62,6 +64,7 @@ let rounds_structure = {
       active: false,
       name: "رای 2",
       votes: {},
+      targets: [],
     },
   },
 };
@@ -103,13 +106,17 @@ const selectedStep = computed(() => {
   ]);
 });
 
-const getRoles = computed(() => {
-  _.each(game.roles, function (r) {
-    r.mode = selectedStep.value?.type;
-  });
+const userTargets = computed(() => {
+  return _.groupBy(selectedStep.value?.targets, "user.userId");
+});
 
+const userTargetBy = computed(() => {
+  return _.groupBy(selectedStep.value?.targets, "target.userId");
+});
+
+const getRoles = computed(() => {
   if (selectedStep.value?.type == "night") {
-    let filtered = _.filter(game.roles, "nightAwake");
+    let filtered = _.filter(selectedRound.value?.roles, "nightAwake");
     return {
       beforeMafia: {
         name: "قبل از مافیا",
@@ -147,12 +154,12 @@ const getRoles = computed(() => {
       },
       sleep: {
         name: "افراد خواب",
-        roles: _.filter(game.roles, ["nightAwake", false]),
+        roles: _.filter(selectedRound.value.roles, ["nightAwake", false]),
       },
     };
   }
 
-  return game.roles;
+  return selectedRound.value?.roles;
 });
 
 function nextStep() {
@@ -183,6 +190,10 @@ function select(role) {
   selector.open = true;
 }
 
+function selected(list) {
+  console.log(list);
+}
+
 watch(
   () => selectedIndex.value,
   (newValue, oldValue) => {
@@ -190,6 +201,13 @@ watch(
   },
   { deep: false }
 );
+// watch(
+//   () => selectedStep.value?.targets,
+//   (newValue, oldValue) => {
+//     console.log("hi");
+//   },
+//   { deep: false }
+// );
 </script>
 
 <template>
@@ -225,7 +243,7 @@ watch(
       <div class="w-1 flex-shrink-0"></div>
     </div>
   </div>
-  <div class="sm:p-5 p-2 mb-60">
+  <div class="sm:p-5 p-2 pb-60">
     <div v-if="selectedIndex == 0 && selectedStep.type == 'night'">
       <div class="p-4">
         در بعضی از سناریو ها تیم مافیا در شب قبل از معارفه بیدار شده و یک دیگر
@@ -248,12 +266,18 @@ watch(
         </button>
       </div>
     </div>
+
     <div v-else class="flex flex-col gap-3">
+      <!--
+				night step
+			-->
       <div class="" v-if="selectedStep?.type == 'night'">
         <template v-for="(roles, key) in getRoles" :key="key">
           <div v-if="roles.roles?.length" class="my-5">
-            <h2 class="text-lg font-bold text-sky-500 p-2">{{ roles.name }}</h2>
-            <hr class="border-sky-500 border-2 mb-2" />
+            <h2 class="text-lg font-bold text-slate-700 p-2">
+              {{ roles.name }}
+            </h2>
+            <hr class="border-slate-700 border-2 mb-2" />
             <div class="flex flex-col gap-3">
               <template v-for="(role, index) in roles.roles" :key="role.userId">
                 <hr
@@ -264,8 +288,48 @@ watch(
                     key != 'sleep'
                   "
                 />
-                <RoleCard :role="role">
+                <RoleCard :role="role" :step="selectedStep">
                   <div class="p-2">
+                    <div
+                      class="flex flex-wrap gap-1 p-2 items-center"
+                      v-if="userTargets[role.userId]?.length"
+                    >
+                      <div>تارگت ها:</div>
+                      <div
+                        v-for="(item, index) in userTargets[role.userId]"
+                        :key="index"
+                        class="bg-slate-100 border border-r-4 border-r-sky-400 rounded-md py-1 px-2"
+                      >
+                        {{ item?.target?.userName }}
+                        <span class="text-slate-400">
+                          <Icon
+                            :icon="item?.target?.icon"
+                            class="inline-block w-6 h-full"
+                          />
+                          {{ item?.target?.roleName }}
+                        </span>
+                      </div>
+                    </div>
+                    <div
+                      class="flex flex-wrap gap-1 p-2 items-center"
+                      v-if="userTargetBy[role.userId]?.length"
+                    >
+                      <div>تارگت شده توسط:</div>
+                      <div
+                        v-for="(item, index) in userTargetBy[role.userId]"
+                        :key="index"
+                        class="bg-slate-100 border border-r-4 border-r-amber-400 rounded-md py-1 px-2"
+                      >
+                        {{ item?.user?.userName }}
+                        <span class="text-slate-400">
+                          <Icon
+                            :icon="item?.user?.icon"
+                            class="inline-block w-6 h-full"
+                          />
+                          {{ item?.user?.roleName }}
+                        </span>
+                      </div>
+                    </div>
                     <button
                       v-if="key != 'sleep'"
                       class="bg-amber-500 text-white p-1 w-full rounded-md"
@@ -280,15 +344,20 @@ watch(
           </div>
         </template>
       </div>
+
       <template v-else v-for="role in getRoles" :key="role.userId">
         <RoleCard :role="role"> body </RoleCard>
       </template>
+
+      <div class="h-60"></div>
     </div>
   </div>
   <TargetSelector
     v-if="selector.open"
     :selector="selector"
     :list="selectedRound.roles"
+    :step="selectedStep"
+    @selectedList="selected"
   ></TargetSelector>
   <Bottom>
     <div class="p-2 border-t flex h-16 gap-2">
