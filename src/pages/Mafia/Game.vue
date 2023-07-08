@@ -318,7 +318,7 @@ watch(
                       <div
                         v-for="(item, index) in userTargetBy[role.userId]"
                         :key="index"
-                        class="bg-slate-100 border border-r-4 border-r-amber-400 rounded-md py-1 px-2"
+                        class="bg-slate-100 border border-r-4 border-r-red-500 rounded-md py-1 px-2"
                       >
                         {{ item?.user?.userName }}
                         <span class="text-slate-400">
