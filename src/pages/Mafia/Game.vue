@@ -6,6 +6,7 @@ import Bottom from "@/components/Bottom.vue";
 import RoleCard from "@/components/mafia/RoleCard.vue";
 import TargetSelector from "@/components/mafia/TargetSelector.vue";
 import { Icon } from "@iconify/vue";
+import * as roles from "@/modules/roles";
 
 const data = new mafia();
 const daysBox = ref(null);
@@ -13,7 +14,8 @@ const users = ref();
 const selector = reactive({
   open: false,
   role: {},
-  type: "target",
+  limit: 1,
+  disable: [],
 });
 const rounds = ref([]);
 const selectedIndex = ref();
@@ -25,6 +27,15 @@ const game = reactive({
 
 users.value = data.getActiveUsers();
 game.roles = data.getPlayers([]);
+
+// let test = new roles.godFather();
+// test.setUser(_.find(game.roles, ["class", "godFather"]));
+// console.log(test.property);
+
+_.each(game.roles, (role) => {
+  role.obj = new roles[role.class]();
+  role.obj.setUser(role);
+});
 
 let rounds_structure = {
   stepNumber: 0,
@@ -58,14 +69,6 @@ let rounds_structure = {
       name: "دفاع",
       targets: [],
     },
-    vote_2: {
-      number: 4,
-      type: "vote_2",
-      active: false,
-      name: "رای 2",
-      votes: {},
-      targets: [],
-    },
   },
 };
 
@@ -79,6 +82,14 @@ if (_.find(game.roles, ["class", "ghazi"])) {
     role: null,
   };
 }
+rounds_structure.steps.vote_2 = {
+  number: _.max(_.map(rounds_structure.steps, "number")) + 1,
+  type: "vote_2",
+  active: false,
+  name: "رای 2",
+  votes: {},
+  targets: [],
+};
 if (_.find(game.roles, ["class", "shahrdar"])) {
   rounds_structure.steps.shahrdar = {
     number: _.max(_.map(rounds_structure.steps, "number")) + 1,
@@ -124,20 +135,25 @@ const getRoles = computed(() => {
           return (
             role.class == "nostradamus" ||
             role.class == "saghi" ||
-            role.class == "negahban"
+            role.class == "negahban" ||
+            role.class == "khabGard"
           );
         }),
       },
       mafia: {
         name: "ساید مافیا",
-        roles: _.remove(filtered, (role) => {
-          return role.side == "mafia" && role.alone?.value != true;
-        }),
+        roles: _.orderBy(
+          _.remove(filtered, (role) => {
+            return role.side == "mafia" && role.options?.alone != true;
+          }),
+          (role) => role.class == "godFather",
+          "desc"
+        ),
       },
       aloneMafia: {
         name: "مافیای مستقل",
         roles: _.remove(filtered, (role) => {
-          return role.side == "mafia" && role.alone?.value == true;
+          return role.side == "mafia" && role.options?.alone == true;
         }),
       },
       cities: {
@@ -185,13 +201,25 @@ function nextStep() {
   daysBox.value.scrollLeft = -10000;
 }
 
-function select(role) {
+function select(role, act) {
   selector.role = role;
   selector.open = true;
+  selector.act = act;
 }
 
-function selected(list) {
-  console.log(list);
+function showTargetBtn(key, roleClass, actType) {
+  if (key == "sleep") {
+    return false;
+  }
+  if (
+    roleClass != "godFather" &&
+    actType == "mafia_shot" &&
+    _.find(game.roles, { dead: false, getOut: false })
+  ) {
+    return false;
+  }
+
+  return true;
 }
 
 watch(
@@ -252,14 +280,14 @@ watch(
       <div class="flex gap-5 justify-center">
         <button
           class="bg-slate-200 shadow-lg p-2 rounded-md"
-          :class="{ 'bg-sky-500 text-white': game.zeroNight === true }"
+          :class="{ '!bg-sky-500 text-white': game.zeroNight === true }"
           @click="game.zeroNight = true"
         >
           شناختند
         </button>
         <button
           class="bg-slate-200 shadow-lg p-2 rounded-md"
-          :class="{ 'bg-sky-500 text-white': game.zeroNight === false }"
+          :class="{ '!bg-sky-500 text-white': game.zeroNight === false }"
           @click="game.zeroNight = false"
         >
           لازم نیست
@@ -284,7 +312,7 @@ watch(
                   class="my-1 border-2 border-dashed border-slate-400"
                   v-if="
                     index > 0 &&
-                    (role.side != 'mafia' || role.alone) &&
+                    (role.side != 'mafia' || role?.options?.alone) &&
                     key != 'sleep'
                   "
                 />
@@ -330,13 +358,20 @@ watch(
                         </span>
                       </div>
                     </div>
-                    <button
-                      v-if="key != 'sleep'"
-                      class="bg-amber-500 text-white p-1 w-full rounded-md"
-                      @click="select(role)"
-                    >
-                      انتخاب تارگت
-                    </button>
+                    <div class="flex gap-2">
+                      <template
+                        v-for="(act, index) in role.obj.property.acts"
+                        :key="act.type"
+                      >
+                        <button
+                          v-if="showTargetBtn(key, role.class, act.type)"
+                          class="bg-amber-500 text-white p-1 w-full rounded-md"
+                          @click="select(role, act)"
+                        >
+                          {{ act.name }}
+                        </button>
+                      </template>
+                    </div>
                   </div>
                 </RoleCard>
               </template>
@@ -357,7 +392,6 @@ watch(
     :selector="selector"
     :list="selectedRound.roles"
     :step="selectedStep"
-    @selectedList="selected"
   ></TargetSelector>
   <Bottom>
     <div class="p-2 border-t flex h-16 gap-2">

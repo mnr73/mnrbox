@@ -4,6 +4,7 @@ import { onMounted, ref } from "vue";
 import _ from "lodash";
 
 const selectedUsers = ref([]);
+const text = ref();
 
 const props = defineProps({
   selector: Object,
@@ -16,20 +17,32 @@ onMounted(function () {
     _.filter(props.step.targets, ["user", props.selector.role]),
     "target"
   );
+  if (props.selector.act.type == "charm") {
+    text.value = _.find(props.step.targets, "word").word;
+  }
 });
 
 function select(user) {
-  if (_.remove(selectedUsers.value, (u) => u == user).length == 0) {
-    selectedUsers.value.push(user);
+  let removedUser = _.remove(selectedUsers.value, (u) => u == user);
+  if (props.selector.limit === 1 && removedUser == 0) {
+    selectedUsers.value = [];
   }
-  // emit("selectedList", selectedUsers.value);
+  if (removedUser.length == 0) {
+    if (selectedUsers.value.length < props.selector.limit) {
+      selectedUsers.value.push(user);
+    }
+  }
   _.remove(props.step.targets, ["user", props.selector.role]);
   _.each(selectedUsers.value, (u) => {
-    props.step.targets.push({
+    let value = {
       user: props.selector.role,
       target: u,
-      type: "test",
-    });
+      type: props.selector.act.type,
+    };
+    if (props.selector.act.type == "charm") {
+      value.word = text.value;
+    }
+    props.step.targets.push(value);
   });
 }
 
@@ -54,8 +67,19 @@ function select(user) {
         </div>
       </div>
       <div class="flex justify-between p-2 border-b rounded-t-md">
-        <div>شات مافیا</div>
-        <div>1 انتخاب</div>
+        <div>{{ props.selector.act.name }}</div>
+        <div>
+          {{ selectedUsers.length }} از {{ props.selector.limit }} انتخاب
+        </div>
+      </div>
+      <div class="p-2">
+        <input
+          type="text"
+          v-if="props.selector.act.type == 'charm'"
+          class="w-full border text-xl p-1"
+          placeholder="کلمه را وارد کنید"
+          v-model="text"
+        />
       </div>
       <div class="flex flex-wrap gap-2 p-2 overflow-y-auto">
         <div
