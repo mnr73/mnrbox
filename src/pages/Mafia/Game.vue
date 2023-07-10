@@ -10,22 +10,25 @@ import * as roles from "@/modules/roles";
 
 const data = new mafia();
 const daysBox = ref(null);
-const users = ref();
+// const users = ref();
 const selector = reactive({
   open: false,
   role: {},
   limit: 1,
   disable: [],
 });
-const rounds = ref([]);
-const selectedIndex = ref();
+// const rounds = ref([]);
+// const selectedIndex = ref();
 const game = reactive({
   zeroNight: null,
-  rounds: rounds.value,
+  rounds: [],
   roles: [],
+  lastRoundNumber: null,
+  selectedRound: {},
+  selectedStep: {},
 });
 
-users.value = data.getActiveUsers();
+// users.value = data.getActiveUsers();
 game.roles = data.getPlayers([]);
 
 // let test = new roles.godFather();
@@ -101,33 +104,32 @@ if (_.find(game.roles, ["class", "shahrdar"])) {
 }
 
 onMounted(() => {
-  rounds.value.push(_.cloneDeep(rounds_structure));
-  selectedIndex.value = rounds.value.length - 1;
-  // game.value.rounds = rounds.value
+  game.rounds.push(_.cloneDeep(rounds_structure));
+  game.lastRoundNumber = game.rounds.length - 1;
 });
 
-const selectedRound = computed(() => {
-  return rounds.value[selectedIndex.value];
+game.selectedRound = computed(() => {
+  return game.rounds[game.lastRoundNumber];
 });
 
-const selectedStep = computed(() => {
-  return _.find(selectedRound.value?.steps, [
+game.selectedStep = computed(() => {
+  return _.find(game.selectedRound?.steps, [
     "number",
-    selectedRound.value?.stepNumber,
+    game.selectedRound?.stepNumber,
   ]);
 });
 
 const userTargets = computed(() => {
-  return _.groupBy(selectedStep.value?.targets, "user.userId");
+  return _.groupBy(game.selectedStep?.targets, "user.userId");
 });
 
 const userTargetBy = computed(() => {
-  return _.groupBy(selectedStep.value?.targets, "target.userId");
+  return _.groupBy(game.selectedStep?.targets, "target.userId");
 });
 
 const getRoles = computed(() => {
-  if (selectedStep.value?.type == "night") {
-    let filtered = _.filter(selectedRound.value?.roles, "nightAwake");
+  if (game.selectedStep?.type == "night") {
+    let filtered = _.filter(game.selectedRound?.roles, "nightAwake");
     return {
       beforeMafia: {
         name: "قبل از مافیا",
@@ -170,34 +172,34 @@ const getRoles = computed(() => {
       },
       sleep: {
         name: "افراد خواب",
-        roles: _.filter(selectedRound.value.roles, ["nightAwake", false]),
+        roles: _.filter(game.selectedRound.roles, ["nightAwake", false]),
       },
     };
   }
 
-  return selectedRound.value?.roles;
+  return game.selectedRound?.roles;
 });
 
 function nextStep() {
-  if (selectedIndex.value == 0) {
-    if (selectedRound.value.stepNumber === 0) {
-      selectedRound.value.stepNumber = 1;
-      selectedRound.value.steps.day.active = true;
+  if (game.lastRoundNumber == 0) {
+    if (game.selectedRound.stepNumber === 0) {
+      game.selectedRound.stepNumber = 1;
+      game.selectedRound.steps.day.active = true;
       return;
     }
   } else {
-    let maxNumber = _.max(_.map(selectedRound.value.steps, "number"));
-    if (selectedRound.value.stepNumber < maxNumber) {
-      selectedRound.value.stepNumber++;
-      _.find(selectedRound.value.steps, [
+    let maxNumber = _.max(_.map(game.selectedRound.steps, "number"));
+    if (game.selectedRound.stepNumber < maxNumber) {
+      game.selectedRound.stepNumber++;
+      _.find(game.selectedRound.steps, [
         "number",
-        selectedRound.value.stepNumber,
+        game.selectedRound.stepNumber,
       ]).active = true;
       return;
     }
   }
-  rounds.value.push(_.cloneDeep(rounds_structure));
-  selectedIndex.value++;
+  game.rounds.push(_.cloneDeep(rounds_structure));
+  game.lastRoundNumber++;
   daysBox.value.scrollLeft = -10000;
 }
 
@@ -223,9 +225,9 @@ function showTargetBtn(key, roleClass, actType) {
 }
 
 watch(
-  () => selectedIndex.value,
+  () => game.lastRoundNumber,
   (newValue, oldValue) => {
-    rounds.value[selectedIndex.value].roles = _.cloneDeep(game.roles);
+    game.rounds[game.lastRoundNumber].roles = _.cloneDeep(game.roles);
   },
   { deep: false }
 );
@@ -244,8 +246,8 @@ watch(
       <div
         class="bg-slate-700 text-white h-8 px-2 rounded-full flex items-center justify-center flex-shrink-0"
         style="min-width: 2rem"
-        :class="{ '!bg-sky-600': selectedIndex == index }"
-        v-for="(round, index) in rounds"
+        :class="{ '!bg-sky-600': game.lastRoundNumber == index }"
+        v-for="(round, index) in game.rounds"
         :key="index"
       >
         {{ index || "معارفه" }}
@@ -255,15 +257,15 @@ watch(
   </div>
   <div class="overflow-x-auto sm:my-3 my-2 sm:px-5 px-2 text-sm">
     <div class="flex gap-2 font-light">
-      <template v-for="(round, key) in selectedRound?.steps" :key="key">
+      <template v-for="(round, key) in game.selectedRound?.steps" :key="key">
         <div
           class="bg-slate-400 text-white px-2 py-1 rounded-full flex items-center justify-center flex-shrink-0"
           :class="{
-            '!bg-sky-600': selectedRound.stepNumber == round.number,
+            '!bg-sky-600': game.selectedRound.stepNumber == round.number,
             '!bg-slate-800':
-              round.active && selectedRound.stepNumber != round.number,
+              round.active && game.selectedRound.stepNumber != round.number,
           }"
-          v-if="selectedIndex != 0 || round.number < 2"
+          v-if="game.lastRoundNumber != 0 || round.number < 2"
         >
           {{ round.name }}
         </div>
@@ -272,7 +274,7 @@ watch(
     </div>
   </div>
   <div class="sm:p-5 p-2 pb-60">
-    <div v-if="selectedIndex == 0 && selectedStep.type == 'night'">
+    <div v-if="game.lastRoundNumber == 0 && game.selectedStep.type == 'night'">
       <div class="p-4">
         در بعضی از سناریو ها تیم مافیا در شب قبل از معارفه بیدار شده و یک دیگر
         را می‌شناسند.
@@ -299,7 +301,7 @@ watch(
       <!--
 				night step
 			-->
-      <div class="" v-if="selectedStep?.type == 'night'">
+      <div class="" v-if="game.selectedStep?.type == 'night'">
         <template v-for="(roles, key) in getRoles" :key="key">
           <div v-if="roles.roles?.length" class="my-5">
             <h2 class="text-lg font-bold text-slate-700 p-2">
@@ -316,7 +318,7 @@ watch(
                     key != 'sleep'
                   "
                 />
-                <RoleCard :role="role" :step="selectedStep">
+                <RoleCard :role="role" :step="game.selectedStep">
                   <div class="p-2">
                     <div
                       class="flex flex-wrap gap-1 p-2 items-center"
@@ -358,6 +360,7 @@ watch(
                         </span>
                       </div>
                     </div>
+                    <div class="" v-if="role.class == 'khabGard'">شسی</div>
                     <div class="flex gap-2">
                       <template
                         v-for="(act, index) in role.obj.property.acts"
@@ -390,8 +393,8 @@ watch(
   <TargetSelector
     v-if="selector.open"
     :selector="selector"
-    :list="selectedRound.roles"
-    :step="selectedStep"
+    :list="game.selectedRound.roles"
+    :step="game.selectedStep"
   ></TargetSelector>
   <Bottom>
     <div class="p-2 border-t flex h-16 gap-2">
