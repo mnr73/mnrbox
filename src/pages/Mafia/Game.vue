@@ -48,14 +48,14 @@ let rounds_structure = {
       type: "night",
       active: true,
       name: "شب",
-      targets: [],
+      acts: [],
     },
     day: {
       number: 1,
       type: "day",
       active: false,
       name: "روز",
-      targets: [],
+      acts: [],
     },
     vote_1: {
       number: 2,
@@ -63,14 +63,14 @@ let rounds_structure = {
       active: false,
       name: "رای 1",
       votes: {},
-      targets: [],
+      acts: [],
     },
     defense: {
       number: 3,
       type: "defense",
       active: false,
       name: "دفاع",
-      targets: [],
+      acts: [],
     },
   },
 };
@@ -91,7 +91,7 @@ rounds_structure.steps.vote_2 = {
   active: false,
   name: "رای 2",
   votes: {},
-  targets: [],
+  acts: [],
 };
 if (_.find(game.roles, ["class", "shahrdar"])) {
   rounds_structure.steps.shahrdar = {
@@ -120,16 +120,24 @@ game.selectedStep = computed(() => {
 });
 
 const userTargets = computed(() => {
-  return _.groupBy(game.selectedStep?.targets, "user.userId");
+  return _.groupBy(_.filter(game.selectedStep?.acts, "target"), "user.userId");
+});
+
+const userActs = computed(() => {
+  return _.groupBy(_.reject(game.selectedStep?.acts, "target"), "user.userId");
 });
 
 const userTargetBy = computed(() => {
-  return _.groupBy(game.selectedStep?.targets, "target.userId");
+  return _.groupBy(
+    _.filter(game.selectedStep?.acts, "target"),
+    "target.userId"
+  );
 });
 
 const getRoles = computed(() => {
   if (game.selectedStep?.type == "night") {
-    let filtered = _.filter(game.selectedRound?.roles, "nightAwake");
+    let sorted = _.sortBy(game.selectedRound?.roles, "nightOrder");
+    let filtered = _.filter(sorted, "nightAwake");
     return {
       beforeMafia: {
         name: "قبل از مافیا",
@@ -142,26 +150,32 @@ const getRoles = computed(() => {
           );
         }),
       },
-      mafia: {
-        name: "ساید مافیا",
-        roles: _.orderBy(
-          _.remove(filtered, (role) => {
-            return role.side == "mafia" && role.options?.alone != true;
-          }),
-          (role) => role.class == "godFather",
-          "desc"
-        ),
-      },
       aloneMafia: {
         name: "مافیای مستقل",
         roles: _.remove(filtered, (role) => {
           return role.side == "mafia" && role.options?.alone == true;
         }),
       },
+      mafia: {
+        name: "ساید مافیا",
+        roles: _.remove(filtered, (role) => {
+          return role.side == "mafia" && role.options?.alone != true;
+        }),
+      },
       cities: {
         name: "ساید شهر",
         roles: _.remove(filtered, (role) => {
-          return role.side == "city";
+          return (
+            role.side == "city" &&
+            role.class != "framason" &&
+            role.class != "tiler"
+          );
+        }),
+      },
+      masons: {
+        name: "فراماسون ها",
+        roles: _.remove(sorted, (role) => {
+          return role.mason;
         }),
       },
       independent: {
@@ -172,7 +186,7 @@ const getRoles = computed(() => {
       },
       sleep: {
         name: "افراد خواب",
-        roles: _.filter(game.selectedRound.roles, ["nightAwake", false]),
+        roles: _.filter(sorted, ["nightAwake", false]),
       },
     };
   }
@@ -204,21 +218,37 @@ function nextStep() {
 }
 
 function select(role, act) {
+  selector.limit = 1;
+  if (role?.options?.counts) {
+    let playerCounts = _.filter(game.roles, { dead: false, getOut: false })
+      .length;
+    selector.limit = _.orderBy(role.options.counts, "players", "desc").find(
+      (o) => o.players <= playerCounts
+    ).value;
+  }
+  if (role.class == "nostradamus") {
+    selector.limit = 3;
+  }
   selector.role = role;
   selector.open = true;
   selector.act = act;
 }
 
 function showTargetBtn(key, roleClass, actType) {
-  if (key == "sleep") {
-    return false;
-  }
-  if (
-    roleClass != "godFather" &&
-    actType == "mafia_shot" &&
-    _.find(game.roles, { dead: false, getOut: false })
-  ) {
-    return false;
+  if (game.selectedStep.type == "night") {
+    if (key == "sleep") {
+      return false;
+    }
+    if (
+      roleClass != "godFather" &&
+      actType == "mafia_shot" &&
+      _.find(game.roles, { dead: false, getOut: false })
+    ) {
+      return false;
+    }
+    if (roleClass == "terrorist") {
+      return false;
+    }
   }
 
   return true;
@@ -320,6 +350,40 @@ watch(
                 />
                 <RoleCard :role="role" :step="game.selectedStep">
                   <div class="p-2">
+                    <div v-if="role.class == 'khabGard'" class="p-2">
+                      <div v-if="userActs[role.userId]?.[0]?.sacrifice">
+                        خودش را فدای شهر کرد 👍
+                      </div>
+                      <div
+                        v-else-if="
+                          userActs[role.userId]?.[0]?.sacrifice === false
+                        "
+                      >
+                        خودش را فدای شهر نکرد 👎
+                      </div>
+                    </div>
+                    <div v-if="role.class == 'farmande'" class="p-2">
+                      <div v-if="userActs[role.userId]?.[0]?.confirm">
+                        شات اسنایپر را تایید کرد 👍
+                      </div>
+                      <div
+                        v-else-if="
+                          userActs[role.userId]?.[0]?.confirm === false
+                        "
+                      >
+                        شات اسنایپر را تایید نکرد 👎
+                      </div>
+                    </div>
+                    <div v-if="role.class == 'janSakht'" class="p-2">
+                      <div v-if="userActs[role.userId]?.[0]?.stats">
+                        استعلام میخواهد 👍
+                      </div>
+                      <div
+                        v-else-if="userActs[role.userId]?.[0]?.stats === false"
+                      >
+                        استعلام نمی‌خواهد 👎
+                      </div>
+                    </div>
                     <div
                       class="flex flex-wrap gap-1 p-2 items-center"
                       v-if="userTargets[role.userId]?.length"
@@ -337,6 +401,48 @@ watch(
                             class="inline-block w-6 h-full"
                           />
                           {{ item?.target?.roleName }}
+                        </span>
+                        <span
+                          class="text-slate-500 font-bold"
+                          v-if="item?.word"
+                        >
+                          ({{ item?.word }})
+                        </span>
+                        <span
+                          class="text-slate-500 font-bold"
+                          v-if="item?.bombAct"
+                        >
+                          ({{ item?.bombAct }})
+                        </span>
+                        <span
+                          class="text-slate-500 font-bold"
+                          v-if="item.guess !== undefined"
+                        >
+                          ({{ item?.guess ? "درست" : "غلط" }})
+                        </span>
+                        <span
+                          class="text-slate-500 font-bold"
+                          v-if="item.type == 'rob_from'"
+                        >
+                          (دزدیدن)
+                        </span>
+                        <span
+                          class="text-slate-500 font-bold"
+                          v-if="item.type == 'rob_to'"
+                        >
+                          (زدن)
+                        </span>
+                        <span
+                          class="text-slate-500 font-bold"
+                          v-if="item.type == 'true_gun'"
+                        >
+                          (واقعی)
+                        </span>
+                        <span
+                          class="text-slate-500 font-bold"
+                          v-if="item.type == 'fake_gun'"
+                        >
+                          (مشقی)
                         </span>
                       </div>
                     </div>
@@ -358,9 +464,50 @@ watch(
                           />
                           {{ item?.user?.roleName }}
                         </span>
+                        <span
+                          class="text-slate-500 font-bold"
+                          v-if="item?.word"
+                        >
+                          ({{ item?.word }})
+                        </span>
+                        <span
+                          class="text-slate-500 font-bold"
+                          v-if="item?.bombAct"
+                        >
+                          ({{ item?.bombAct }})
+                        </span>
+                        <span
+                          class="text-slate-500 font-bold"
+                          v-if="item.guess !== undefined"
+                        >
+                          ({{ item?.guess ? "درست" : "غلط" }})
+                        </span>
+                        <span
+                          class="text-slate-500 font-bold"
+                          v-if="item.type == 'rob_from'"
+                        >
+                          (دزدیدن)
+                        </span>
+                        <span
+                          class="text-slate-500 font-bold"
+                          v-if="item.type == 'rob_to'"
+                        >
+                          (زدن)
+                        </span>
+                        <span
+                          class="text-slate-500 font-bold"
+                          v-if="item.type == 'true_gun'"
+                        >
+                          (واقعی)
+                        </span>
+                        <span
+                          class="text-slate-500 font-bold"
+                          v-if="item.type == 'fake_gun'"
+                        >
+                          (مشقی)
+                        </span>
                       </div>
                     </div>
-                    <div class="" v-if="role.class == 'khabGard'">شسی</div>
                     <div class="flex gap-2">
                       <template
                         v-for="(act, index) in role.obj.property.acts"
@@ -368,7 +515,7 @@ watch(
                       >
                         <button
                           v-if="showTargetBtn(key, role.class, act.type)"
-                          class="bg-amber-500 text-white p-1 w-full rounded-md"
+                          class="bg-slate-200 border border-slate-300 p-1 w-full rounded-md"
                           @click="select(role, act)"
                         >
                           {{ act.name }}

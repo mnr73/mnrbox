@@ -10,6 +10,9 @@ class roles {
 		roleName: "",
 		roleComponent: "",
 		nightAwake: true,
+		mason: false,
+		nightOrder: 0,
+		dayOrder: 0,
 	}
 
 	_property = {}
@@ -56,6 +59,7 @@ export class godFather extends roles {
 		this._card.roleComponent = "GodFather"
 		this._card.side = "mafia"
 		this._card.icon = "mdi:redhat"
+		this._card.nightOrder = 0
 		this._card.options = {
 			heart: 0
 		}
@@ -80,42 +84,11 @@ export class strongMan extends roles {
 		this._card.roleComponent = "StrongMan"
 		this._card.side = "mafia"
 		this._card.icon = "game-icons:biceps"
+		this._card.nightOrder = 1
 		this._card.options = {
 			shot: 1,
 			sameShot: false,
 			heart: 0
-		}
-		this._property = {
-			acts: [
-				{
-					type: "mafia_shot",
-					name: "شات مافیا",
-					kill: true,
-					deep: false,
-					term: 'night'
-				},
-				{
-					type: "strong_shot",
-					name: "شات مافیا",
-					kill: true,
-					deep: true,
-					term: 'night'
-				}
-			]
-		}
-	}
-}
-
-export class nato extends roles {
-	constructor() {
-		super()
-		this._card.roleName = "ناتو"
-		this._card.roleComponent = "Nato"
-		this._card.side = "mafia"
-		this._card.icon = "fa-solid:theater-masks"
-		this._card.options = {
-			count: 5,
-			failsCount: 3,
 		}
 		this._property = {
 			acts: [
@@ -138,6 +111,39 @@ export class nato extends roles {
 	}
 }
 
+export class nato extends roles {
+	constructor() {
+		super()
+		this._card.roleName = "ناتو"
+		this._card.roleComponent = "Nato"
+		this._card.side = "mafia"
+		this._card.icon = "fa-solid:theater-masks"
+		this._card.nightOrder = 2
+		this._card.options = {
+			count: 5,
+			failsCount: 3,
+		}
+		this._property = {
+			acts: [
+				{
+					type: "mafia_shot",
+					name: "شات مافیا",
+					kill: true,
+					deep: false,
+					term: 'night'
+				},
+				{
+					type: "guess_role",
+					name: "حدس نقش",
+					kill: true,
+					deep: true,
+					term: 'night'
+				}
+			]
+		}
+	}
+}
+
 export class natasha extends roles {
 	constructor() {
 		super()
@@ -145,6 +151,7 @@ export class natasha extends roles {
 		this._card.roleComponent = "Natasha"
 		this._card.side = "mafia"
 		this._card.icon = "game-icons:cowled"
+		this._card.nightOrder = 4
 		this._card.options = {
 			noVote: true,
 			noKick: false,
@@ -178,6 +185,7 @@ export class dozd extends roles {
 		this._card.roleComponent = "Dozd"
 		this._card.side = "mafia"
 		this._card.icon = "game-icons:balaclava"
+		this._card.nightOrder = 9
 		this._card.options = {
 			gone: false,
 			alone: true,
@@ -217,6 +225,7 @@ export class afsoongar extends roles {
 		this._card.roleComponent = "Afsoongar"
 		this._card.side = "mafia"
 		this._card.icon = "game-icons:burning-skull"
+		this._card.nightOrder = 3
 		this._card.options = {
 			silent: true,
 			fastNight: true,
@@ -249,6 +258,7 @@ export class terrorist extends roles {
 		this._card.roleComponent = "Terrorist"
 		this._card.side = "mafia"
 		this._card.icon = "game-icons:ak47"
+		this._card.nightOrder = 99
 		this._card.options = {
 			afterVote: true,
 			alone: false,
@@ -281,6 +291,7 @@ export class mashooghe extends roles {
 		this._card.roleComponent = "Mashooghe"
 		this._card.side = "mafia"
 		this._card.icon = "game-icons:evil-love"
+		this._card.nightOrder = 99
 		this._card.options = {
 			byVote: true,
 			inDay: true,
@@ -307,6 +318,7 @@ export class bazjoo extends roles {
 		this._card.roleComponent = "Bazjoo"
 		this._card.side = "mafia"
 		this._card.icon = "solar:eye-scan-bold"
+		this._card.nightOrder = 7
 		this._card.options = {
 			count: 1,
 		}
@@ -338,6 +350,7 @@ export class samSaz extends roles {
 		this._card.roleComponent = "SamSaz"
 		this._card.side = "mafia"
 		this._card.icon = "game-icons:dripping-tube"
+		this._card.nightOrder = 4
 		this._card.options = {
 			count: 2,
 			days: 3,
@@ -370,6 +383,7 @@ export class negotiator extends roles {
 		this._card.roleComponent = "Negotiator"
 		this._card.side = "mafia"
 		this._card.icon = "game-icons:pay-money"
+		this._card.nightOrder = 50
 		this._card.options = {
 			framason: false,
 		}
@@ -401,6 +415,7 @@ export class kharabKar extends roles {
 		this._card.roleComponent = "KharabKar"
 		this._card.side = "mafia"
 		this._card.icon = "game-icons:luger"
+		this._card.nightOrder = 50
 		this._card.options = {
 			counts: [
 				{ players: 20, value: 3 },
@@ -436,6 +451,7 @@ export class doctorLekter extends roles {
 		this._card.roleComponent = "DoctorLekter"
 		this._card.side = "mafia"
 		this._card.icon = "game-icons:plague-doctor-profile"
+		this._card.nightOrder = 10
 		this._card.options = {
 			self: 100,
 		}
@@ -468,6 +484,7 @@ export class groganGir extends roles {
 		this._card.roleComponent = "GroganGir"
 		this._card.side = "mafia"
 		this._card.icon = "game-icons:usable"
+		this._card.nightOrder = 10
 		this._card.options = {
 			alone: true,
 		}
@@ -500,6 +517,7 @@ export class spy extends roles {
 		this._card.roleComponent = "Spy"
 		this._card.side = "mafia"
 		this._card.icon = "game-icons:spy"
+		this._card.nightOrder = 99
 		this._card.options = {
 			exitWithFramason: false,
 		}
@@ -524,6 +542,7 @@ export class sharlatan extends roles {
 		this._card.roleComponent = "Sharlatan"
 		this._card.side = "mafia"
 		this._card.icon = "game-icons:duality-mask"
+		this._card.nightOrder = 10
 		this._card.options = {
 			count: 100,
 			self: 1,
@@ -556,6 +575,7 @@ export class simpleMafia1 extends roles {
 		this._card.roleComponent = "SimpleMafia"
 		this._card.side = "mafia"
 		this._card.icon = "game-icons:bully-minion"
+		this._card.nightOrder = 100
 		this._property = {
 			acts: [
 				{
@@ -576,6 +596,7 @@ export class simpleMafia2 extends roles {
 		this._card.roleComponent = "SimpleMafia"
 		this._card.side = "mafia"
 		this._card.icon = "game-icons:bully-minion"
+		this._card.nightOrder = 100
 		this._property = {
 			acts: [
 				{
@@ -596,6 +617,7 @@ export class simpleMafia3 extends roles {
 		this._card.roleComponent = "SimpleMafia"
 		this._card.side = "mafia"
 		this._card.icon = "game-icons:bully-minion"
+		this._card.nightOrder = 100
 		this._property = {
 			acts: [
 				{
@@ -623,6 +645,7 @@ export class doctor extends roles {
 		this._card.roleComponent = "Doctor"
 		this._card.side = "city"
 		this._card.icon = "game-icons:love-injection"
+		this._card.nightOrder = 0
 		this._card.options = {
 			counts: [
 				{ players: 20, value: 3 },
@@ -653,6 +676,7 @@ export class detective extends roles {
 		this._card.roleComponent = "Detective"
 		this._card.side = "city"
 		this._card.icon = "ic:round-search"
+		this._card.nightOrder = 1
 		this._card.options = {
 			count: 100,
 		}
@@ -677,6 +701,7 @@ export class sniper extends roles {
 		this._card.roleComponent = "Sniper"
 		this._card.side = "city"
 		this._card.icon = "fe:target"
+		this._card.nightOrder = 2
 		this._card.options = {
 			count: 100,
 		}
@@ -701,8 +726,20 @@ export class farmande extends roles {
 		this._card.roleComponent = "Farmande"
 		this._card.side = "city"
 		this._card.icon = "game-icons:police-officer-head"
+		this._card.nightOrder = 3
 		this._card.options = {
 			dieOnFail: true,
+		}
+		this._property = {
+			acts: [
+				{
+					type: "confirm_sniper",
+					name: "تایید شات اسنایپر",
+					kill: false,
+					deep: false,
+					term: 'night'
+				}
+			]
 		}
 	}
 }
@@ -714,6 +751,7 @@ export class bomber extends roles {
 		this._card.roleComponent = "Bomber"
 		this._card.side = "city"
 		this._card.icon = "game-icons:rolling-bomb"
+		this._card.nightOrder = 4
 		this._card.options = {
 			count: 5,
 		}
@@ -738,6 +776,7 @@ export class takavar1 extends roles {
 		this._card.roleComponent = "Takavar"
 		this._card.side = "city"
 		this._card.icon = "game-icons:ak47u"
+		this._card.nightOrder = 50
 		this._card.options = {
 			sniperShot: false,
 		}
@@ -762,6 +801,7 @@ export class takavar2 extends roles {
 		this._card.roleComponent = "Takavar"
 		this._card.side = "city"
 		this._card.icon = "game-icons:ak47u"
+		this._card.nightOrder = 50
 		this._card.options = {
 			sniperShot: false,
 		}
@@ -786,6 +826,7 @@ export class takavar3 extends roles {
 		this._card.roleComponent = "Takavar"
 		this._card.side = "city"
 		this._card.icon = "game-icons:ak47u"
+		this._card.nightOrder = 50
 		this._card.options = {
 			sniperShot: false,
 		}
@@ -810,6 +851,7 @@ export class saghi extends roles {
 		this._card.roleComponent = "Saghi"
 		this._card.side = "city"
 		this._card.icon = "game-icons:drink-me"
+		this._card.nightOrder = 1
 		this._property = {
 			acts: [
 				{
@@ -832,6 +874,7 @@ export class fadayi extends roles {
 		this._card.side = "city"
 		this._card.icon = "game-icons:hand-bandage"
 		this._card.nightAwake = false
+		this._card.nightOrder = 99
 		this._property = {
 			acts: [
 				{
@@ -853,9 +896,21 @@ export class janSakht extends roles {
 		this._card.roleComponent = "JanSakht"
 		this._card.side = "city"
 		this._card.icon = "game-icons:horned-helm"
+		this._card.nightOrder = 85
 		this._card.options = {
 			inquiry: 2,
 			heart: 1,
+		}
+		this._property = {
+			acts: [
+				{
+					type: "stats",
+					name: "استعلام",
+					kill: false,
+					deep: false,
+					term: 'day'
+				}
+			]
 		}
 	}
 }
@@ -866,24 +921,25 @@ export class keshish extends roles {
 		this._card.roleComponent = "Keshish"
 		this._card.side = "city"
 		this._card.icon = "game-icons:robe"
+		this._card.nightOrder = 50
 		this._card.options = {
 			counts: [
 				{ players: 20, value: 3 },
 				{ players: 15, value: 2 },
 				{ players: 1, value: 1 },
 			],
-		},
-			this._property = {
-				acts: [
-					{
-						type: "priest_save",
-						name: "دعای روحانی",
-						kill: false,
-						deep: false,
-						term: 'all'
-					}
-				]
-			}
+		}
+		this._property = {
+			acts: [
+				{
+					type: "priest_save",
+					name: "دعای روحانی",
+					kill: false,
+					deep: false,
+					term: 'all'
+				}
+			]
+		}
 	}
 }
 export class tofangdar extends roles {
@@ -893,6 +949,7 @@ export class tofangdar extends roles {
 		this._card.roleComponent = "Tofangdar"
 		this._card.side = "city"
 		this._card.icon = "game-icons:revolver"
+		this._card.nightOrder = 50
 		this._card.options = {
 			count: 3,
 			everyNight: 4,
@@ -900,8 +957,15 @@ export class tofangdar extends roles {
 		this._property = {
 			acts: [
 				{
-					type: "give_gun",
-					name: "دادن اسلحه",
+					type: "true_gun",
+					name: "اسلحه واقعی",
+					kill: false,
+					deep: false,
+					term: 'day'
+				},
+				{
+					type: "fake_gun",
+					name: "اسلحه مشقی",
 					kill: false,
 					deep: false,
 					term: 'day'
@@ -918,6 +982,7 @@ export class ghazi extends roles {
 		this._card.side = "city"
 		this._card.icon = "game-icons:scales"
 		this._card.nightAwake = false
+		this._card.nightOrder = 99
 	}
 }
 export class shahrdar extends roles {
@@ -931,6 +996,7 @@ export class shahrdar extends roles {
 			count: 1,
 		}
 		this._card.nightAwake = false
+		this._card.nightOrder = 99
 	}
 }
 export class framason extends roles {
@@ -940,6 +1006,8 @@ export class framason extends roles {
 		this._card.roleComponent = "Framason"
 		this._card.side = "city"
 		this._card.icon = "game-icons:pentacle"
+		this._card.mason = true
+		this._card.nightOrder = 10
 		this._property = {
 			acts: [
 				{
@@ -960,6 +1028,8 @@ export class tiler extends roles {
 		this._card.roleComponent = "Tiler"
 		this._card.side = "city"
 		this._card.icon = "game-icons:ram-profile"
+		this._card.mason = true
+		this._card.nightOrder = 11
 		this._property = {
 			acts: [
 				{
@@ -981,6 +1051,7 @@ export class royinTan extends roles {
 		this._card.side = "city"
 		this._card.icon = "game-icons:android-mask"
 		this._card.nightAwake = false
+		this._card.nightOrder = 99
 	}
 }
 export class cowboy extends roles {
@@ -991,6 +1062,7 @@ export class cowboy extends roles {
 		this._card.side = "city"
 		this._card.icon = "game-icons:outback-hat"
 		this._card.nightAwake = false
+		this._card.nightOrder = 99
 		this._property = {
 			acts: [
 				{
@@ -1011,6 +1083,18 @@ export class khabGard extends roles {
 		this._card.roleComponent = "KhabGard"
 		this._card.side = "city"
 		this._card.icon = "game-icons:coma"
+		this._card.nightOrder = 10
+		this._property = {
+			acts: [
+				{
+					type: "deep_sleep",
+					name: "خواب عمیق",
+					kill: false,
+					deep: false,
+					term: 'night'
+				}
+			]
+		}
 	}
 }
 export class ahangar extends roles {
@@ -1020,6 +1104,7 @@ export class ahangar extends roles {
 		this._card.roleComponent = "Ahangar"
 		this._card.side = "city"
 		this._card.icon = "game-icons:anvil-impact"
+		this._card.nightOrder = 50
 		this._property = {
 			acts: [
 				{
@@ -1040,6 +1125,7 @@ export class negahban extends roles {
 		this._card.roleComponent = "Negahban"
 		this._card.side = "city"
 		this._card.icon = "game-icons:winged-sword"
+		this._card.nightOrder = 10
 		this._card.options = {
 			counts: [
 				{ players: 30, value: 3 },
@@ -1051,7 +1137,7 @@ export class negahban extends roles {
 			acts: [
 				{
 					type: "guard",
-					name: "نگه بانی",
+					name: "نگهبانی",
 					kill: false,
 					deep: false,
 					term: 'night'
@@ -1068,6 +1154,7 @@ export class citizen1 extends roles {
 		this._card.side = "city"
 		this._card.icon = "quill:user-happy"
 		this._card.nightAwake = false
+		this._card.nightOrder = 100
 	}
 }
 export class citizen2 extends roles {
@@ -1078,6 +1165,7 @@ export class citizen2 extends roles {
 		this._card.side = "city"
 		this._card.icon = "quill:user-happy"
 		this._card.nightAwake = false
+		this._card.nightOrder = 100
 	}
 }
 export class citizen3 extends roles {
@@ -1088,6 +1176,7 @@ export class citizen3 extends roles {
 		this._card.side = "city"
 		this._card.icon = "quill:user-happy"
 		this._card.nightAwake = false
+		this._card.nightOrder = 100
 	}
 }
 export class killer extends roles {
@@ -1097,6 +1186,7 @@ export class killer extends roles {
 		this._card.roleComponent = "Killer"
 		this._card.side = "independent"
 		this._card.icon = "game-icons:grim-reaper"
+		this._card.nightOrder = 0
 		this._card.options = {
 			justOdd: true,
 			deepShot: true,
@@ -1122,6 +1212,7 @@ export class joker extends roles {
 		this._card.roleComponent = "Joker"
 		this._card.side = "independent"
 		this._card.icon = "game-icons:mouth-watering"
+		this._card.nightOrder = 10
 		this._card.options = {
 			count: 4,
 			heart: 100,
@@ -1147,6 +1238,7 @@ export class nostradamus extends roles {
 		this._card.roleComponent = "Nostradamus"
 		this._card.side = "gray"
 		this._card.icon = "game-icons:crystal-ball"
+		this._card.nightOrder = 0
 		this._card.options = {
 			heart: 100,
 		}
