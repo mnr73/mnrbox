@@ -31,8 +31,9 @@ function setRoles() {
         (x) => x.card.side == "mafia",
         (x) => x.card.side == "city",
         "card.side",
+        "card.nightOrder",
       ],
-      ["desc", "desc"]
+      ["desc", "desc", "desc", "asc"]
     );
   }
 }

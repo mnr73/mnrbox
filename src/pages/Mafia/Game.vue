@@ -35,10 +35,10 @@ game.roles = data.getPlayers([]);
 // test.setUser(_.find(game.roles, ["class", "godFather"]));
 // console.log(test.property);
 
-_.each(game.roles, (role) => {
-  role.obj = new roles[role.class]();
-  role.obj.setUser(role);
-});
+// _.each(game.roles, (role) => {
+//   role.obj = new roles[role.class]();
+//   role.obj.setUser(role);
+// });
 
 let rounds_structure = {
   stepNumber: 0,
@@ -221,15 +221,18 @@ function nextStep() {
 
 function select(role, act) {
   selector.limit = 1;
-  if (role?.options?.counts) {
-    let playerCounts = _.filter(game.roles, { dead: false, getOut: false })
-      .length;
-    selector.limit = _.orderBy(role.options.counts, "players", "desc").find(
-      (o) => o.players <= playerCounts
-    ).value;
-  }
-  if (role.class == "nostradamus") {
-    selector.limit = 3;
+  if (role?.acts?.[act.type]?.targets) {
+    if (typeof role.acts[act.type].targets == "object") {
+      let playerCounts = _.filter(game.roles, { dead: false, getOut: false })
+        .length;
+      selector.limit = _.orderBy(
+        role.acts[act.type].targets,
+        "players",
+        "desc"
+      ).find((o) => o.players <= playerCounts).value;
+    } else if (typeof role.acts[act.type].targets == "number") {
+      selector.limit = role.acts[act.type].targets;
+    }
   }
   selector.role = role;
   selector.open = true;
@@ -534,7 +537,7 @@ function calcActs() {
                     </div>
                     <div class="flex gap-2">
                       <template
-                        v-for="(act, index) in role.obj.property.acts"
+                        v-for="(act, index) in role.acts"
                         :key="act.type"
                       >
                         <button
