@@ -355,7 +355,7 @@ function calcActs() {
       <div class="w-1 flex-shrink-0"></div>
     </div>
   </div>
-  <div class="sm:p-5 p-2 pb-60">
+  <div class="sm:p-5 p-2 pb-60 max-w-screen-md mx-auto">
     <div v-if="game.lastRoundNumber == 0 && game.selectedStep.type == 'night'">
       <div class="p-4">
         در بعضی از سناریو ها تیم مافیا در شب قبل از معارفه بیدار شده و یک دیگر
