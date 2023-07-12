@@ -106,6 +106,7 @@ if (_.find(game.roles, ["class", "shahrdar"])) {
 onMounted(() => {
   game.rounds.push(_.cloneDeep(rounds_structure));
   game.lastRoundNumber = game.rounds.length - 1;
+  calcActs();
 });
 
 game.selectedRound = computed(() => {
@@ -195,6 +196,7 @@ const getRoles = computed(() => {
 });
 
 function nextStep() {
+  calcActs();
   if (game.lastRoundNumber == 0) {
     if (game.selectedRound.stepNumber === 0) {
       game.selectedRound.stepNumber = 1;
@@ -254,6 +256,9 @@ function showTargetBtn(key, roleClass, actType) {
   return true;
 }
 
+/**
+ * add roles in each round
+ */
 watch(
   () => game.lastRoundNumber,
   (newValue, oldValue) => {
@@ -261,6 +266,25 @@ watch(
   },
   { deep: false }
 );
+
+function calcActs() {
+  let acts = _.flatMapDeep(game.rounds, (round) => {
+    return _.map(round.steps, (step) => {
+      return step.acts;
+    });
+  });
+  acts = _.filter(acts);
+  acts = _.groupBy(acts, "user.class");
+
+  _.each(game.selectedRound.roles, (role) => {
+    role.acts = acts[role.class] || [];
+  });
+  // game.acts = _.each(game.acts, (role) => {
+  //   return _.each(role, (acts) => {
+  //     acts.test = "true";
+  //   });
+  // });
+}
 // watch(
 //   () => selectedStep.value?.targets,
 //   (newValue, oldValue) => {

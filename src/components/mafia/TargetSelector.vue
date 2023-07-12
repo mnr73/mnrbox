@@ -62,6 +62,7 @@ function select(user) {
       user: props.selector.role,
       target: u,
       type: props.selector.act.type,
+      name: props.selector.act.name,
     };
     if (props.selector.act.type == "charm") {
       value.word = text.value;
