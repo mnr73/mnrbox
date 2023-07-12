@@ -44,6 +44,9 @@ onMounted(function () {
 });
 
 function select(user) {
+  if (props.selector.disabled.find((u) => u == user)) {
+    return;
+  }
   let removedUser = _.remove(selectedUsers.value, (u) => u == user);
   if (props.selector.limit === 1 && removedUser == 0) {
     selectedUsers.value = [];
@@ -276,6 +279,8 @@ function janSakhtAct(act) {
           @click="select(role)"
           :class="{
             'border-sky-500': selectedUsers.find((user) => user == role),
+            'border-red-500': selector.disabled.find((user) => user == role),
+            'opacity-60': selector.disabled.find((user) => user == role),
           }"
         >
           <div class="text-lg">

@@ -15,7 +15,7 @@ const selector = reactive({
   open: false,
   role: {},
   limit: 1,
-  disable: [],
+  disabled: [],
 });
 // const rounds = ref([]);
 // const selectedIndex = ref();
@@ -144,7 +144,7 @@ const getRoles = computed(() => {
         name: "قبل از مافیا",
         roles: _.remove(filtered, (role) => {
           return (
-            role.class == "nostradamus" ||
+            (role.class == "nostradamus" && !game.acts[role.class]) ||
             role.class == "saghi" ||
             role.class == "negahban" ||
             role.class == "khabGard"
@@ -175,7 +175,7 @@ const getRoles = computed(() => {
       },
       masons: {
         name: "فراماسون ها",
-        roles: _.remove(sorted, (role) => {
+        roles: _.filter(sorted, (role) => {
           return role.mason;
         }),
       },
@@ -187,7 +187,12 @@ const getRoles = computed(() => {
       },
       sleep: {
         name: "افراد خواب",
-        roles: _.filter(sorted, ["nightAwake", false]),
+        roles: _.filter(sorted, (role) => {
+          return (
+            role.nightAwake == false ||
+            (role.class == "nostradamus" && game.acts[role.class])
+          );
+        }),
       },
     };
   }
@@ -237,6 +242,23 @@ function select(role, act) {
   selector.role = role;
   selector.open = true;
   selector.act = act;
+  if (role.class == "tofangdar") {
+    if (act.type == "true_gun") {
+      selector.disabled = _.map(
+        _.filter(game.selectedStep.acts, (act) => {
+          return act.user == role && act.type == "fake_gun";
+        }),
+        "target"
+      );
+    } else if (act.type == "fake_gun") {
+      selector.disabled = _.map(
+        _.filter(game.selectedStep.acts, (act) => {
+          return act.user == role && act.type == "true_gun";
+        }),
+        "target"
+      );
+    }
+  }
 }
 
 function showTargetBtn(key, roleClass, actType) {
@@ -252,6 +274,9 @@ function showTargetBtn(key, roleClass, actType) {
       return false;
     }
     if (roleClass == "terrorist") {
+      return false;
+    }
+    if (roleClass == "killer" && game.lastRoundNumber % 2 != 0) {
       return false;
     }
   }
@@ -271,17 +296,17 @@ watch(
 );
 
 function calcActs() {
-  let acts = _.flatMapDeep(game.rounds, (round) => {
+  game.acts = _.flatMapDeep(game.rounds, (round) => {
     return _.map(round.steps, (step) => {
       return step.acts;
     });
   });
-  acts = _.filter(acts);
-  acts = _.groupBy(acts, "user.class");
+  game.acts = _.filter(game.acts);
+  game.acts = _.groupBy(game.acts, "user.class");
 
-  _.each(game.selectedRound.roles, (role) => {
-    role.acts = acts[role.class] || [];
-  });
+  // _.each(game.selectedRound.roles, (role) => {
+  //   role.acts = acts[role.class] || [];
+  // });
   // game.acts = _.each(game.acts, (role) => {
   //   return _.each(role, (acts) => {
   //     acts.test = "true";

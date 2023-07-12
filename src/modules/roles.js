@@ -910,7 +910,7 @@ export class tofangdar extends roles {
 				deep: false,
 				term: 'day',
 				inventory: 100,
-				targets: 4
+				targets: 100
 			}
 		}
 	}
