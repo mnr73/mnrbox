@@ -7,6 +7,7 @@ import RoleCard from "@/components/mafia/RoleCard.vue";
 import TargetSelector from "@/components/mafia/TargetSelector.vue";
 import { Icon } from "@iconify/vue";
 import * as roles from "@/modules/roles";
+import TargetCard from "@/components/mafia/TargetCard.vue";
 
 const data = new mafia();
 const daysBox = ref(null);
@@ -16,6 +17,9 @@ const selector = reactive({
   role: {},
   limit: 1,
   disabled: [],
+  acts: {},
+  roundActs: {},
+  lastTime: [],
 });
 // const rounds = ref([]);
 // const selectedIndex = ref();
@@ -120,6 +124,21 @@ game.selectedStep = computed(() => {
   ]);
 });
 
+const allActs = computed(() => {
+  let all = _.cloneDeep(game.acts);
+  _.each(game.roundActs, (roleActs, key) => {
+    if (all[key]) {
+      _.each(all[key], (acts, typeKey) => {
+        acts.count += roleActs[typeKey].count;
+        acts.selfCount += roleActs[typeKey].selfCount;
+      });
+    } else {
+      all[key] = roleActs;
+    }
+  });
+  return all;
+});
+
 const userTargets = computed(() => {
   return _.groupBy(_.filter(game.selectedStep?.acts, "target"), "user.userId");
 });
@@ -201,7 +220,7 @@ const getRoles = computed(() => {
 });
 
 function nextStep() {
-  calcActs();
+  scroll(0, 0);
   if (game.lastRoundNumber == 0) {
     if (game.selectedRound.stepNumber === 0) {
       game.selectedRound.stepNumber = 1;
@@ -222,6 +241,8 @@ function nextStep() {
   game.rounds.push(_.cloneDeep(rounds_structure));
   game.lastRoundNumber++;
   daysBox.value.scrollLeft = -10000;
+
+  calcActs();
 }
 
 function select(role, act) {
@@ -259,6 +280,12 @@ function select(role, act) {
       );
     }
   }
+  selector.lastTime = _.filter(
+    game.rounds[game.lastRoundNumber - 1].steps[game.selectedStep.type].acts,
+    (a) => a.user.class == role.class
+  );
+  // selector.lastTime = _.map(selector.lastTime, "target");
+  // selector.lastTime = _.map()
 }
 
 function showTargetBtn(key, roleClass, actType) {
@@ -296,22 +323,51 @@ watch(
 );
 
 function calcActs() {
-  game.acts = _.flatMapDeep(game.rounds, (round) => {
+  game.acts = calcActsStats(_.dropRight(game.rounds));
+  calcRoundActs();
+}
+
+function calcRoundActs() {
+  game.roundActs = calcActsStats([_.last(game.rounds)]);
+}
+
+function calcActsStats(round) {
+  let actsList = _.flatMapDeep(round, (round) => {
     return _.map(round.steps, (step) => {
       return step.acts;
     });
   });
-  game.acts = _.filter(game.acts);
-  game.acts = _.groupBy(game.acts, "user.class");
+  actsList = _.filter(actsList);
+  actsList = _.groupBy(actsList, "user.class");
 
-  // _.each(game.selectedRound.roles, (role) => {
-  //   role.acts = acts[role.class] || [];
-  // });
-  // game.acts = _.each(game.acts, (role) => {
-  //   return _.each(role, (acts) => {
-  //     acts.test = "true";
-  //   });
-  // });
+  actsList = _.mapValues(actsList, (acts) => {
+    acts = _.groupBy(acts, "type");
+    acts = _.mapValues(acts, (a) => {
+      if (a[0].user.class == "khabGard") {
+        a = _.filter(a, "sacrifice");
+      }
+      if (a[0].user.class == "farmande") {
+        a = _.filter(a, "confirm");
+      }
+      if (a[0].user.class == "janSakht") {
+        a = _.filter(a, "stats");
+      }
+      if (a.length) {
+        return {
+          count: a.length,
+          name: a[0].name,
+          selfCount: a.filter((x) => x.user == x.target).length,
+        };
+      }
+    });
+    return _.omitBy(acts, (a) => {
+      return a == undefined;
+    });
+  });
+  // return actsList;
+  return _.omitBy(actsList, (a) => {
+    return _.values(a).length == 0;
+  });
 }
 // watch(
 //   () => selectedStep.value?.targets,
@@ -401,6 +457,24 @@ function calcActs() {
                   "
                 />
                 <RoleCard :role="role" :step="game.selectedStep">
+                  <div
+                    class="bg-slate-50 border-b p-1 flex gap-2"
+                    v-if="allActs?.[role.class]"
+                  >
+                    <template
+                      v-for="(item, index) in allActs[role.class]"
+                      :key="index"
+                    >
+                      <div
+                        class="flex gap-2 bg-slate-100 border p-1 rounded-md"
+                      >
+                        <div>{{ item.name }} : {{ item.count }}</div>
+                        <div v-if="item.selfCount">
+                          خودش : {{ item.selfCount }}
+                        </div>
+                      </div>
+                    </template>
+                  </div>
                   <div class="p-2">
                     <div v-if="role.class == 'khabGard'" class="p-2">
                       <div v-if="userActs[role.userId]?.[0]?.sacrifice">
@@ -441,124 +515,24 @@ function calcActs() {
                       v-if="userTargets[role.userId]?.length"
                     >
                       <div>تارگت ها:</div>
-                      <div
+                      <template
                         v-for="(item, index) in userTargets[role.userId]"
                         :key="index"
-                        class="bg-slate-100 border border-r-4 border-r-sky-400 rounded-md py-1 px-2"
                       >
-                        {{ item?.target?.userName }}
-                        <span class="text-slate-400">
-                          <Icon
-                            :icon="item?.target?.icon"
-                            class="inline-block w-6 h-full"
-                          />
-                          {{ item?.target?.roleName }}
-                        </span>
-                        <span
-                          class="text-slate-500 font-bold"
-                          v-if="item?.word"
-                        >
-                          ({{ item?.word }})
-                        </span>
-                        <span
-                          class="text-slate-500 font-bold"
-                          v-if="item?.bombAct"
-                        >
-                          ({{ item?.bombAct }})
-                        </span>
-                        <span
-                          class="text-slate-500 font-bold"
-                          v-if="item.guess !== undefined"
-                        >
-                          ({{ item?.guess ? "درست" : "غلط" }})
-                        </span>
-                        <span
-                          class="text-slate-500 font-bold"
-                          v-if="item.type == 'rob_from'"
-                        >
-                          (دزدیدن)
-                        </span>
-                        <span
-                          class="text-slate-500 font-bold"
-                          v-if="item.type == 'rob_to'"
-                        >
-                          (زدن)
-                        </span>
-                        <span
-                          class="text-slate-500 font-bold"
-                          v-if="item.type == 'true_gun'"
-                        >
-                          (واقعی)
-                        </span>
-                        <span
-                          class="text-slate-500 font-bold"
-                          v-if="item.type == 'fake_gun'"
-                        >
-                          (مشقی)
-                        </span>
-                      </div>
+                        <TargetCard :item="item" :to="true" />
+                      </template>
                     </div>
                     <div
                       class="flex flex-wrap gap-1 p-2 items-center"
                       v-if="userTargetBy[role.userId]?.length"
                     >
                       <div>تارگت شده توسط:</div>
-                      <div
+                      <template
                         v-for="(item, index) in userTargetBy[role.userId]"
                         :key="index"
-                        class="bg-slate-100 border border-r-4 border-r-red-500 rounded-md py-1 px-2"
                       >
-                        {{ item?.user?.userName }}
-                        <span class="text-slate-400">
-                          <Icon
-                            :icon="item?.user?.icon"
-                            class="inline-block w-6 h-full"
-                          />
-                          {{ item?.user?.roleName }}
-                        </span>
-                        <span
-                          class="text-slate-500 font-bold"
-                          v-if="item?.word"
-                        >
-                          ({{ item?.word }})
-                        </span>
-                        <span
-                          class="text-slate-500 font-bold"
-                          v-if="item?.bombAct"
-                        >
-                          ({{ item?.bombAct }})
-                        </span>
-                        <span
-                          class="text-slate-500 font-bold"
-                          v-if="item.guess !== undefined"
-                        >
-                          ({{ item?.guess ? "درست" : "غلط" }})
-                        </span>
-                        <span
-                          class="text-slate-500 font-bold"
-                          v-if="item.type == 'rob_from'"
-                        >
-                          (دزدیدن)
-                        </span>
-                        <span
-                          class="text-slate-500 font-bold"
-                          v-if="item.type == 'rob_to'"
-                        >
-                          (زدن)
-                        </span>
-                        <span
-                          class="text-slate-500 font-bold"
-                          v-if="item.type == 'true_gun'"
-                        >
-                          (واقعی)
-                        </span>
-                        <span
-                          class="text-slate-500 font-bold"
-                          v-if="item.type == 'fake_gun'"
-                        >
-                          (مشقی)
-                        </span>
-                      </div>
+                        <TargetCard :item="item" :to="false" />
+                      </template>
                     </div>
                     <div class="flex gap-2">
                       <template
@@ -594,6 +568,7 @@ function calcActs() {
     :selector="selector"
     :list="game.selectedRound.roles"
     :step="game.selectedStep"
+    @select="calcRoundActs()"
   ></TargetSelector>
   <Bottom>
     <div class="p-2 border-t flex h-16 gap-2">

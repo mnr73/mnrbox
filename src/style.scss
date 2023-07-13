@@ -14,9 +14,13 @@
 	font-weight: bold;
 	font-display: swap;
 }
-#app{
+#app {
 	font-family: vazir, Avenir, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	@apply text-slate-600;
+}
+
+html {
+	scroll-behavior: smooth;
 }

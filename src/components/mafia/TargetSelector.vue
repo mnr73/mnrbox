@@ -2,6 +2,7 @@
 import { Icon } from "@iconify/vue";
 import { computed, onMounted, ref } from "vue";
 import _ from "lodash";
+import TargetCard from "./TargetCard.vue";
 
 const selectedUsers = ref([]);
 // const userActs = ref();
@@ -78,6 +79,8 @@ function select(user) {
     }
     props.step.acts.push(value);
   });
+
+  emit("select");
 }
 
 function setText() {
@@ -100,10 +103,12 @@ function khabGardAct(act) {
   let value = {
     user: props.selector.role,
     type: props.selector.act.type,
+    name: props.selector.act.name,
     sacrifice: act,
   };
   props.step.acts.push(value);
   // userActs.value = _.filter(props.step.acts, ["user", props.selector.role]);
+  emit("select");
 }
 
 function farmandeAct(act) {
@@ -111,9 +116,11 @@ function farmandeAct(act) {
   let value = {
     user: props.selector.role,
     type: props.selector.act.type,
+    name: props.selector.act.name,
     confirm: act,
   };
   props.step.acts.push(value);
+  emit("select");
 }
 
 function janSakhtAct(act) {
@@ -121,11 +128,14 @@ function janSakhtAct(act) {
   let value = {
     user: props.selector.role,
     type: props.selector.act.type,
+    name: props.selector.act.name,
     stats: act,
   };
   props.step.acts.push(value);
+  emit("select");
 }
-// const emit = defineEmits(["selectedList"]);
+
+const emit = defineEmits(["select"]);
 </script>
 
 <template>
@@ -150,6 +160,13 @@ function janSakhtAct(act) {
         <div>
           {{ selectedUsers.length }} از {{ props.selector.limit }} انتخاب
         </div>
+      </div>
+
+      <div class="p-2 flex gap-2 items-center flex-wrap">
+        <div>تارگت های قبلی:</div>
+        <template v-for="(item, index) in selector.lastTime" :key="index">
+          <TargetCard :item="item" :to="true" />
+        </template>
       </div>
       <div class="p-2" v-if="props.selector.act.type == 'charm'">
         <input
