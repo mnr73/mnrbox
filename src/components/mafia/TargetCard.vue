@@ -12,8 +12,8 @@ const props = defineProps({
   <div
     class="bg-slate-100 border border-r-4 rounded-md py-1 px-2"
     :class="{
-      'border-r-sky-400': to,
-      'border-r-red-400': !to,
+      'border-r-sky-500': to,
+      'border-r-red-500': !to,
     }"
   >
     {{ item?.[to ? "target" : "user"]?.userName }}
@@ -39,10 +39,10 @@ const props = defineProps({
     <span class="text-slate-500 font-bold" v-if="item.type == 'rob_to'">
       (زدن)
     </span>
-    <span class="text-slate-500 font-bold" v-if="item.type == 'true_gun'">
+    <span class="text-emerald-500 font-bold" v-if="item.type == 'true_gun'">
       (واقعی)
     </span>
-    <span class="text-slate-500 font-bold" v-if="item.type == 'fake_gun'">
+    <span class="text-red-500 font-bold" v-if="item.type == 'fake_gun'">
       (مشقی)
     </span>
   </div>

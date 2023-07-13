@@ -162,10 +162,12 @@ const emit = defineEmits(["select"]);
         </div>
       </div>
 
-      <div class="p-2 flex gap-2 items-center flex-wrap">
-        <div>تارگت های قبلی:</div>
+      <div
+        class="p-2 flex gap-2 items-center overflow-x-auto overflow-y-hidden"
+      >
+        <div class="flex-shrink-0">تارگت های قبلی:</div>
         <template v-for="(item, index) in selector.lastTime" :key="index">
-          <TargetCard :item="item" :to="true" />
+          <TargetCard :item="item" :to="true" class="flex-shrink-0" />
         </template>
       </div>
       <div class="p-2" v-if="props.selector.act.type == 'charm'">

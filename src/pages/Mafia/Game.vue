@@ -343,13 +343,13 @@ function calcActsStats(round) {
   actsList = _.mapValues(actsList, (acts) => {
     acts = _.groupBy(acts, "type");
     acts = _.mapValues(acts, (a) => {
-      if (a[0].user.class == "khabGard") {
+      if (a[0]?.user?.class == "khabGard") {
         a = _.filter(a, "sacrifice");
       }
-      if (a[0].user.class == "farmande") {
+      if (a[0]?.user?.class == "farmande") {
         a = _.filter(a, "confirm");
       }
-      if (a[0].user.class == "janSakht") {
+      if (a[0]?.user?.class == "janSakht") {
         a = _.filter(a, "stats");
       }
       if (a.length) {
