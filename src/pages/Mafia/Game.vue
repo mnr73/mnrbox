@@ -9,12 +9,18 @@ import { Icon } from "@iconify/vue";
 import * as roles from "@/modules/roles";
 import TargetCard from "@/components/mafia/TargetCard.vue";
 import soundMafia1 from "@/assets/audio/mafia1.mp3";
+import TimerPart from "@/components/mafia/TimerPart.vue";
 
 const data = new mafia();
 const daysBox = ref(null);
 const track = reactive({
   audio: new Audio(soundMafia1),
   paused: true,
+});
+const timer = reactive({
+  open: false,
+  speak: 40,
+  challenge: 20,
 });
 // const users = ref();
 const selector = reactive({
@@ -29,7 +35,6 @@ const selector = reactive({
 // const rounds = ref([]);
 // const selectedIndex = ref();
 const game = reactive({
-  zeroNight: null,
   rounds: [],
   roles: [],
   lastRoundNumber: null,
@@ -381,13 +386,7 @@ function calcActsStats(round) {
     return _.values(a).length == 0;
   });
 }
-// watch(
-//   () => selectedStep.value?.targets,
-//   (newValue, oldValue) => {
-//     console.log("hi");
-//   },
-//   { deep: false }
-// );
+
 function toggleSound(op = "toggle") {
   track.audio.loop = true;
   if (track.paused && (op == "toggle" || op == "play")) {
@@ -436,185 +435,146 @@ function toggleSound(op = "toggle") {
   <div class="sm:p-5 p-2 pb-60 max-w-screen-md mx-auto">
     <div v-if="game.lastRoundNumber == 0 && game.selectedStep.type == 'night'">
       <div class="p-4">
-        در بعضی از سناریو ها تیم مافیا در شب قبل از معارفه بیدار شده و یک دیگر
-        را می‌شناسند.
-      </div>
-      <div class="flex gap-5 justify-center">
-        <button
-          class="bg-slate-200 shadow-lg p-2 rounded-md"
-          :class="{ '!bg-sky-500 text-white': game.zeroNight === true }"
-          @click="game.zeroNight = true"
-        >
-          شناختند
-        </button>
-        <button
-          class="bg-slate-200 shadow-lg p-2 rounded-md"
-          :class="{ '!bg-sky-500 text-white': game.zeroNight === false }"
-          @click="game.zeroNight = false"
-        >
-          لازم نیست
-        </button>
+        <h2 class="text-xl font-bold text-red-600">توجه:</h2>
+        <p>
+          در بعضی از سناریو ها تیم مافیا در شب قبل از معارفه بیدار شده و یک دیگر
+          را می‌شناسند. یا نوستراداموس بیدار شده و پیشبینی می‌کند. اگر نمیخواهید
+          در شب معارفه کاری انجام شود از این مرحله گذر کنید.
+        </p>
       </div>
     </div>
 
-    <div v-else class="">
-      <!--
+    <!--
 				night step
 			-->
-      <div v-if="game.selectedStep?.type == 'night'">
-        <template v-for="(roles, key) in getRoles" :key="key">
-          <div v-if="roles.roles?.length" class="my-5">
-            <h2 class="text-lg font-bold text-slate-700 p-2">
-              {{ roles.name }}
-            </h2>
-            <hr class="border-slate-700 border-2 mb-2" />
-            <div class="flex flex-col gap-3">
-              <template v-for="(role, index) in roles.roles" :key="role.userId">
-                <hr
-                  class="my-1 border-2 border-dashed border-slate-400"
-                  v-if="
-                    index > 0 &&
-                    (role.side != 'mafia' || role?.options?.alone) &&
-                    key != 'sleep'
-                  "
-                />
-                <RoleCard :role="role" :step="game.selectedStep">
-                  <div
-                    class="bg-slate-50 border-b p-1 flex gap-2"
-                    v-if="allActs?.[role.class]"
+    <div v-if="game.selectedStep?.type == 'night'">
+      <template v-for="(roles, key) in getRoles" :key="key">
+        <div v-if="roles.roles?.length" class="my-5">
+          <h2 class="text-lg font-bold text-slate-700 p-2">
+            {{ roles.name }}
+          </h2>
+          <hr class="border-slate-700 border-2 mb-2" />
+          <div class="flex flex-col gap-3">
+            <template v-for="(role, index) in roles.roles" :key="role.userId">
+              <hr
+                class="my-1 border-2 border-dashed border-slate-400"
+                v-if="
+                  index > 0 &&
+                  (role.side != 'mafia' || role?.options?.alone) &&
+                  key != 'sleep'
+                "
+              />
+              <RoleCard :role="role" :step="game.selectedStep">
+                <div
+                  class="bg-slate-50 border-b p-1 flex gap-2"
+                  v-if="allActs?.[role.class]"
+                >
+                  <template
+                    v-for="(item, index) in allActs[role.class]"
+                    :key="index"
                   >
+                    <div class="flex gap-2 bg-slate-100 border p-1 rounded-md">
+                      <div>{{ item.name }} : {{ item.count }}</div>
+                      <div v-if="item.selfCount">
+                        خودش : {{ item.selfCount }}
+                      </div>
+                    </div>
+                  </template>
+                </div>
+                <div class="p-2">
+                  <div v-if="role.class == 'khabGard'" class="p-2">
+                    <div v-if="userActs[role.userId]?.[0]?.sacrifice">
+                      خودش را فدای شهر کرد 👍
+                    </div>
+                    <div
+                      v-else-if="
+                        userActs[role.userId]?.[0]?.sacrifice === false
+                      "
+                    >
+                      خودش را فدای شهر نکرد 👎
+                    </div>
+                  </div>
+                  <div v-if="role.class == 'farmande'" class="p-2">
+                    <div v-if="userActs[role.userId]?.[0]?.confirm">
+                      شات اسنایپر را تایید کرد 👍
+                    </div>
+                    <div
+                      v-else-if="userActs[role.userId]?.[0]?.confirm === false"
+                    >
+                      شات اسنایپر را تایید نکرد 👎
+                    </div>
+                  </div>
+                  <div v-if="role.class == 'janSakht'" class="p-2">
+                    <div v-if="userActs[role.userId]?.[0]?.stats">
+                      استعلام میخواهد 👍
+                    </div>
+                    <div
+                      v-else-if="userActs[role.userId]?.[0]?.stats === false"
+                    >
+                      استعلام نمی‌خواهد 👎
+                    </div>
+                  </div>
+                  <div
+                    class="flex flex-wrap gap-1 p-2 items-center"
+                    v-if="userTargets[role.userId]?.length"
+                  >
+                    <div>تارگت ها:</div>
                     <template
-                      v-for="(item, index) in allActs[role.class]"
+                      v-for="(item, index) in userTargets[role.userId]"
                       :key="index"
                     >
-                      <div
-                        class="flex gap-2 bg-slate-100 border p-1 rounded-md"
-                      >
-                        <div>{{ item.name }} : {{ item.count }}</div>
-                        <div v-if="item.selfCount">
-                          خودش : {{ item.selfCount }}
-                        </div>
-                      </div>
+                      <TargetCard :item="item" :to="true" />
                     </template>
                   </div>
-                  <div class="p-2">
-                    <div v-if="role.class == 'khabGard'" class="p-2">
-                      <div v-if="userActs[role.userId]?.[0]?.sacrifice">
-                        خودش را فدای شهر کرد 👍
-                      </div>
-                      <div
-                        v-else-if="
-                          userActs[role.userId]?.[0]?.sacrifice === false
-                        "
-                      >
-                        خودش را فدای شهر نکرد 👎
-                      </div>
-                    </div>
-                    <div v-if="role.class == 'farmande'" class="p-2">
-                      <div v-if="userActs[role.userId]?.[0]?.confirm">
-                        شات اسنایپر را تایید کرد 👍
-                      </div>
-                      <div
-                        v-else-if="
-                          userActs[role.userId]?.[0]?.confirm === false
-                        "
-                      >
-                        شات اسنایپر را تایید نکرد 👎
-                      </div>
-                    </div>
-                    <div v-if="role.class == 'janSakht'" class="p-2">
-                      <div v-if="userActs[role.userId]?.[0]?.stats">
-                        استعلام میخواهد 👍
-                      </div>
-                      <div
-                        v-else-if="userActs[role.userId]?.[0]?.stats === false"
-                      >
-                        استعلام نمی‌خواهد 👎
-                      </div>
-                    </div>
-                    <div
-                      class="flex flex-wrap gap-1 p-2 items-center"
-                      v-if="userTargets[role.userId]?.length"
+                  <div
+                    class="flex flex-wrap gap-1 p-2 items-center"
+                    v-if="userTargetBy[role.userId]?.length"
+                  >
+                    <div>تارگت شده توسط:</div>
+                    <template
+                      v-for="(item, index) in userTargetBy[role.userId]"
+                      :key="index"
                     >
-                      <div>تارگت ها:</div>
-                      <template
-                        v-for="(item, index) in userTargets[role.userId]"
-                        :key="index"
-                      >
-                        <TargetCard :item="item" :to="true" />
-                      </template>
-                    </div>
-                    <div
-                      class="flex flex-wrap gap-1 p-2 items-center"
-                      v-if="userTargetBy[role.userId]?.length"
-                    >
-                      <div>تارگت شده توسط:</div>
-                      <template
-                        v-for="(item, index) in userTargetBy[role.userId]"
-                        :key="index"
-                      >
-                        <TargetCard :item="item" :to="false" />
-                      </template>
-                    </div>
-                    <div class="flex gap-2">
-                      <template
-                        v-for="(act, index) in role.acts"
-                        :key="act.type"
-                      >
-                        <button
-                          v-if="showTargetBtn(key, role.class, act.type)"
-                          class="bg-slate-200 border border-slate-300 p-1 w-full rounded-md"
-                          @click="select(role, act)"
-                        >
-                          {{ act.name }}
-                        </button>
-                      </template>
-                    </div>
+                      <TargetCard :item="item" :to="false" />
+                    </template>
                   </div>
-                </RoleCard>
-              </template>
-            </div>
+                  <div class="flex gap-2">
+                    <template v-for="(act, index) in role.acts" :key="act.type">
+                      <button
+                        v-if="showTargetBtn(key, role.class, act.type)"
+                        class="bg-slate-200 border border-slate-300 p-1 w-full rounded-md"
+                        @click="select(role, act)"
+                      >
+                        {{ act.name }}
+                      </button>
+                    </template>
+                  </div>
+                </div>
+              </RoleCard>
+            </template>
           </div>
+        </div>
+      </template>
+    </div>
+
+    <div v-else-if="game.selectedStep?.type == 'day'">
+      <div class="flex flex-col gap-3">
+        <template v-for="role in getRoles" :key="role.userId">
+          <RoleCard :role="role"> body </RoleCard>
         </template>
       </div>
-
-      <div v-else-if="game.selectedStep?.type == 'day'">
-        <div class="flex gap-2 my-2">
-          <label>
-            زمان صحبت (ثانیه)
-            <input
-              type="number"
-              placeholder="زمان صحبت"
-              class="p-2 border rounded-md w-full"
-            />
-          </label>
-          <label>
-            زمان چالش (ثانیه)
-            <input
-              type="number"
-              placeholder="زمان چالش"
-              class="p-2 border rounded-md w-full"
-            />
-          </label>
-        </div>
-        <div class="flex flex-col gap-3">
-          <template v-for="role in getRoles" :key="role.userId">
-            <RoleCard :role="role"> body </RoleCard>
-          </template>
-        </div>
-      </div>
-
-      <div v-else>
-        other
-        <div class="flex flex-col gap-3">
-          <template v-for="role in getRoles" :key="role.userId">
-            <RoleCard :role="role"> body </RoleCard>
-          </template>
-        </div>
-      </div>
-
-      <div class="h-60"></div>
     </div>
+
+    <div v-else>
+      other
+      <div class="flex flex-col gap-3">
+        <template v-for="role in getRoles" :key="role.userId">
+          <RoleCard :role="role"> body </RoleCard>
+        </template>
+      </div>
+    </div>
+
+    <div class="h-60"></div>
   </div>
   <TargetSelector
     v-if="selector.open"
@@ -624,6 +584,14 @@ function toggleSound(op = "toggle") {
     @select="calcRoundActs()"
   ></TargetSelector>
   <Bottom>
+    <div class="bg-slate-50 border-t" v-show="timer.open">
+      <div class="flex gep-2 justify-around">
+        <TimerPart :time="timer.speak" />
+        <div class="border-r"></div>
+        <TimerPart :time="timer.challenge" />
+      </div>
+    </div>
+
     <div class="p-2 border-t flex h-16 gap-2">
       <button
         class="bg-slate-700 text-white shadow-md p-2 w-3/12 rounded-2xl"
@@ -631,6 +599,13 @@ function toggleSound(op = "toggle") {
         @click="toggleSound()"
       >
         <Icon icon="akar-icons:music" class="inline-block w-10 h-full" />
+      </button>
+      <button
+        class="bg-slate-700 text-white shadow-md p-2 w-3/12 rounded-2xl"
+        :class="{ '!bg-red-700': timer.open }"
+        @click="timer.open = !timer.open"
+      >
+        <Icon icon="akar-icons:alarm" class="inline-block w-10 h-full" />
       </button>
       <button class="bg-slate-700 text-white shadow-md p-2 w-3/12 rounded-2xl">
         <Icon icon="akar-icons:clipboard" class="inline-block w-10 h-full" />
