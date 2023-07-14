@@ -3,13 +3,10 @@ import { ref, watch, computed, onMounted, reactive } from "vue";
 import mafia from "@/modules/mafia";
 import _ from "lodash";
 import Bottom from "@/components/Bottom.vue";
-import RoleCard from "@/components/mafia/RoleCard.vue";
-import TargetSelector from "@/components/mafia/TargetSelector.vue";
 import { Icon } from "@iconify/vue";
-import * as roles from "@/modules/roles";
-import TargetCard from "@/components/mafia/TargetCard.vue";
 import soundMafia1 from "@/assets/audio/mafia1.mp3";
 import TimerPart from "@/components/mafia/TimerPart.vue";
+import NightStory from "@/components/mafia/NightStory.vue";
 
 const data = new mafia();
 const daysBox = ref(null);
@@ -23,15 +20,7 @@ const timer = reactive({
   challenge: 20,
 });
 // const users = ref();
-const selector = reactive({
-  open: false,
-  role: {},
-  limit: 1,
-  disabled: [],
-  acts: {},
-  roundActs: {},
-  lastTime: [],
-});
+
 // const rounds = ref([]);
 // const selectedIndex = ref();
 const game = reactive({
@@ -120,7 +109,7 @@ if (_.find(game.roles, ["class", "shahrdar"])) {
 onMounted(() => {
   addRound();
   game.lastRoundNumber = game.rounds.length - 1;
-  calcActs();
+  game.calcActs();
 });
 
 function addRound() {
@@ -144,99 +133,19 @@ game.selectedStep = computed(() => {
   ]);
 });
 
-const allActs = computed(() => {
-  let all = _.cloneDeep(game.acts);
-  _.each(game.roundActs, (roleActs, key) => {
-    if (all[key]) {
-      _.each(all[key], (acts, typeKey) => {
-        acts.count += roleActs[typeKey].count;
-        acts.selfCount += roleActs[typeKey].selfCount;
-      });
-    } else {
-      all[key] = roleActs;
-    }
-  });
-  return all;
-});
-
-const userTargets = computed(() => {
+game.userTargets = computed(() => {
   return _.groupBy(_.filter(game.selectedStep?.acts, "target"), "user.userId");
 });
 
-const userActs = computed(() => {
+game.userActs = computed(() => {
   return _.groupBy(_.reject(game.selectedStep?.acts, "target"), "user.userId");
 });
 
-const userTargetBy = computed(() => {
+game.userTargetBy = computed(() => {
   return _.groupBy(
     _.filter(game.selectedStep?.acts, "target"),
     "target.userId"
   );
-});
-
-const getRoles = computed(() => {
-  if (game.selectedStep?.type == "night") {
-    let sorted = _.sortBy(game.selectedRound?.roles, "nightOrder");
-    let filtered = _.filter(sorted, "nightAwake");
-    return {
-      beforeMafia: {
-        name: "قبل از مافیا",
-        roles: _.remove(filtered, (role) => {
-          return (
-            (role.class == "nostradamus" && !game.acts[role.class]) ||
-            role.class == "saghi" ||
-            role.class == "negahban" ||
-            role.class == "khabGard"
-          );
-        }),
-      },
-      aloneMafia: {
-        name: "مافیای مستقل",
-        roles: _.remove(filtered, (role) => {
-          return role.side == "mafia" && role.options?.alone == true;
-        }),
-      },
-      mafia: {
-        name: "ساید مافیا",
-        roles: _.remove(filtered, (role) => {
-          return role.side == "mafia" && role.options?.alone != true;
-        }),
-      },
-      cities: {
-        name: "ساید شهر",
-        roles: _.remove(filtered, (role) => {
-          return (
-            role.side == "city" &&
-            role.class != "framason" &&
-            role.class != "tiler"
-          );
-        }),
-      },
-      masons: {
-        name: "فراماسون ها",
-        roles: _.filter(sorted, (role) => {
-          return role.mason;
-        }),
-      },
-      independent: {
-        name: "ساید مستفل",
-        roles: _.remove(filtered, (role) => {
-          return role.side == "independent";
-        }),
-      },
-      sleep: {
-        name: "افراد خواب",
-        roles: _.filter(sorted, (role) => {
-          return (
-            role.nightAwake == false ||
-            (role.class == "nostradamus" && game.acts[role.class])
-          );
-        }),
-      },
-    };
-  }
-
-  return game.selectedRound?.roles;
 });
 
 function nextStep() {
@@ -259,73 +168,7 @@ function nextStep() {
     toggleSound("stop");
   }
 
-  calcActs();
-}
-
-function select(role, act) {
-  selector.limit = 1;
-  if (role?.acts?.[act.type]?.targets) {
-    if (typeof role.acts[act.type].targets == "object") {
-      let playerCounts = _.filter(game.roles, { dead: false, getOut: false })
-        .length;
-      selector.limit = _.orderBy(
-        role.acts[act.type].targets,
-        "players",
-        "desc"
-      ).find((o) => o.players <= playerCounts).value;
-    } else if (typeof role.acts[act.type].targets == "number") {
-      selector.limit = role.acts[act.type].targets;
-    }
-  }
-  selector.role = role;
-  selector.open = true;
-  selector.act = act;
-  if (role.class == "tofangdar") {
-    if (act.type == "true_gun") {
-      selector.disabled = _.map(
-        _.filter(game.selectedStep.acts, (act) => {
-          return act.user == role && act.type == "fake_gun";
-        }),
-        "target"
-      );
-    } else if (act.type == "fake_gun") {
-      selector.disabled = _.map(
-        _.filter(game.selectedStep.acts, (act) => {
-          return act.user == role && act.type == "true_gun";
-        }),
-        "target"
-      );
-    }
-  }
-  selector.lastTime = _.filter(
-    game.rounds[game.lastRoundNumber - 1].steps[game.selectedStep.type].acts,
-    (a) => a.user.class == role.class
-  );
-  // selector.lastTime = _.map(selector.lastTime, "target");
-  // selector.lastTime = _.map()
-}
-
-function showTargetBtn(key, roleClass, actType) {
-  if (game.selectedStep.type == "night") {
-    if (key == "sleep") {
-      return false;
-    }
-    if (
-      roleClass != "godFather" &&
-      actType == "mafia_shot" &&
-      _.find(game.roles, { dead: false, getOut: false })
-    ) {
-      return false;
-    }
-    if (roleClass == "terrorist") {
-      return false;
-    }
-    if (roleClass == "killer" && game.lastRoundNumber % 2 != 0) {
-      return false;
-    }
-  }
-
-  return true;
+  game.calcActs();
 }
 
 /**
@@ -339,16 +182,31 @@ watch(
   { deep: false }
 );
 
-function calcActs() {
-  game.acts = calcActsStats(_.dropRight(game.rounds));
-  calcRoundActs();
-}
+game.calcActs = function () {
+  game.acts = game.calcActsStats(_.dropRight(game.rounds));
+  game.calcRoundActs();
+};
 
-function calcRoundActs() {
-  game.roundActs = calcActsStats([_.last(game.rounds)]);
-}
+game.calcRoundActs = function () {
+  game.roundActs = game.calcActsStats([_.last(game.rounds)]);
+};
 
-function calcActsStats(round) {
+game.allActs = computed(() => {
+  let all = _.cloneDeep(game.acts);
+  _.each(game.roundActs, (roleActs, key) => {
+    if (all[key]) {
+      _.each(all[key], (acts, typeKey) => {
+        acts.count += roleActs[typeKey].count;
+        acts.selfCount += roleActs[typeKey].selfCount;
+      });
+    } else {
+      all[key] = roleActs;
+    }
+  });
+  return all;
+});
+
+game.calcActsStats = function (round) {
   let actsList = _.flatMapDeep(round, (round) => {
     return _.map(round.steps, (step) => {
       return step.acts;
@@ -385,7 +243,7 @@ function calcActsStats(round) {
   return _.omitBy(actsList, (a) => {
     return _.values(a).length == 0;
   });
-}
+};
 
 function toggleSound(op = "toggle") {
   track.audio.loop = true;
@@ -447,142 +305,27 @@ function toggleSound(op = "toggle") {
     <!--
 				night step
 			-->
-    <div v-if="game.selectedStep?.type == 'night'">
-      <template v-for="(roles, key) in getRoles" :key="key">
-        <div v-if="roles.roles?.length" class="my-5">
-          <h2 class="text-lg font-bold text-slate-700 p-2">
-            {{ roles.name }}
-          </h2>
-          <hr class="border-slate-700 border-2 mb-2" />
-          <div class="flex flex-col gap-3">
-            <template v-for="(role, index) in roles.roles" :key="role.userId">
-              <hr
-                class="my-1 border-2 border-dashed border-slate-400"
-                v-if="
-                  index > 0 &&
-                  (role.side != 'mafia' || role?.options?.alone) &&
-                  key != 'sleep'
-                "
-              />
-              <RoleCard :role="role" :step="game.selectedStep">
-                <div
-                  class="bg-slate-50 border-b p-1 flex gap-2"
-                  v-if="allActs?.[role.class]"
-                >
-                  <template
-                    v-for="(item, index) in allActs[role.class]"
-                    :key="index"
-                  >
-                    <div class="flex gap-2 bg-slate-100 border p-1 rounded-md">
-                      <div>{{ item.name }} : {{ item.count }}</div>
-                      <div v-if="item.selfCount">
-                        خودش : {{ item.selfCount }}
-                      </div>
-                    </div>
-                  </template>
-                </div>
-                <div class="p-2">
-                  <div v-if="role.class == 'khabGard'" class="p-2">
-                    <div v-if="userActs[role.userId]?.[0]?.sacrifice">
-                      خودش را فدای شهر کرد 👍
-                    </div>
-                    <div
-                      v-else-if="
-                        userActs[role.userId]?.[0]?.sacrifice === false
-                      "
-                    >
-                      خودش را فدای شهر نکرد 👎
-                    </div>
-                  </div>
-                  <div v-if="role.class == 'farmande'" class="p-2">
-                    <div v-if="userActs[role.userId]?.[0]?.confirm">
-                      شات اسنایپر را تایید کرد 👍
-                    </div>
-                    <div
-                      v-else-if="userActs[role.userId]?.[0]?.confirm === false"
-                    >
-                      شات اسنایپر را تایید نکرد 👎
-                    </div>
-                  </div>
-                  <div v-if="role.class == 'janSakht'" class="p-2">
-                    <div v-if="userActs[role.userId]?.[0]?.stats">
-                      استعلام میخواهد 👍
-                    </div>
-                    <div
-                      v-else-if="userActs[role.userId]?.[0]?.stats === false"
-                    >
-                      استعلام نمی‌خواهد 👎
-                    </div>
-                  </div>
-                  <div
-                    class="flex flex-wrap gap-1 p-2 items-center"
-                    v-if="userTargets[role.userId]?.length"
-                  >
-                    <div>تارگت ها:</div>
-                    <template
-                      v-for="(item, index) in userTargets[role.userId]"
-                      :key="index"
-                    >
-                      <TargetCard :item="item" :to="true" />
-                    </template>
-                  </div>
-                  <div
-                    class="flex flex-wrap gap-1 p-2 items-center"
-                    v-if="userTargetBy[role.userId]?.length"
-                  >
-                    <div>تارگت شده توسط:</div>
-                    <template
-                      v-for="(item, index) in userTargetBy[role.userId]"
-                      :key="index"
-                    >
-                      <TargetCard :item="item" :to="false" />
-                    </template>
-                  </div>
-                  <div class="flex gap-2">
-                    <template v-for="(act, index) in role.acts" :key="act.type">
-                      <button
-                        v-if="showTargetBtn(key, role.class, act.type)"
-                        class="bg-slate-200 border border-slate-300 p-1 w-full rounded-md"
-                        @click="select(role, act)"
-                      >
-                        {{ act.name }}
-                      </button>
-                    </template>
-                  </div>
-                </div>
-              </RoleCard>
-            </template>
-          </div>
-        </div>
-      </template>
-    </div>
+    <NightStory :game="game" v-if="game.selectedStep?.type == 'night'" />
 
-    <div v-else-if="game.selectedStep?.type == 'day'">
+    <!-- <div v-else-if="game.selectedStep?.type == 'day'">
       <div class="flex flex-col gap-3">
         <template v-for="role in getRoles" :key="role.userId">
           <RoleCard :role="role"> body </RoleCard>
         </template>
       </div>
-    </div>
+    </div> -->
 
-    <div v-else>
-      other
+    <!-- <div v-else>
       <div class="flex flex-col gap-3">
         <template v-for="role in getRoles" :key="role.userId">
           <RoleCard :role="role"> body </RoleCard>
         </template>
       </div>
-    </div>
+    </div> -->
 
     <div class="h-60"></div>
   </div>
-  <TargetSelector
-    v-if="selector.open"
-    :selector="selector"
-    :list="game.selectedRound.roles"
-    :step="game.selectedStep"
-    @select="calcRoundActs()"
-  ></TargetSelector>
+
   <Bottom>
     <div class="bg-slate-50 border-t" v-show="timer.open">
       <div class="flex gep-2 justify-around">

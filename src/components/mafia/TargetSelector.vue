@@ -163,7 +163,8 @@ const emit = defineEmits(["select"]);
       </div>
 
       <div
-        class="p-2 flex gap-2 items-center overflow-x-auto overflow-y-hidden"
+        class="p-2 flex gap-2 items-center overflow-x-auto overflow-y-hidden h-28"
+        v-if="selector.lastTime?.length"
       >
         <div class="flex-shrink-0">تارگت های قبلی:</div>
         <template v-for="(item, index) in selector.lastTime" :key="index">
