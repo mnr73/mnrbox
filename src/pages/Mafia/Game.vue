@@ -9,6 +9,7 @@ import TimerPart from "@/components/mafia/TimerPart.vue";
 import NightStory from "@/components/mafia/NightStory.vue";
 import DayStory from "@/components/mafia/DayStory.vue";
 import VoteOneStory from "@/components/mafia/VoteOneStory.vue";
+import VoteTwoStory from "@/components/mafia/VoteTwoStory.vue";
 import DefenseStory from "@/components/mafia/DefenseStory.vue";
 import GhaziStory from "@/components/mafia/GhaziStory.vue";
 
@@ -448,6 +449,8 @@ function toggleSound(op = "toggle") {
     <DefenseStory :game="game" v-if="game.selectedStep?.type == 'defense'" />
 
     <GhaziStory :game="game" v-if="game.selectedStep?.type == 'ghazi'" />
+
+    <VoteTwoStory :game="game" v-if="game.selectedStep?.type == 'vote_2'" />
 
     <!-- <div v-else-if="game.selectedStep?.type == 'day'">
       <div class="flex flex-col gap-3">
