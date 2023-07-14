@@ -12,6 +12,7 @@ import VoteOneStory from "@/components/mafia/VoteOneStory.vue";
 import VoteTwoStory from "@/components/mafia/VoteTwoStory.vue";
 import DefenseStory from "@/components/mafia/DefenseStory.vue";
 import GhaziStory from "@/components/mafia/GhaziStory.vue";
+import ShahrdarFadayiStory from "@/components/mafia/ShahrdarFadayiStory.vue";
 
 const data = new mafia();
 const daysBox = ref(null);
@@ -451,6 +452,11 @@ function toggleSound(op = "toggle") {
     <GhaziStory :game="game" v-if="game.selectedStep?.type == 'ghazi'" />
 
     <VoteTwoStory :game="game" v-if="game.selectedStep?.type == 'vote_2'" />
+
+    <ShahrdarFadayiStory
+      :game="game"
+      v-if="game.selectedStep?.type == 'shahrdar'"
+    />
 
     <!-- <div v-else-if="game.selectedStep?.type == 'day'">
       <div class="flex flex-col gap-3">

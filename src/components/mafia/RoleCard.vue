@@ -49,7 +49,9 @@ const props = defineProps({
         props.game.allActs?.[role.class] &&
         (props.game.selectedStep.type == 'night' ||
           (props.game.selectedStep.type == 'ghazi' &&
-            props.role.class == 'ghazi'))
+            props.role.class == 'ghazi') ||
+          (props.game.selectedStep.type == 'shahrdar' &&
+            (props.role.class == 'shahrdar' || props.role.class == 'fadayi')))
       "
     >
       <template
