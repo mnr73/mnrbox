@@ -116,6 +116,20 @@ function khabGardAct(act) {
   emit("select");
 }
 
+function ghaziAct(act) {
+  _.remove(props.step.acts, ["user", props.selector.role]);
+  let value = {
+    user: props.selector.role,
+    type: props.selector.act.type,
+    name: props.selector.act.name,
+    term: props.selector.act.term,
+    cancelVote: act,
+  };
+  props.step.acts.push(value);
+  // userActs.value = _.filter(props.step.acts, ["user", props.selector.role]);
+  emit("select");
+}
+
 function farmandeAct(act) {
   _.remove(props.step.acts, ["user", props.selector.role]);
   let value = {
@@ -236,6 +250,35 @@ const emit = defineEmits(["select"]);
             <div class="text-sm text-slate-400">
               در این صورت مافیا در شب بیدار می‌شود
             </div>
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="
+          selector.role.class == 'ghazi' && selector.act.type == 'cancel_vote'
+        "
+        class="p-2 flex flex-col gap-2"
+      >
+        <div
+          class="bg-white p-3 rounded-md border border-t-4 flex-grow text-center cursor-pointer h-fit"
+          @click="ghaziAct(true)"
+          :class="{
+            'border-sky-500': userActs?.[0]?.cancelVote === true,
+          }"
+        >
+          <div class="text-lg">
+            <div>رای گیری را کنسل می‌کنم 👍</div>
+          </div>
+        </div>
+        <div
+          class="bg-white p-3 rounded-md border border-t-4 flex-grow text-center cursor-pointer h-fit"
+          @click="ghaziAct(false)"
+          :class="{
+            'border-sky-500': userActs?.[0]?.cancelVote === false,
+          }"
+        >
+          <div class="text-lg">
+            <div>رای گیری را کنسل نمی‌کنم 👎</div>
           </div>
         </div>
       </div>

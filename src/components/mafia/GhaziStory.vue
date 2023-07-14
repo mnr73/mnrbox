@@ -11,26 +11,23 @@ const props = defineProps({
 });
 
 const getRoles = computed(() => {
-  let roles = _.clone(props.game.selectedRound?.roles);
+  let roles = props.game.selectedRound?.roles;
   return {
+    ghazi: {
+      name: "قاضی",
+      roles: _.filter(roles, ["class", "ghazi"]),
+    },
     defense: {
       name: "دفاعیه",
-      roles: _.remove(roles, (role) => {
+      roles: _.filter(roles, (role) => {
         return Math.floor(props.game.playerCounts / 2) <= role.vote1;
       }),
-    },
-    others: {
-      name: "سایر بازیکنان",
-      roles: roles,
     },
   };
 });
 
 function showTargetBtn(roleClass, actType) {
-  if (roleClass == "cowboy") {
-    return true;
-  }
-  if (roleClass == "terrorist" && actType == "terror") {
+  if (roleClass == "ghazi") {
     return true;
   }
 
@@ -119,7 +116,7 @@ function showTargetBtn(roleClass, actType) {
   <TargetSelector
     v-if="game.selector.open"
     :selector="game.selector"
-    :list="game.selectedRound.roles"
+    :list="getRoles.defense.roles"
     :step="game.selectedStep"
     @select="props.game.calcRoundActs()"
   ></TargetSelector>

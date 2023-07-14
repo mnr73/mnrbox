@@ -47,7 +47,9 @@ const props = defineProps({
       class="bg-slate-50 border-b p-1 flex gap-2"
       v-if="
         props.game.allActs?.[role.class] &&
-        props.game.selectedStep.type == 'night'
+        (props.game.selectedStep.type == 'night' ||
+          (props.game.selectedStep.type == 'ghazi' &&
+            props.role.class == 'ghazi'))
       "
     >
       <template

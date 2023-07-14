@@ -10,6 +10,7 @@ import NightStory from "@/components/mafia/NightStory.vue";
 import DayStory from "@/components/mafia/DayStory.vue";
 import VoteOneStory from "@/components/mafia/VoteOneStory.vue";
 import DefenseStory from "@/components/mafia/DefenseStory.vue";
+import GhaziStory from "@/components/mafia/GhaziStory.vue";
 
 const data = new mafia();
 const daysBox = ref(null);
@@ -101,8 +102,7 @@ if (_.find(game.roles, ["class", "ghazi"])) {
     type: "ghazi",
     active: false,
     name: "قاضی",
-    do: null,
-    role: null,
+    acts: [],
   };
 }
 rounds_structure.steps.vote_2 = {
@@ -113,13 +113,18 @@ rounds_structure.steps.vote_2 = {
   votes: {},
   acts: [],
 };
-if (_.find(game.roles, ["class", "shahrdar"])) {
+if (
+  _.find(
+    game.roles,
+    (role) => role.class == "shahrdar" || role.class == "fadayi"
+  )
+) {
   rounds_structure.steps.shahrdar = {
     number: _.max(_.map(rounds_structure.steps, "number")) + 1,
     type: "shahrdar",
     active: false,
-    name: "شهردار",
-    veto: null,
+    name: "شهردار و فدایی",
+    acts: [],
   };
 }
 
@@ -284,7 +289,10 @@ game.select = function (role, act) {
       );
     }
   }
-  if (game.rounds[game.lastRoundNumber - 1] != undefined) {
+  if (
+    game.rounds[game.lastRoundNumber - 1]?.steps?.[game.selectedStep.type]
+      ?.acts != undefined
+  ) {
     game.selector.lastTime = _.filter(
       game.rounds[game.lastRoundNumber - 1].steps[game.selectedStep.type].acts,
       (a) => a.user.class == role.class
@@ -321,14 +329,17 @@ game.calcActsStats = function (round) {
   actsList = _.mapValues(actsList, (acts) => {
     acts = _.groupBy(acts, "type");
     acts = _.mapValues(acts, (a) => {
-      if (a[0]?.user?.class == "khabGard") {
+      if (a[0]?.type == "deep_sleep") {
         a = _.filter(a, "sacrifice");
       }
-      if (a[0]?.user?.class == "farmande") {
+      if (a[0]?.type == "confirm_sniper") {
         a = _.filter(a, "confirm");
       }
-      if (a[0]?.user?.class == "janSakht") {
+      if (a[0]?.user?.class == "janSakht" && a[0]?.type == "stats") {
         a = _.filter(a, "stats");
+      }
+      if (a[0]?.user?.class == "ghazi" && a[0]?.type == "cancel_vote") {
+        a = _.filter(a, "cancelVote");
       }
       if (a.length) {
         let result = {
@@ -414,6 +425,16 @@ function toggleSound(op = "toggle") {
         </p>
       </div>
     </div>
+    <div v-if="game.lastRoundNumber == 1 && game.selectedStep.type == 'night'">
+      <div class="p-4">
+        <h2 class="text-xl font-bold text-red-600">توجه:</h2>
+        <p>
+          اگر در شب قبل از معارفه مافیا یکدیگر را شناخته باشند بازی از امشب شروع
+          می‌شود. در غیر این صورت امشب فقط مافیا یک دیگر را می‌شناسند. فراماسون
+          یکدیگر را می‌شناسند و نوستراداموس پیشبینی می‌کند.
+        </p>
+      </div>
+    </div>
 
     <!--
 				night step
@@ -425,6 +446,8 @@ function toggleSound(op = "toggle") {
     <VoteOneStory :game="game" v-if="game.selectedStep?.type == 'vote_1'" />
 
     <DefenseStory :game="game" v-if="game.selectedStep?.type == 'defense'" />
+
+    <GhaziStory :game="game" v-if="game.selectedStep?.type == 'ghazi'" />
 
     <!-- <div v-else-if="game.selectedStep?.type == 'day'">
       <div class="flex flex-col gap-3">
