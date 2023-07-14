@@ -8,6 +8,8 @@ import soundMafia1 from "@/assets/audio/mafia1.mp3";
 import TimerPart from "@/components/mafia/TimerPart.vue";
 import NightStory from "@/components/mafia/NightStory.vue";
 import DayStory from "@/components/mafia/DayStory.vue";
+import VoteOneStory from "@/components/mafia/VoteOneStory.vue";
+import DefenseStory from "@/components/mafia/DefenseStory.vue";
 
 const data = new mafia();
 const daysBox = ref(null);
@@ -43,6 +45,11 @@ const game = reactive({
 
 // users.value = data.getActiveUsers();
 game.roles = data.getPlayers([]);
+game.roles = _.map(game.roles, (role) => {
+  role.vote1 = 0;
+  role.vote2 = 0;
+  return role;
+});
 
 // let test = new roles.godFather();
 // test.setUser(_.find(game.roles, ["class", "godFather"]));
@@ -164,6 +171,14 @@ game.userActs = computed(() => {
   return _.groupBy(_.reject(game.selectedStep?.acts, "target"), "user.userId");
 });
 
+game.playerCounts = computed(() => {
+  console.log(game.selectedRound);
+  return _.filter(game.selectedRound.roles, {
+    dead: false,
+    getOut: false,
+  }).length;
+});
+
 game.userTargetBy = computed(() => {
   if (game.selectedStep?.type == "night") {
     return _.groupBy(
@@ -195,6 +210,12 @@ function nextStep() {
     game.lastRoundNumber++;
     daysBox.value.scrollLeft = -10000;
   }
+  // if (game.selectedStep.type == "vote_1") {
+  //   game.selectedRound.roles = _.map(game.selectedRound.roles, (role) => {
+  //     role.vote1 = 0;
+  //     return role;
+  //   });
+  // }
   if (["night", "ghazi", "shahrdar"].includes(game.selectedStep.type)) {
     toggleSound("play");
   } else {
@@ -233,15 +254,11 @@ game.select = function (role, act) {
   game.selector.limit = 1;
   if (role?.acts?.[act.type]?.targets) {
     if (typeof role.acts[act.type].targets == "object") {
-      let playerCounts = _.filter(game.roles, {
-        dead: false,
-        getOut: false,
-      }).length;
       game.selector.limit = _.orderBy(
         role.acts[act.type].targets,
         "players",
         "desc"
-      ).find((o) => o.players <= playerCounts).value;
+      ).find((o) => o.players <= game.playerCounts).value;
     } else if (typeof role.acts[act.type].targets == "number") {
       game.selector.limit = role.acts[act.type].targets;
     }
@@ -404,6 +421,10 @@ function toggleSound(op = "toggle") {
     <NightStory :game="game" v-if="game.selectedStep?.type == 'night'" />
 
     <DayStory :game="game" v-if="game.selectedStep?.type == 'day'" />
+
+    <VoteOneStory :game="game" v-if="game.selectedStep?.type == 'vote_1'" />
+
+    <DefenseStory :game="game" v-if="game.selectedStep?.type == 'defense'" />
 
     <!-- <div v-else-if="game.selectedStep?.type == 'day'">
       <div class="flex flex-col gap-3">
