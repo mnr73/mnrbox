@@ -6,15 +6,15 @@ import RoleCard from "./RoleCard.vue";
 import { computed, reactive } from "vue";
 import _ from "lodash";
 
-const selector = reactive({
-  open: false,
-  role: {},
-  limit: 1,
-  disabled: [],
-  acts: {},
-  roundActs: {},
-  lastTime: [],
-});
+// const selector = reactive({
+//   open: false,
+//   role: {},
+//   limit: 1,
+//   disabled: [],
+//   acts: {},
+//   roundActs: {},
+//   lastTime: [],
+// });
 
 const props = defineProps({
   game: Object,
@@ -101,55 +101,6 @@ function showTargetBtn(key, roleClass, actType) {
 
   return true;
 }
-
-function select(role, act) {
-  selector.limit = 1;
-  if (role?.acts?.[act.type]?.targets) {
-    if (typeof role.acts[act.type].targets == "object") {
-      let playerCounts = _.filter(props.game.roles, {
-        dead: false,
-        getOut: false,
-      }).length;
-      selector.limit = _.orderBy(
-        role.acts[act.type].targets,
-        "players",
-        "desc"
-      ).find((o) => o.players <= playerCounts).value;
-    } else if (typeof role.acts[act.type].targets == "number") {
-      selector.limit = role.acts[act.type].targets;
-    }
-  }
-  selector.role = role;
-  selector.open = true;
-  selector.act = act;
-  if (role.class == "tofangdar") {
-    if (act.type == "true_gun") {
-      selector.disabled = _.map(
-        _.filter(props.game.selectedStep.acts, (act) => {
-          return act.user == role && act.type == "fake_gun";
-        }),
-        "target"
-      );
-    } else if (act.type == "fake_gun") {
-      selector.disabled = _.map(
-        _.filter(props.game.selectedStep.acts, (act) => {
-          return act.user == role && act.type == "true_gun";
-        }),
-        "target"
-      );
-    }
-  }
-  if (props.game.rounds[props.game.lastRoundNumber - 1] != undefined) {
-    selector.lastTime = _.filter(
-      props.game.rounds[props.game.lastRoundNumber - 1].steps[
-        props.game.selectedStep.type
-      ].acts,
-      (a) => a.user.class == role.class
-    );
-  }
-  // selector.lastTime = _.map(selector.lastTime, "target");
-  // selector.lastTime = _.map()
-}
 </script>
 
 <template>
@@ -180,7 +131,7 @@ function select(role, act) {
                   <button
                     v-if="showTargetBtn(key, role.class, act.type)"
                     class="bg-slate-200 border border-slate-300 p-1 w-full rounded-md"
-                    @click="select(role, act)"
+                    @click="game.select(role, act)"
                   >
                     {{ act.name }}
                   </button>
@@ -193,8 +144,8 @@ function select(role, act) {
     </template>
   </div>
   <TargetSelector
-    v-if="selector.open"
-    :selector="selector"
+    v-if="game.selector.open"
+    :selector="game.selector"
     :list="game.selectedRound.roles"
     :step="game.selectedStep"
     @select="props.game.calcRoundActs()"

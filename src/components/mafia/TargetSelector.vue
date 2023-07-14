@@ -16,7 +16,10 @@ const props = defineProps({
   step: Object,
 });
 
-if (props.selector.role.class == "farmande") {
+if (
+  props.selector.role.class == "farmande" &&
+  props.selector.act.type == "confirm_sniper"
+) {
   sniperShot.value = _.find(props.step.acts, ["type", "sniper_shot"]);
 }
 
@@ -67,6 +70,7 @@ function select(user) {
       target: u,
       type: props.selector.act.type,
       name: props.selector.act.name,
+      term: props.selector.act.term,
     };
     if (props.selector.act.type == "charm") {
       value.word = text.value;
@@ -104,6 +108,7 @@ function khabGardAct(act) {
     user: props.selector.role,
     type: props.selector.act.type,
     name: props.selector.act.name,
+    term: props.selector.act.term,
     sacrifice: act,
   };
   props.step.acts.push(value);
@@ -117,6 +122,7 @@ function farmandeAct(act) {
     user: props.selector.role,
     type: props.selector.act.type,
     name: props.selector.act.name,
+    term: props.selector.act.term,
     confirm: act,
   };
   props.step.acts.push(value);
@@ -129,6 +135,7 @@ function janSakhtAct(act) {
     user: props.selector.role,
     type: props.selector.act.type,
     name: props.selector.act.name,
+    term: props.selector.act.term,
     stats: act,
   };
   props.step.acts.push(value);
@@ -198,7 +205,9 @@ const emit = defineEmits(["select"]);
         <span>{{ bool ? "بله" : "خیر" }}</span>
       </label>
       <div
-        v-if="selector.role.class == 'khabGard'"
+        v-if="
+          selector.role.class == 'khabGard' && selector.act.type == 'deep_sleep'
+        "
         class="p-2 flex flex-col gap-2"
       >
         <div
@@ -231,7 +240,10 @@ const emit = defineEmits(["select"]);
         </div>
       </div>
       <div
-        v-else-if="selector.role.class == 'farmande'"
+        v-else-if="
+          selector.role.class == 'farmande' &&
+          selector.act.type == 'confirm_sniper'
+        "
         class="p-2 flex flex-col gap-2"
       >
         <div v-if="sniperShot">
@@ -264,7 +276,9 @@ const emit = defineEmits(["select"]);
         </template>
       </div>
       <div
-        v-else-if="selector.role.class == 'janSakht'"
+        v-else-if="
+          selector.role.class == 'janSakht' && selector.act.type == 'stats'
+        "
         class="p-2 flex flex-col gap-2"
       >
         <div class="text-xl p-2">آیا استعلام میخواهی؟</div>

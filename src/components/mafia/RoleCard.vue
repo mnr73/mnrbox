@@ -45,7 +45,10 @@ const props = defineProps({
 
     <div
       class="bg-slate-50 border-b p-1 flex gap-2"
-      v-if="props.game.allActs?.[role.class]"
+      v-if="
+        props.game.allActs?.[role.class] &&
+        props.game.selectedStep.type == 'night'
+      "
     >
       <template
         v-for="(item, index) in props.game.allActs[role.class]"
@@ -54,6 +57,8 @@ const props = defineProps({
         <div class="flex gap-2 bg-slate-100 border p-1 rounded-md">
           <div>{{ item.name }} : {{ item.count }}</div>
           <div v-if="item.selfCount">خودش : {{ item.selfCount }}</div>
+          <div v-if="item.exploded">منفجر شده : {{ item.exploded }}</div>
+          <div v-if="item.trueShots">شلیک شده : {{ item.trueShots }}</div>
         </div>
       </template>
     </div>

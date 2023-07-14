@@ -7,6 +7,7 @@ import { Icon } from "@iconify/vue";
 import soundMafia1 from "@/assets/audio/mafia1.mp3";
 import TimerPart from "@/components/mafia/TimerPart.vue";
 import NightStory from "@/components/mafia/NightStory.vue";
+import DayStory from "@/components/mafia/DayStory.vue";
 
 const data = new mafia();
 const daysBox = ref(null);
@@ -29,6 +30,15 @@ const game = reactive({
   lastRoundNumber: null,
   selectedRound: {},
   selectedStep: {},
+  selector: {
+    open: false,
+    role: {},
+    limit: 1,
+    disabled: [],
+    act: {},
+    roundActs: {},
+    lastTime: [],
+  },
 });
 
 // users.value = data.getActiveUsers();
@@ -134,7 +144,20 @@ game.selectedStep = computed(() => {
 });
 
 game.userTargets = computed(() => {
-  return _.groupBy(_.filter(game.selectedStep?.acts, "target"), "user.userId");
+  if (game.selectedStep?.type == "night") {
+    return _.groupBy(
+      _.filter(game.selectedStep?.acts, "target"),
+      "user.userId"
+    );
+  } else {
+    return _.groupBy(
+      _.filter(_.flatMap(game.selectedRound.steps, "acts"), {
+        target: {},
+        term: "day",
+      }),
+      "user.userId"
+    );
+  }
 });
 
 game.userActs = computed(() => {
@@ -142,10 +165,20 @@ game.userActs = computed(() => {
 });
 
 game.userTargetBy = computed(() => {
-  return _.groupBy(
-    _.filter(game.selectedStep?.acts, "target"),
-    "target.userId"
-  );
+  if (game.selectedStep?.type == "night") {
+    return _.groupBy(
+      _.filter(game.selectedStep?.acts, "target"),
+      "target.userId"
+    );
+  } else {
+    return _.groupBy(
+      _.filter(_.flatMap(game.selectedRound.steps, "acts"), {
+        target: {},
+        term: "day",
+      }),
+      "target.userId"
+    );
+  }
 });
 
 function nextStep() {
@@ -191,6 +224,59 @@ game.calcRoundActs = function () {
   game.roundActs = game.calcActsStats([_.last(game.rounds)]);
 };
 
+game.bombExplode = function (act) {
+  act.exploded = !act.exploded;
+  game.calcActs();
+};
+
+game.select = function (role, act) {
+  game.selector.limit = 1;
+  if (role?.acts?.[act.type]?.targets) {
+    if (typeof role.acts[act.type].targets == "object") {
+      let playerCounts = _.filter(game.roles, {
+        dead: false,
+        getOut: false,
+      }).length;
+      game.selector.limit = _.orderBy(
+        role.acts[act.type].targets,
+        "players",
+        "desc"
+      ).find((o) => o.players <= playerCounts).value;
+    } else if (typeof role.acts[act.type].targets == "number") {
+      game.selector.limit = role.acts[act.type].targets;
+    }
+  }
+  game.selector.role = role;
+  game.selector.open = true;
+  game.selector.act = act;
+  game.selector.disabled = [];
+  if (role.class == "tofangdar") {
+    if (act.type == "true_gun") {
+      game.selector.disabled = _.map(
+        _.filter(game.selectedStep.acts, (act) => {
+          return act.user == role && act.type == "fake_gun";
+        }),
+        "target"
+      );
+    } else if (act.type == "fake_gun") {
+      game.selector.disabled = _.map(
+        _.filter(game.selectedStep.acts, (act) => {
+          return act.user == role && act.type == "true_gun";
+        }),
+        "target"
+      );
+    }
+  }
+  if (game.rounds[game.lastRoundNumber - 1] != undefined) {
+    game.selector.lastTime = _.filter(
+      game.rounds[game.lastRoundNumber - 1].steps[game.selectedStep.type].acts,
+      (a) => a.user.class == role.class
+    );
+  }
+  // game.selector.lastTime = _.map(game.selector.lastTime, "target");
+  // game.selector.lastTime = _.map()
+};
+
 game.allActs = computed(() => {
   let all = _.cloneDeep(game.acts);
   _.each(game.roundActs, (roleActs, key) => {
@@ -207,12 +293,12 @@ game.allActs = computed(() => {
 });
 
 game.calcActsStats = function (round) {
-  let actsList = _.flatMapDeep(round, (round) => {
+  let actsOrgList = _.flatMapDeep(round, (round) => {
     return _.map(round.steps, (step) => {
       return step.acts;
     });
   });
-  actsList = _.filter(actsList);
+  let actsList = _.filter(actsOrgList);
   actsList = _.groupBy(actsList, "user.class");
 
   actsList = _.mapValues(actsList, (acts) => {
@@ -228,11 +314,21 @@ game.calcActsStats = function (round) {
         a = _.filter(a, "stats");
       }
       if (a.length) {
-        return {
+        let result = {
           count: a.length,
           name: a[0].name,
           selfCount: a.filter((x) => x.user == x.target).length,
         };
+        if (a[0].type == "bomb") {
+          result.exploded = a.filter((x) => x.exploded).length;
+        }
+        if (a[0].type == "true_gun") {
+          result.trueShots = actsOrgList.filter(
+            (x) => x.type == "shot_true_gun"
+          ).length;
+        }
+
+        return result;
       }
     });
     return _.omitBy(acts, (a) => {
@@ -306,6 +402,8 @@ function toggleSound(op = "toggle") {
 				night step
 			-->
     <NightStory :game="game" v-if="game.selectedStep?.type == 'night'" />
+
+    <DayStory :game="game" v-if="game.selectedStep?.type == 'day'" />
 
     <!-- <div v-else-if="game.selectedStep?.type == 'day'">
       <div class="flex flex-col gap-3">

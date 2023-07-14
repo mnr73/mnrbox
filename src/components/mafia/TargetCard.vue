@@ -45,5 +45,20 @@ const props = defineProps({
     <span class="text-red-500 font-bold" v-if="item.type == 'fake_gun'">
       (مشقی)
     </span>
+    <span
+      class="text-emerald-500 font-bold"
+      v-if="item.type == 'shot_true_gun'"
+    >
+      (تیر واقعی تفنگدار)
+    </span>
+    <span class="text-red-500 font-bold" v-if="item.type == 'shot_fake_gun'">
+      (تیر مشقی تفنگدار)
+    </span>
+    <span class="text-red-500 font-bold" v-if="item.type == 'mafia_shot'">
+      (شات مافیا)
+    </span>
+    <span class="text-sky-500 font-bold" v-if="item.exploded">
+      (منفجر شد)
+    </span>
   </div>
 </template>

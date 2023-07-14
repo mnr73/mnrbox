@@ -200,7 +200,7 @@ export class dozd extends roles {
 				name: "دزدیدن از",
 				kill: false,
 				deep: false,
-				term: 'night',
+				term: 'day',
 				inventory: 100,
 				targets: 1,
 			},
@@ -209,7 +209,7 @@ export class dozd extends roles {
 				name: "زدن به",
 				kill: false,
 				deep: false,
-				term: 'night',
+				term: 'day',
 				inventory: 100,
 				targets: 1,
 			}
@@ -358,7 +358,7 @@ export class samSaz extends roles {
 				name: "مسموم کردن",
 				kill: true,
 				deep: true,
-				term: 'all',
+				term: 'day',
 				inventory: 1,
 				targets: 1,
 			}
@@ -807,7 +807,7 @@ export class saghi extends roles {
 				name: "مست کردن",
 				kill: false,
 				deep: false,
-				term: 'all',
+				term: 'day',
 				inventory: 100,
 				targets: 1
 			}
@@ -830,7 +830,7 @@ export class fadayi extends roles {
 				name: "فدا شدن",
 				kill: false,
 				deep: false,
-				term: 'all'
+				term: 'day'
 			}
 		}
 	}
@@ -874,7 +874,7 @@ export class keshish extends roles {
 				name: "دعای روحانی",
 				kill: false,
 				deep: false,
-				term: 'all',
+				term: 'day',
 				inventory: 100,
 				targets: [
 					{ players: 20, value: 3 },
@@ -982,7 +982,7 @@ export class framason extends roles {
 				name: "بیدار کردن",
 				kill: false,
 				deep: false,
-				term: 'day',
+				term: 'night',
 				inventory: 1,
 				targets: 1
 			}
@@ -1004,7 +1004,7 @@ export class tiler extends roles {
 				name: "بیدار کردن",
 				kill: false,
 				deep: false,
-				term: 'day',
+				term: 'night',
 				inventory: 1,
 				targets: 1
 			}
