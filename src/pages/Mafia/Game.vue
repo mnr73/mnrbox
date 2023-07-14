@@ -8,9 +8,14 @@ import TargetSelector from "@/components/mafia/TargetSelector.vue";
 import { Icon } from "@iconify/vue";
 import * as roles from "@/modules/roles";
 import TargetCard from "@/components/mafia/TargetCard.vue";
+import soundMafia1 from "@/assets/audio/mafia1.mp3";
 
 const data = new mafia();
 const daysBox = ref(null);
+const track = reactive({
+  audio: new Audio(soundMafia1),
+  paused: true,
+});
 // const users = ref();
 const selector = reactive({
   open: false,
@@ -108,10 +113,20 @@ if (_.find(game.roles, ["class", "shahrdar"])) {
 }
 
 onMounted(() => {
-  game.rounds.push(_.cloneDeep(rounds_structure));
+  addRound();
   game.lastRoundNumber = game.rounds.length - 1;
   calcActs();
 });
+
+function addRound() {
+  if (game.rounds.length == 0) {
+    let round = _.cloneDeep(rounds_structure);
+    round.steps = _.pick(round.steps, ["night", "day"]);
+    game.rounds.push(round);
+  } else {
+    game.rounds.push(_.cloneDeep(rounds_structure));
+  }
+}
 
 game.selectedRound = computed(() => {
   return game.rounds[game.lastRoundNumber];
@@ -221,26 +236,23 @@ const getRoles = computed(() => {
 
 function nextStep() {
   scroll(0, 0);
-  if (game.lastRoundNumber == 0) {
-    if (game.selectedRound.stepNumber === 0) {
-      game.selectedRound.stepNumber = 1;
-      game.selectedRound.steps.day.active = true;
-      return;
-    }
+  let maxNumber = _.max(_.map(game.selectedRound.steps, "number"));
+  if (game.selectedRound.stepNumber < maxNumber) {
+    game.selectedRound.stepNumber++;
+    _.find(game.selectedRound.steps, [
+      "number",
+      game.selectedRound.stepNumber,
+    ]).active = true;
   } else {
-    let maxNumber = _.max(_.map(game.selectedRound.steps, "number"));
-    if (game.selectedRound.stepNumber < maxNumber) {
-      game.selectedRound.stepNumber++;
-      _.find(game.selectedRound.steps, [
-        "number",
-        game.selectedRound.stepNumber,
-      ]).active = true;
-      return;
-    }
+    addRound();
+    game.lastRoundNumber++;
+    daysBox.value.scrollLeft = -10000;
   }
-  game.rounds.push(_.cloneDeep(rounds_structure));
-  game.lastRoundNumber++;
-  daysBox.value.scrollLeft = -10000;
+  if (["night", "ghazi", "shahrdar"].includes(game.selectedStep.type)) {
+    toggleSound("play");
+  } else {
+    toggleSound("stop");
+  }
 
   calcActs();
 }
@@ -376,6 +388,16 @@ function calcActsStats(round) {
 //   },
 //   { deep: false }
 // );
+function toggleSound(op = "toggle") {
+  track.audio.loop = true;
+  if (track.paused && (op == "toggle" || op == "play")) {
+    track.audio.currentTime = 0;
+    track.audio.play();
+  } else if (track.paused == false && (op == "toggle" || op == "stop")) {
+    track.audio.pause();
+  }
+  track.paused = { toggle: !track.paused, stop: true, play: false }[op];
+}
 </script>
 
 <template>
@@ -435,11 +457,11 @@ function calcActsStats(round) {
       </div>
     </div>
 
-    <div v-else class="flex flex-col gap-3">
+    <div v-else class="">
       <!--
 				night step
 			-->
-      <div class="" v-if="game.selectedStep?.type == 'night'">
+      <div v-if="game.selectedStep?.type == 'night'">
         <template v-for="(roles, key) in getRoles" :key="key">
           <div v-if="roles.roles?.length" class="my-5">
             <h2 class="text-lg font-bold text-slate-700 p-2">
@@ -556,9 +578,40 @@ function calcActsStats(round) {
         </template>
       </div>
 
-      <template v-else v-for="role in getRoles" :key="role.userId">
-        <RoleCard :role="role"> body </RoleCard>
-      </template>
+      <div v-else-if="game.selectedStep?.type == 'day'">
+        <div class="flex gap-2 my-2">
+          <label>
+            زمان صحبت (ثانیه)
+            <input
+              type="number"
+              placeholder="زمان صحبت"
+              class="p-2 border rounded-md w-full"
+            />
+          </label>
+          <label>
+            زمان چالش (ثانیه)
+            <input
+              type="number"
+              placeholder="زمان چالش"
+              class="p-2 border rounded-md w-full"
+            />
+          </label>
+        </div>
+        <div class="flex flex-col gap-3">
+          <template v-for="role in getRoles" :key="role.userId">
+            <RoleCard :role="role"> body </RoleCard>
+          </template>
+        </div>
+      </div>
+
+      <div v-else>
+        other
+        <div class="flex flex-col gap-3">
+          <template v-for="role in getRoles" :key="role.userId">
+            <RoleCard :role="role"> body </RoleCard>
+          </template>
+        </div>
+      </div>
 
       <div class="h-60"></div>
     </div>
@@ -572,17 +625,28 @@ function calcActsStats(round) {
   ></TargetSelector>
   <Bottom>
     <div class="p-2 border-t flex h-16 gap-2">
-      <button class="bg-slate-700 text-white shadow-md p-2 w-3/12 rounded-2xl">
-        موزیک
+      <button
+        class="bg-slate-700 text-white shadow-md p-2 w-3/12 rounded-2xl"
+        :class="{ '!bg-red-700': !track.paused }"
+        @click="toggleSound()"
+      >
+        <Icon icon="akar-icons:music" class="inline-block w-10 h-full" />
       </button>
       <button class="bg-slate-700 text-white shadow-md p-2 w-3/12 rounded-2xl">
-        تایمر
+        <Icon icon="akar-icons:clipboard" class="inline-block w-10 h-full" />
+      </button>
+      <button class="bg-slate-700 text-white shadow-md p-2 w-3/12 rounded-2xl">
+        <Icon icon="akar-icons:people-group" class="inline-block w-10 h-full" />
       </button>
       <button
         class="bg-slate-700 text-white shadow-md p-2 w-6/12 rounded-2xl"
         @click="nextStep"
       >
-        مرحله بعد
+        بعدی
+        <Icon
+          icon="akar-icons:arrow-left-thick"
+          class="inline-block w-10 h-full"
+        />
       </button>
     </div>
   </Bottom>
