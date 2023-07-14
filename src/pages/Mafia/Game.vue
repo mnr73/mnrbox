@@ -13,6 +13,7 @@ import VoteTwoStory from "@/components/mafia/VoteTwoStory.vue";
 import DefenseStory from "@/components/mafia/DefenseStory.vue";
 import GhaziStory from "@/components/mafia/GhaziStory.vue";
 import ShahrdarFadayiStory from "@/components/mafia/ShahrdarFadayiStory.vue";
+import UserList from "@/components/mafia/UserList.vue";
 
 const data = new mafia();
 const daysBox = ref(null);
@@ -24,6 +25,9 @@ const timer = reactive({
   open: false,
   speak: 40,
   challenge: 20,
+});
+const userList = reactive({
+  open: false,
 });
 // const users = ref();
 
@@ -179,7 +183,6 @@ game.userActs = computed(() => {
 });
 
 game.playerCounts = computed(() => {
-  console.log(game.selectedRound);
   return _.filter(game.selectedRound.roles, {
     dead: false,
     getOut: false,
@@ -238,7 +241,13 @@ function nextStep() {
 watch(
   () => game.lastRoundNumber,
   (newValue, oldValue) => {
-    game.rounds[game.lastRoundNumber].roles = _.cloneDeep(game.roles);
+    if (game.lastRoundNumber == 0) {
+      game.rounds[game.lastRoundNumber].roles = _.cloneDeep(game.roles);
+    } else {
+      game.rounds[game.lastRoundNumber].roles = _.cloneDeep(
+        game.rounds[game.lastRoundNumber - 1].roles
+      );
+    }
   },
   { deep: false }
 );
@@ -477,6 +486,8 @@ function toggleSound(op = "toggle") {
     <div class="h-60"></div>
   </div>
 
+  <UserList :game="game" :userList="userList" v-show="userList.open" />
+
   <Bottom>
     <div class="bg-slate-50 border-t" v-show="timer.open">
       <div class="flex gep-2 justify-around">
@@ -504,7 +515,11 @@ function toggleSound(op = "toggle") {
       <button class="bg-slate-700 text-white shadow-md p-2 w-3/12 rounded-2xl">
         <Icon icon="akar-icons:clipboard" class="inline-block w-10 h-full" />
       </button>
-      <button class="bg-slate-700 text-white shadow-md p-2 w-3/12 rounded-2xl">
+      <button
+        class="bg-slate-700 text-white shadow-md p-2 w-3/12 rounded-2xl"
+        :class="{ '!bg-red-700': userList.open }"
+        @click="userList.open = true"
+      >
         <Icon icon="akar-icons:people-group" class="inline-block w-10 h-full" />
       </button>
       <button
