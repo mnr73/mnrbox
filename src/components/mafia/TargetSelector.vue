@@ -16,6 +16,12 @@ const props = defineProps({
   step: Object,
 });
 
+const getRoles = computed(() => {
+  // return props.game.selectedRound?.roles;
+  let sorted = _.sortBy(props.list, ["dead", "getOut"], ["desc", "desc"]);
+  return sorted;
+});
+
 if (
   props.selector.role.class == "farmande" &&
   props.selector.act.type == "confirm_sniper"
@@ -351,17 +357,29 @@ const emit = defineEmits(["select"]);
       <div class="flex flex-wrap gap-2 p-2 overflow-y-auto" v-else>
         <div
           class="bg-white p-3 rounded-md border border-t-4 flex-grow text-center cursor-pointer h-fit"
-          v-for="(role, index) in props.list"
+          v-for="(role, index) in getRoles"
           :key="role.userId"
           @click="select(role)"
           :class="{
             'border-sky-500': selectedUsers.find((user) => user == role),
             'border-red-500': selector.disabled.find((user) => user == role),
             'opacity-60': selector.disabled.find((user) => user == role),
+            'opacity-60': role.dead || role.getOut,
           }"
         >
           <div class="text-lg">
-            <div>{{ role.userName }}</div>
+            <div class="flex gap-1 justify-center">
+              <div class="border-e border-slate-400 px-1 me-1" v-if="role.dead">
+                <Icon icon="mdi:dead" class="w-6 h-full" />
+              </div>
+              <div
+                class="border-e border-slate-400 px-1 me-1"
+                v-if="role.getOut"
+              >
+                <Icon icon="majesticons:door-exit" class="w-6 h-full" />
+              </div>
+              <div>{{ role.userName }}</div>
+            </div>
             <div class="text-sm text-slate-400">
               <Icon :icon="role.icon" class="inline-block h-full w-5 me-1" />{{
                 role.roleName

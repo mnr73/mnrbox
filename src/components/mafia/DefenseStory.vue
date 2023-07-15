@@ -12,6 +12,9 @@ const props = defineProps({
 
 const getRoles = computed(() => {
   let roles = _.clone(props.game.selectedRound?.roles);
+  let removed = _.remove(roles, (role) => {
+    return role.dead || role.getOut;
+  });
   return {
     defense: {
       name: "دفاعیه",
@@ -22,6 +25,10 @@ const getRoles = computed(() => {
     others: {
       name: "سایر بازیکنان",
       roles: roles,
+    },
+    removed: {
+      name: "خارج شده ها",
+      roles: removed,
     },
   };
 });

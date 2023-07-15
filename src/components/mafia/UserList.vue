@@ -70,7 +70,7 @@ function close() {
               </button>
               <button
                 class="w-full text-center border rounded-md p-2 bg-slate-100"
-                :class="{ '!text-white': role.getOut }"
+                :class="{ '!bg-sky-500 !text-white': role.getOut }"
                 @click="role.getOut = !role.getOut"
               >
                 <div>اخراج</div>

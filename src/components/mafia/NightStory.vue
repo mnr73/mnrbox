@@ -81,21 +81,24 @@ const getRoles = computed(() => {
   };
 });
 
-function showTargetBtn(key, roleClass, actType) {
+function showTargetBtn(key, role, actType) {
+  if (role.dead || role.getOut) {
+    return false;
+  }
   if (key == "sleep") {
     return false;
   }
   if (
-    roleClass != "godFather" &&
+    role.class != "godFather" &&
     actType == "mafia_shot" &&
     _.find(props.game.roles, { dead: false, getOut: false })
   ) {
     return false;
   }
-  if (roleClass == "terrorist") {
+  if (role.class == "terrorist") {
     return false;
   }
-  if (roleClass == "killer" && props.game.lastRoundNumber % 2 != 0) {
+  if (role.class == "killer" && props.game.lastRoundNumber % 2 != 0) {
     return false;
   }
 
@@ -129,7 +132,7 @@ function showTargetBtn(key, roleClass, actType) {
               <div class="flex gap-2 p-2 pt-0">
                 <template v-for="(act, index) in role.acts" :key="act.type">
                   <button
-                    v-if="showTargetBtn(key, role.class, act.type)"
+                    v-if="showTargetBtn(key, role, act.type)"
                     class="bg-slate-200 border border-slate-300 p-1 w-full rounded-md"
                     @click="game.select(role, act)"
                   >
