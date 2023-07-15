@@ -33,10 +33,7 @@ const userList = reactive({
 const roundList = reactive({
   open: false,
 });
-// const users = ref();
 
-// const rounds = ref([]);
-// const selectedIndex = ref();
 const game = reactive({
   rounds: [],
   roles: [],
@@ -54,22 +51,12 @@ const game = reactive({
   },
 });
 
-// users.value = data.getActiveUsers();
 game.roles = data.getPlayers([]);
 game.roles = _.map(game.roles, (role) => {
   role.vote1 = 0;
   role.vote2 = 0;
   return role;
 });
-
-// let test = new roles.godFather();
-// test.setUser(_.find(game.roles, ["class", "godFather"]));
-// console.log(test.property);
-
-// _.each(game.roles, (role) => {
-//   role.obj = new roles[role.class]();
-//   role.obj.setUser(role);
-// });
 
 let rounds_structure = {
   stepNumber: 0,
@@ -224,12 +211,6 @@ function nextStep() {
     game.lastRoundNumber++;
     daysBox.value.scrollLeft = -10000;
   }
-  // if (game.selectedStep.type == "vote_1") {
-  //   game.selectedRound.roles = _.map(game.selectedRound.roles, (role) => {
-  //     role.vote1 = 0;
-  //     return role;
-  //   });
-  // }
   if (["night", "ghazi", "shahrdar"].includes(game.selectedStep.type)) {
     toggleSound("play");
   } else {
@@ -313,8 +294,6 @@ game.select = function (role, act) {
       (a) => a.user.class == role.class
     );
   }
-  // game.selector.lastTime = _.map(game.selector.lastTime, "target");
-  // game.selector.lastTime = _.map()
 };
 
 game.allActs = computed(() => {
@@ -470,22 +449,6 @@ function toggleSound(op = "toggle") {
       :game="game"
       v-if="game.selectedStep?.type == 'shahrdar'"
     />
-
-    <!-- <div v-else-if="game.selectedStep?.type == 'day'">
-      <div class="flex flex-col gap-3">
-        <template v-for="role in getRoles" :key="role.userId">
-          <RoleCard :role="role"> body </RoleCard>
-        </template>
-      </div>
-    </div> -->
-
-    <!-- <div v-else>
-      <div class="flex flex-col gap-3">
-        <template v-for="role in getRoles" :key="role.userId">
-          <RoleCard :role="role"> body </RoleCard>
-        </template>
-      </div>
-    </div> -->
 
     <div class="h-60"></div>
   </div>

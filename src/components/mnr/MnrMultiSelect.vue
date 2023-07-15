@@ -32,7 +32,11 @@
         height: 'calc(2.9rem + ' + tagsHeight + 'px)',
       }"
     >
-      <div class="mnr-frame" @mouseover="hover = true" @mouseout="hover = false">
+      <div
+        class="mnr-frame"
+        @mouseover="hover = true"
+        @mouseout="hover = false"
+      >
         <div
           class="mnr-tags"
           ref="tags"
@@ -228,21 +232,22 @@ export default {
       } else {
         return this.options;
       }
-      // console.log(this.$refs.input);
     },
     placeHolderText() {
       if (this.modelValue.length > 1) {
         return this.someText || this.modelValue.length + " items";
       } else if (this.modelValue.length == 1) {
-        return this.options.find((item) => item[this.oValue] == this.modelValue[0])[
-          this.oText
-        ];
+        return this.options.find(
+          (item) => item[this.oValue] == this.modelValue[0]
+        )[this.oText];
       } else {
         return this.placeholder;
       }
     },
     selectedItems() {
-      return this.options.filter((item) => this.modelValue.includes(item[this.oValue]));
+      return this.options.filter((item) =>
+        this.modelValue.includes(item[this.oValue])
+      );
     },
   },
   watch: {
@@ -268,11 +273,9 @@ export default {
   },
   methods: {
     clickHandler(e) {
-      // console.log("test", e);
       if (e.path) {
         if (!e.path.includes(this.$refs.body)) {
           this.openList = false;
-          // console.log("out");
         }
       } else {
         if (this.hover == false) {

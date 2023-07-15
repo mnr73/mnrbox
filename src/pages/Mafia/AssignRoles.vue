@@ -41,7 +41,6 @@ const openUser = computed(() => {
 });
 
 const openRole = computed(() => {
-  console.log(roles.value, openUser.value?.id);
   return _.find(roles.value, ["userId", openUser.value?.id]);
 });
 </script>

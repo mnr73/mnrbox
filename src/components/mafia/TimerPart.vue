@@ -17,8 +17,7 @@ const timer = reactive({
 });
 
 function start() {
-  console.log("start time");
-  console.log(clearInterval(time));
+  clearInterval(time);
   if (!timer.paused) {
     timer.remain = timer.time;
   }
