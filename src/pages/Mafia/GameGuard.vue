@@ -10,8 +10,8 @@ const data = new mafia();
 
 function endGame() {
   data.deleteGame();
-  data.deletePlayers();
-  router.push("/mafia");
+  router.replace("/mafia");
+  // window.location.replace("/mafia");
 }
 </script>
 
