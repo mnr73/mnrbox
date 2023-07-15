@@ -14,6 +14,7 @@ import DefenseStory from "@/components/mafia/DefenseStory.vue";
 import GhaziStory from "@/components/mafia/GhaziStory.vue";
 import ShahrdarFadayiStory from "@/components/mafia/ShahrdarFadayiStory.vue";
 import UserList from "@/components/mafia/UserList.vue";
+import RoundDetails from "@/components/mafia/RoundDetails.vue";
 
 const data = new mafia();
 const daysBox = ref(null);
@@ -27,6 +28,9 @@ const timer = reactive({
   challenge: 20,
 });
 const userList = reactive({
+  open: false,
+});
+const roundList = reactive({
   open: false,
 });
 // const users = ref();
@@ -487,6 +491,7 @@ function toggleSound(op = "toggle") {
   </div>
 
   <UserList :game="game" :userList="userList" v-show="userList.open" />
+  <RoundDetails :game="game" :userList="roundList" v-show="roundList.open" />
 
   <Bottom>
     <div class="bg-slate-50 border-t" v-show="timer.open">
@@ -512,7 +517,11 @@ function toggleSound(op = "toggle") {
       >
         <Icon icon="akar-icons:alarm" class="inline-block w-10 h-full" />
       </button>
-      <button class="bg-slate-700 text-white shadow-md p-2 w-3/12 rounded-2xl">
+      <button
+        class="bg-slate-700 text-white shadow-md p-2 w-3/12 rounded-2xl"
+        :class="{ '!bg-red-700': roundList.open }"
+        @click="roundList.open = true"
+      >
         <Icon icon="akar-icons:clipboard" class="inline-block w-10 h-full" />
       </button>
       <button

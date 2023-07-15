@@ -254,7 +254,7 @@ const emit = defineEmits(["select"]);
         </div>
       </div>
       <div
-        v-if="
+        v-else-if="
           selector.role.class == 'ghazi' && selector.act.type == 'cancel_vote'
         "
         class="p-2 flex flex-col gap-2"
