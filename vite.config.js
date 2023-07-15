@@ -1,13 +1,41 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
+import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [vue()],
+	plugins: [
+		vue(),
+		VitePWA({
+			registerType: 'autoUpdate',
+			devOptions: {
+				enabled: true
+			},
+			includeAssets: ['mafia.svg', 'audio/end.ogg', 'audio/mafia1.mp3'],
+			manifest: {
+				name: 'MNR box',
+				short_name: 'MNRbox',
+				description: 'useful utility',
+				theme_color: '#65a30d',
+				icons: [
+					{
+						src: 'pwa-192x192.png',
+						sizes: '192x192',
+						type: 'image/png'
+					},
+					{
+						src: 'pwa-512x512.png',
+						sizes: '512x512',
+						type: 'image/png'
+					}
+				]
+			}
+		})
+	],
 	resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  }
+		alias: {
+			'@': path.resolve(__dirname, './src'),
+		},
+	}
 })
