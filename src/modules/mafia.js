@@ -54,6 +54,11 @@ class mafia {
 		return this.mafia.players;
 	}
 
+	deletePlayers() {
+		delete this.mafia.players
+		this.update()
+	}
+
 	updateGame(game) {
 		this.mafia.game = _.pick(game, ['lastRoundNumber', 'rounds', 'end'])
 		this.update()
