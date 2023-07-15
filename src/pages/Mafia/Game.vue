@@ -63,6 +63,7 @@ game.roles = data.getPlayers([]);
 let rounds_structure = roundStructure(game);
 
 onMounted(() => {
+  data.deleteGame();
   let savedGame = data.getGame();
 
   if (savedGame != undefined && savedGame?.end === false) {
@@ -242,7 +243,7 @@ game.select = function (role, act) {
   ) {
     game.selector.lastTime = _.filter(
       game.rounds[game.lastRoundNumber - 1].steps[game.selectedStep.type].acts,
-      (a) => a.user.class == role.class
+      (a) => a.user.class == role.class && a.type == act.type
     );
   }
 };
