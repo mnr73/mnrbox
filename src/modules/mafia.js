@@ -63,6 +63,23 @@ class mafia {
 	getSetting() {
 		return this.mafia.setting;
 	}
+
+	updateGame(game) {
+		console.log('update game');
+		this.mafia.game = _.pick(game, ['lastRoundNumber', 'rounds', 'end'])
+		this.update()
+		return this.getGame();
+	}
+
+	getGame() {
+		console.log('get game');
+		return this.mafia.game;
+	}
+
+	deleteGame() {
+		delete this.mafia.game
+		this.update()
+	}
 }
 
 export default mafia;

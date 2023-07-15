@@ -36,6 +36,7 @@ const roundList = reactive({
 
 const game = reactive({
   rounds: [],
+  end: false,
   roles: [],
   lastRoundNumber: null,
   selectedRound: {},
@@ -52,11 +53,11 @@ const game = reactive({
 });
 
 game.roles = data.getPlayers([]);
-game.roles = _.map(game.roles, (role) => {
-  role.vote1 = 0;
-  role.vote2 = 0;
-  return role;
-});
+// game.roles = _.map(game.roles, (role) => {
+//   role.vote1 = 0;
+//   role.vote2 = 0;
+//   return role;
+// });
 
 let rounds_structure = {
   stepNumber: 0,
@@ -126,9 +127,20 @@ if (
 }
 
 onMounted(() => {
-  addRound();
-  game.lastRoundNumber = game.rounds.length - 1;
+  let savedGame = data.getGame();
+
+  if (savedGame != undefined && savedGame?.end === false) {
+    game.end = savedGame.end;
+    game.lastRoundNumber = savedGame.lastRoundNumber;
+    game.rounds = savedGame.rounds;
+  } else {
+    addRound();
+    game.lastRoundNumber = game.rounds.length - 1;
+  }
+
+  // console.log(game);
   game.calcActs();
+  // data.updateGame(game);
 });
 
 function addRound() {
@@ -216,7 +228,7 @@ function nextStep() {
   } else {
     toggleSound("stop");
   }
-
+  data.updateGame(game);
   game.calcActs();
 }
 
@@ -244,6 +256,7 @@ game.calcActs = function () {
 
 game.calcRoundActs = function () {
   game.roundActs = game.calcActsStats([_.last(game.rounds)]);
+  data.updateGame(game);
 };
 
 game.bombExplode = function (act) {
