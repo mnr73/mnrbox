@@ -104,23 +104,18 @@ import {
 
 export function createRouter() {
 	const router = _createRouter({
-		// use appropriate history implementation for server/client
-		// import.meta.env.SSR is injected by Vite.
 		history: createWebHistory(),
 		routes
 	});
-	let data = new mafia();
-	router.beforeEach((to, from) => {
-		let savedGame = data.getGame();
-		if (savedGame != undefined && savedGame?.end === false) {
-			if (to.meta.guard == "active_game") {
+	router.beforeEach(async (to, from) => {
+		if (to.meta.guard == "active_game") {
+			// await new Promise(r => setTimeout(r, 1000));
+			let data = new mafia();
+			let savedGame = data.getGame();
+			if (savedGame != undefined && savedGame?.end === false) {
 				return { name: 'mafia-game-guard' }
 			}
-			// return false
 		}
-		// ...
-		// explicitly return false to cancel the navigation
-		// return false
 	})
 
 	return router;
