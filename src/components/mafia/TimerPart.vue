@@ -17,10 +17,12 @@ const timer = reactive({
 });
 
 function start() {
-  clearInterval(time);
+  console.log("start time");
+  console.log(clearInterval(time));
   if (!timer.paused) {
     timer.remain = timer.time;
   }
+  timer.paused = false;
   time = setInterval(() => {
     timer.remain -= 1;
     if (timer.remain <= 0) {

@@ -35,35 +35,35 @@ const props = defineProps({
             <div class="flex p-2 gap-2">
               <button
                 class="w-full text-center border rounded-md p-2 bg-slate-100"
-                :class="{ 'bg-sky-500 text-white': role.dead }"
+                :class="{ '!bg-sky-500 !text-white': role.dead }"
                 @click="role.dead = !role.dead"
               >
                 <div>کشته</div>
               </button>
               <button
                 class="w-full text-center border rounded-md p-2 bg-slate-100"
-                :class="{ 'bg-sky-500 text-white': role.getOut }"
+                :class="{ '!text-white': role.getOut }"
                 @click="role.getOut = !role.getOut"
               >
                 <div>اخراج</div>
               </button>
               <button
                 class="w-full text-center border rounded-md p-2 bg-slate-100"
-                :class="{ 'bg-sky-500 text-white': role.beSimple }"
+                :class="{ '!bg-sky-500 !text-white': role.beSimple }"
                 @click="role.beSimple = !role.beSimple"
               >
                 <div>ساده</div>
               </button>
               <button
                 class="w-full text-center border rounded-md p-2 bg-slate-100"
-                :class="{ 'bg-sky-500 text-white': role.mason }"
+                :class="{ '!bg-sky-500 !text-white': role.mason }"
                 @click="role.mason = !role.mason"
               >
                 <div>ماسون</div>
               </button>
               <button
                 class="w-full text-center border rounded-md p-2 bg-slate-100"
-                :class="{ 'bg-sky-500 text-white': role.bought }"
+                :class="{ '!bg-sky-500 !text-white': role.bought }"
                 @click="role.bought = !role.bought"
               >
                 <div>خریداری</div>
