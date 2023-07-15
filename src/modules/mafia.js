@@ -65,14 +65,12 @@ class mafia {
 	}
 
 	updateGame(game) {
-		console.log('update game');
 		this.mafia.game = _.pick(game, ['lastRoundNumber', 'rounds', 'end'])
 		this.update()
 		return this.getGame();
 	}
 
 	getGame() {
-		console.log('get game');
 		return this.mafia.game;
 	}
 
