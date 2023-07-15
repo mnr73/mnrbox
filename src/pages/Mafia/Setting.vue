@@ -5,33 +5,56 @@ import { Icon } from "@iconify/vue";
 import { ref, watch } from "vue";
 import mafia from "@/modules/mafia";
 
-const settings = ref({
-	zeroNight: false,
-	speakTime: 30,
-	giftTime: 20,
-});
+const data = new mafia();
 
-const data = new mafia;
+function deleteAll() {
+  localStorage.removeItem("mafia");
+}
 
-settings.value = data.getSetting() || settings.value
+// function deleteUsers() {
+// 	data.deleteUser
+// }
 
-watch(
-	() => settings.value,
-	(newValue, oldValue) => {
-		data.updateSetting(settings.value)
-	},
-	{ deep: true }
-)
+// function deleteRoles() {}
 </script>
 <template>
-	<div class="sm:p-5 p-2">
-		<div class="bg-white sm:p-5 p-2 rounded-sm border">
-			<MnrCheckSlider v-model:checked="settings.zeroNight">شب قبل از معارفه. در بعضی از بازی ها مافیا قبل از روز معارفه
-				بیدار شده و یک دیگر را می‌شناسند.
-			</MnrCheckSlider>
-			<hr class="my-2">
-			<MnrNumber title="زمان صحبت" v-model="settings.speakTime" />
-			<MnrNumber title="زمان چالش" v-model="settings.giftTime" class="mt-3" />
-		</div>
-	</div>
+  <div class="p-2">
+    <div class="p-5 max-w-2xl bg-white border mt-10 mx-auto">
+      <!-- <div class="my-2">
+        <h2 class="font-bold text-lg">ریست کردن نقش های بازی</h2>
+        <p class="mt-5">
+          با انجام این کار کل نقش های بازی و تنظیمات آن به حالت پیشفرض ریست
+          می‌شود
+        </p>
+        <button class="bg-red-500 text-white rounded-md p-2 mt-5" @click="deleteRoles()">
+          ریست کردن نقش ها
+        </button>
+      </div>
+
+      <div class="my-10">
+        <h2 class="font-bold text-lg">حذف دیتا کاربران</h2>
+        <p class="mt-2">
+          با این کار کل دیتا کاربران در حافظه پاک می‌شود و باید از ابتدا آنها را
+          تعریف کنید
+        </p>
+        <button class="bg-red-500 text-white rounded-md p-2 mt-5" @click="deleteUsers()">
+          حذف کاربران
+        </button>
+      </div> -->
+
+      <div class="my-10">
+        <h2 class="font-bold text-lg">حذف همه دیتا</h2>
+        <p class="mt-2">
+          تمام دیتا ذخیره شده بازی مافیا حذف می‌شود. از جمله کاربران. نقش ها،
+          بازی و ...
+        </p>
+        <button
+          class="bg-red-500 text-white rounded-md p-2 mt-5"
+          @click="deleteAll()"
+        >
+          حذف همه
+        </button>
+      </div>
+    </div>
+  </div>
 </template>

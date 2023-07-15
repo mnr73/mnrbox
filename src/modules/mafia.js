@@ -54,16 +54,6 @@ class mafia {
 		return this.mafia.players;
 	}
 
-	updateSetting(setting) {
-		this.mafia.setting = setting
-		this.update()
-		return this.getSetting();
-	}
-
-	getSetting() {
-		return this.mafia.setting;
-	}
-
 	updateGame(game) {
 		this.mafia.game = _.pick(game, ['lastRoundNumber', 'rounds', 'end'])
 		this.update()
