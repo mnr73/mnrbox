@@ -63,7 +63,7 @@ game.roles = data.getPlayers([]);
 let rounds_structure = roundStructure(game);
 
 onMounted(() => {
-  data.deleteGame();
+  // data.deleteGame();
   let savedGame = data.getGame();
 
   if (savedGame != undefined && savedGame?.end === false) {

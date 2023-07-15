@@ -1,4 +1,5 @@
 // import { createRouter, createWebHistory } from "vue-router";
+import mafia from "@/modules/mafia";
 
 const routes = [
 	{
@@ -15,6 +16,7 @@ const routes = [
 		name: "mafia",
 		meta: {
 			layout: "mafia",
+			guard: "active_game"
 		}
 	},
 	{
@@ -23,6 +25,7 @@ const routes = [
 		name: "mafia-users",
 		meta: {
 			layout: "mafia",
+			guard: "active_game"
 		}
 	},
 	{
@@ -31,6 +34,7 @@ const routes = [
 		name: "mafia-roles",
 		meta: {
 			layout: "mafia",
+			guard: "active_game"
 		}
 	},
 	{
@@ -47,6 +51,7 @@ const routes = [
 		name: "mafia-start-set-roles",
 		meta: {
 			layout: "mafia",
+			guard: "active_game"
 		}
 	},
 	{
@@ -55,12 +60,21 @@ const routes = [
 		name: "mafia-start-assign-roles",
 		meta: {
 			layout: "mafia",
+			guard: "active_game"
 		}
 	},
 	{
 		path: "/mafia/game",
 		component: () => import("./pages/Mafia/Game.vue"),
 		name: "mafia-game",
+		meta: {
+			layout: "mafia",
+		}
+	},
+	{
+		path: "/mafia/game-guard",
+		component: () => import("./pages/Mafia/GameGuard.vue"),
+		name: "mafia-game-guard",
 		meta: {
 			layout: "mafia",
 		}
@@ -89,10 +103,26 @@ import {
 } from "vue-router";
 
 export function createRouter() {
-	return _createRouter({
+	const router = _createRouter({
 		// use appropriate history implementation for server/client
 		// import.meta.env.SSR is injected by Vite.
 		history: createWebHistory(),
 		routes
 	});
+	let data = new mafia();
+	router.beforeEach((to, from) => {
+		let savedGame = data.getGame();
+		if (savedGame != undefined && savedGame?.end === false) {
+			if (to.meta.guard == "active_game") {
+				return { name: 'mafia-game-guard' }
+			}
+			// return false
+		}
+		// ...
+		// explicitly return false to cancel the navigation
+		// return false
+	})
+
+	return router;
 }
+
