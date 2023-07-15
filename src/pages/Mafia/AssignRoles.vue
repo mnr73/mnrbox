@@ -39,6 +39,11 @@ onMounted(() => {
 const openUser = computed(() => {
   return _.find(users.value, "open") || null;
 });
+
+const openRole = computed(() => {
+  console.log(roles.value, openUser.value?.id);
+  return _.find(roles.value, ["userId", openUser.value?.id]);
+});
 </script>
 <template>
   <div class="sm:p-5 p-2 pb-20">
@@ -68,11 +73,21 @@ const openUser = computed(() => {
       class="fixed w-full h-screen bg-black bg-opacity-30 top-0 left-0 z-50 flex items-center justify-center"
     >
       <div
-        class="w-11/12 h-2/6 max-w-screen-sm bg-white shadow-lg rounded-md flex flex-col gap-10 items-center justify-center"
+        class="w-11/12 h-2/6 max-w-screen-sm bg-white shadow-lg rounded-md flex flex-col gap-5 items-center justify-center"
       >
-        <div class="">{{ openUser?.name }}</div>
+        <div class="font-bold">{{ openUser?.name }}</div>
+        <div>
+          <Icon :icon="openRole?.icon" class="h-20 w-20" />
+        </div>
         <div class="">
-          {{ _.find(roles, ["userId", openUser?.id])?.roleName }}
+          {{ openRole?.roleName }} ({{
+            {
+              mafia: "مافیا",
+              city: "شهر",
+              independent: "مستقل",
+              gray: "خاکستری",
+            }[openRole?.side]
+          }})
         </div>
         <button
           class="bg-red-600 text-white p-2 rounded-md"
