@@ -322,17 +322,28 @@ function toggleSound(op = "toggle") {
   }
   track.paused = { toggle: !track.paused, stop: true, play: false }[op];
 }
+
+function changeStep(step) {
+  if (step.active) {
+    game.selectedRound.stepNumber = step.number;
+  }
+}
+
+function changeRound(roundNumber) {
+  game.lastRoundNumber = roundNumber;
+}
 </script>
 
 <template>
   <div class="overflow-x-auto sm:my-3 my-2 sm:px-5 px-2 text-sm" ref="daysBox">
     <div class="flex gap-2">
       <div
-        class="bg-slate-700 text-white h-8 px-2 rounded-full flex items-center justify-center flex-shrink-0"
+        class="bg-slate-700 text-white h-8 px-2 rounded-full flex items-center justify-center flex-shrink-0 cursor-pointer"
         style="min-width: 2rem"
         :class="{ '!bg-sky-600': game.lastRoundNumber == index }"
         v-for="(round, index) in game.rounds"
         :key="index"
+        @click="changeRound(index)"
       >
         {{ index || "معارفه" }}
       </div>
@@ -341,17 +352,18 @@ function toggleSound(op = "toggle") {
   </div>
   <div class="overflow-x-auto sm:my-3 my-2 sm:px-5 px-2 text-sm">
     <div class="flex gap-2 font-light">
-      <template v-for="(round, key) in game.selectedRound?.steps" :key="key">
+      <template v-for="(step, key) in game.selectedRound?.steps" :key="key">
         <div
-          class="bg-slate-400 text-white px-2 py-1 rounded-full flex items-center justify-center flex-shrink-0"
+          class="bg-slate-400 text-white px-2 py-1 rounded-full flex items-center justify-center flex-shrink-0 cursor-pointer"
           :class="{
-            '!bg-sky-600': game.selectedRound.stepNumber == round.number,
+            '!bg-sky-600': game.selectedRound.stepNumber == step.number,
             '!bg-slate-800':
-              round.active && game.selectedRound.stepNumber != round.number,
+              step.active && game.selectedRound.stepNumber != step.number,
           }"
-          v-if="game.lastRoundNumber != 0 || round.number < 2"
+          v-if="game.lastRoundNumber != 0 || step.number < 2"
+          @click="changeStep(step)"
         >
-          {{ round.name }}
+          {{ step.name }}
         </div>
       </template>
       <div class="w-1 flex-shrink-0"></div>
