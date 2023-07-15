@@ -19,7 +19,7 @@ class roles {
 	_property = {}
 
 	constructor() {
-		this._card.class = this.constructor.name
+		// this._card.class = this.constructor.name
 	}
 
 
@@ -56,6 +56,7 @@ class roles {
 export class godFather extends roles {
 	constructor() {
 		super()
+		this._card.class = "godFather"
 		this._card.roleName = "گاد فادر"
 		this._card.roleComponent = "GodFather"
 		this._card.side = "mafia"
@@ -79,6 +80,7 @@ export class godFather extends roles {
 export class strongMan extends roles {
 	constructor() {
 		super()
+		this._card.class = "strongMan"
 		this._card.roleName = "مرد قوی"
 		this._card.roleComponent = "StrongMan"
 		this._card.side = "mafia"
@@ -112,6 +114,7 @@ export class strongMan extends roles {
 export class nato extends roles {
 	constructor() {
 		super()
+		this._card.class = "nato"
 		this._card.roleName = "ناتو"
 		this._card.roleComponent = "Nato"
 		this._card.side = "mafia"
@@ -144,6 +147,7 @@ export class nato extends roles {
 export class natasha extends roles {
 	constructor() {
 		super()
+		this._card.class = "natasha"
 		this._card.roleName = "ناتاشا"
 		this._card.roleComponent = "Natasha"
 		this._card.side = "mafia"
@@ -179,6 +183,7 @@ export class natasha extends roles {
 export class dozd extends roles {
 	constructor() {
 		super()
+		this._card.class = "dozd"
 		this._card.roleName = "دزد"
 		this._card.roleComponent = "Dozd"
 		this._card.side = "mafia"
@@ -221,6 +226,7 @@ export class dozd extends roles {
 export class afsoongar extends roles {
 	constructor() {
 		super()
+		this._card.class = "afsoongar"
 		this._card.roleName = "افسونگر"
 		this._card.roleComponent = "Afsoongar"
 		this._card.side = "mafia"
@@ -253,6 +259,7 @@ export class afsoongar extends roles {
 export class terrorist extends roles {
 	constructor() {
 		super()
+		this._card.class = "terrorist"
 		this._card.roleName = "تروریست"
 		this._card.roleComponent = "Terrorist"
 		this._card.side = "mafia"
@@ -283,7 +290,8 @@ export class terrorist extends roles {
 
 export class mashooghe extends roles {
 	constructor() {
-		super();
+		super()
+		this._card.class = "mashooghe";
 		this._card.roleName = "معشوقه"
 		this._card.roleComponent = "Mashooghe"
 		this._card.side = "mafia"
@@ -309,6 +317,7 @@ export class mashooghe extends roles {
 export class bazjoo extends roles {
 	constructor() {
 		super()
+		this._card.class = "bazjoo"
 		this._card.roleName = "بازجو"
 		this._card.roleComponent = "Bazjoo"
 		this._card.side = "mafia"
@@ -338,6 +347,7 @@ export class bazjoo extends roles {
 export class samSaz extends roles {
 	constructor() {
 		super()
+		this._card.class = "samSaz"
 		this._card.roleName = "سم ساز"
 		this._card.roleComponent = "SamSaz"
 		this._card.side = "mafia"
@@ -370,6 +380,7 @@ export class samSaz extends roles {
 export class negotiator extends roles {
 	constructor() {
 		super()
+		this._card.class = "negotiator"
 		this._card.roleName = "مذاکره کننده"
 		this._card.roleComponent = "Negotiator"
 		this._card.side = "mafia"
@@ -402,6 +413,7 @@ export class negotiator extends roles {
 export class kharabKar extends roles {
 	constructor() {
 		super()
+		this._card.class = "kharabKar"
 		this._card.roleName = "خرابکار"
 		this._card.roleComponent = "KharabKar"
 		this._card.side = "mafia"
@@ -434,6 +446,7 @@ export class kharabKar extends roles {
 export class doctorLekter extends roles {
 	constructor() {
 		super()
+		this._card.class = "doctorLekter"
 		this._card.roleName = "دکتر لکتر"
 		this._card.roleComponent = "DoctorLekter"
 		this._card.side = "mafia"
@@ -463,6 +476,7 @@ export class doctorLekter extends roles {
 export class groganGir extends roles {
 	constructor() {
 		super()
+		this._card.class = "groganGir"
 		this._card.roleName = "گروگان گیر"
 		this._card.roleComponent = "GroganGir"
 		this._card.side = "mafia"
@@ -494,6 +508,7 @@ export class groganGir extends roles {
 export class spy extends roles {
 	constructor() {
 		super()
+		this._card.class = "spy"
 		this._card.roleName = "جاسوس"
 		this._card.roleComponent = "Spy"
 		this._card.side = "mafia"
@@ -517,6 +532,7 @@ export class spy extends roles {
 export class sharlatan extends roles {
 	constructor() {
 		super()
+		this._card.class = "sharlatan"
 		this._card.roleName = "شارلاتان"
 		this._card.roleComponent = "Sharlatan"
 		this._card.side = "mafia"
@@ -547,6 +563,7 @@ export class sharlatan extends roles {
 export class simpleMafia1 extends roles {
 	constructor() {
 		super()
+		this._card.class = "simpleMafia1"
 		this._card.roleName = "مافیا ساده 1"
 		this._card.roleComponent = "SimpleMafia"
 		this._card.side = "mafia"
@@ -566,6 +583,7 @@ export class simpleMafia1 extends roles {
 export class simpleMafia2 extends roles {
 	constructor() {
 		super()
+		this._card.class = "simpleMafia2"
 		this._card.roleName = "مافیا ساده 2"
 		this._card.roleComponent = "SimpleMafia"
 		this._card.side = "mafia"
@@ -585,6 +603,7 @@ export class simpleMafia2 extends roles {
 export class simpleMafia3 extends roles {
 	constructor() {
 		super()
+		this._card.class = "simpleMafia3"
 		this._card.roleName = "مافیا ساده 3"
 		this._card.roleComponent = "SimpleMafia"
 		this._card.side = "mafia"
@@ -611,6 +630,7 @@ export class simpleMafia3 extends roles {
 export class doctor extends roles {
 	constructor() {
 		super()
+		this._card.class = "doctor"
 		this._card.roleName = "دکتر"
 		this._card.roleComponent = "Doctor"
 		this._card.side = "city"
@@ -639,6 +659,7 @@ export class doctor extends roles {
 export class detective extends roles {
 	constructor() {
 		super()
+		this._card.class = "detective"
 		this._card.roleName = "کاراگاه"
 		this._card.roleComponent = "Detective"
 		this._card.side = "city"
@@ -661,6 +682,7 @@ export class detective extends roles {
 export class sniper extends roles {
 	constructor() {
 		super()
+		this._card.class = "sniper"
 		this._card.roleName = "اسنایپر"
 		this._card.roleComponent = "Sniper"
 		this._card.side = "city"
@@ -683,6 +705,7 @@ export class sniper extends roles {
 export class farmande extends roles {
 	constructor() {
 		super()
+		this._card.class = "farmande"
 		this._card.roleName = "فرمانده"
 		this._card.roleComponent = "Farmande"
 		this._card.side = "city"
@@ -706,6 +729,7 @@ export class farmande extends roles {
 export class bomber extends roles {
 	constructor() {
 		super()
+		this._card.class = "bomber"
 		this._card.roleName = "بمبر"
 		this._card.roleComponent = "Bomber"
 		this._card.side = "city"
@@ -728,6 +752,7 @@ export class bomber extends roles {
 export class takavar1 extends roles {
 	constructor() {
 		super()
+		this._card.class = "takavar1"
 		this._card.roleName = "تکاور 1"
 		this._card.roleComponent = "Takavar"
 		this._card.side = "city"
@@ -751,6 +776,7 @@ export class takavar1 extends roles {
 export class takavar2 extends roles {
 	constructor() {
 		super()
+		this._card.class = "takavar2"
 		this._card.roleName = "تکاور 2"
 		this._card.roleComponent = "Takavar"
 		this._card.side = "city"
@@ -774,6 +800,7 @@ export class takavar2 extends roles {
 export class takavar3 extends roles {
 	constructor() {
 		super()
+		this._card.class = "takavar3"
 		this._card.roleName = "تکاور 3"
 		this._card.roleComponent = "Takavar"
 		this._card.side = "city"
@@ -797,6 +824,7 @@ export class takavar3 extends roles {
 export class saghi extends roles {
 	constructor() {
 		super()
+		this._card.class = "saghi"
 		this._card.roleName = "ساقی"
 		this._card.roleComponent = "Saghi"
 		this._card.side = "city"
@@ -819,6 +847,7 @@ export class saghi extends roles {
 export class fadayi extends roles {
 	constructor() {
 		super()
+		this._card.class = "fadayi"
 		this._card.roleName = "فدایی"
 		this._card.roleComponent = "Fadayi"
 		this._card.side = "city"
@@ -840,6 +869,7 @@ export class fadayi extends roles {
 export class janSakht extends roles {
 	constructor() {
 		super()
+		this._card.class = "janSakht"
 		this._card.roleName = "جان ساخت"
 		this._card.roleComponent = "JanSakht"
 		this._card.side = "city"
@@ -864,6 +894,7 @@ export class janSakht extends roles {
 export class keshish extends roles {
 	constructor() {
 		super()
+		this._card.class = "keshish"
 		this._card.roleName = "کشیش"
 		this._card.roleComponent = "Keshish"
 		this._card.side = "city"
@@ -889,6 +920,7 @@ export class keshish extends roles {
 export class tofangdar extends roles {
 	constructor() {
 		super()
+		this._card.class = "tofangdar"
 		this._card.roleName = "تفنگدار"
 		this._card.roleComponent = "Tofangdar"
 		this._card.side = "city"
@@ -919,6 +951,7 @@ export class tofangdar extends roles {
 export class ghazi extends roles {
 	constructor() {
 		super()
+		this._card.class = "ghazi"
 		this._card.roleName = "قاضی"
 		this._card.roleComponent = "Ghazi"
 		this._card.side = "city"
@@ -949,6 +982,7 @@ export class ghazi extends roles {
 export class shahrdar extends roles {
 	constructor() {
 		super()
+		this._card.class = "shahrdar"
 		this._card.roleName = "شهردارد"
 		this._card.roleComponent = "Shahrdar"
 		this._card.side = "city"
@@ -971,6 +1005,7 @@ export class shahrdar extends roles {
 export class framason extends roles {
 	constructor() {
 		super()
+		this._card.class = "framason"
 		this._card.roleName = "فراماسون"
 		this._card.roleComponent = "Framason"
 		this._card.side = "city"
@@ -993,6 +1028,7 @@ export class framason extends roles {
 export class tiler extends roles {
 	constructor() {
 		super()
+		this._card.class = "tiler"
 		this._card.roleName = "تایلر"
 		this._card.roleComponent = "Tiler"
 		this._card.side = "city"
@@ -1015,6 +1051,7 @@ export class tiler extends roles {
 export class royinTan extends roles {
 	constructor() {
 		super()
+		this._card.class = "royinTan"
 		this._card.roleName = "رویین تن"
 		this._card.roleComponent = "RoyinTan"
 		this._card.side = "city"
@@ -1026,6 +1063,7 @@ export class royinTan extends roles {
 export class cowboy extends roles {
 	constructor() {
 		super()
+		this._card.class = "cowboy"
 		this._card.roleName = "کابوی"
 		this._card.roleComponent = "Cowboy"
 		this._card.side = "city"
@@ -1046,6 +1084,7 @@ export class cowboy extends roles {
 export class khabGard extends roles {
 	constructor() {
 		super()
+		this._card.class = "khabGard"
 		this._card.roleName = "خوابگرد"
 		this._card.roleComponent = "KhabGard"
 		this._card.side = "city"
@@ -1065,6 +1104,7 @@ export class khabGard extends roles {
 export class ahangar extends roles {
 	constructor() {
 		super()
+		this._card.class = "ahangar"
 		this._card.roleName = "آهنگر"
 		this._card.roleComponent = "Ahangar"
 		this._card.side = "city"
@@ -1084,6 +1124,7 @@ export class ahangar extends roles {
 export class negahban extends roles {
 	constructor() {
 		super()
+		this._card.class = "negahban"
 		this._card.roleName = "نگهبان"
 		this._card.roleComponent = "Negahban"
 		this._card.side = "city"
@@ -1109,6 +1150,7 @@ export class negahban extends roles {
 export class citizen1 extends roles {
 	constructor() {
 		super()
+		this._card.class = "citizen1"
 		this._card.roleName = "شهر ساده 1"
 		this._card.roleComponent = "Citizen"
 		this._card.side = "city"
@@ -1120,6 +1162,7 @@ export class citizen1 extends roles {
 export class citizen2 extends roles {
 	constructor() {
 		super()
+		this._card.class = "citizen2"
 		this._card.roleName = "شهر ساده 2"
 		this._card.roleComponent = "Citizen"
 		this._card.side = "city"
@@ -1131,6 +1174,7 @@ export class citizen2 extends roles {
 export class citizen3 extends roles {
 	constructor() {
 		super()
+		this._card.class = "citizen3"
 		this._card.roleName = "شهر ساده 3"
 		this._card.roleComponent = "Citizen"
 		this._card.side = "city"
@@ -1142,6 +1186,7 @@ export class citizen3 extends roles {
 export class killer extends roles {
 	constructor() {
 		super()
+		this._card.class = "killer"
 		this._card.roleName = "قاتل"
 		this._card.roleComponent = "Killer"
 		this._card.side = "independent"
@@ -1168,6 +1213,7 @@ export class killer extends roles {
 export class joker extends roles {
 	constructor() {
 		super()
+		this._card.class = "joker"
 		this._card.roleName = "جوکر"
 		this._card.roleComponent = "Joker"
 		this._card.side = "independent"
@@ -1192,6 +1238,7 @@ export class joker extends roles {
 export class nostradamus extends roles {
 	constructor() {
 		super()
+		this._card.class = "nostradamus"
 		this._card.roleName = "نوستراداموس"
 		this._card.roleComponent = "Nostradamus"
 		this._card.side = "gray"
