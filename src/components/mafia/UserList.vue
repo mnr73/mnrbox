@@ -1,25 +1,53 @@
 <script setup>
 import { Icon } from "@iconify/vue";
-import { reactive } from "vue";
+import { reactive, ref, computed } from "vue";
 import endSound from "@/assets/audio/end.ogg";
 import RoleCard from "./RoleCard.vue";
+import _ from "lodash";
+
+const search = ref("");
+
+const filteredRoles = computed(() => {
+  if (search.value.trim() == "") {
+    return props.game.selectedRound?.roles;
+  }
+  return _.filter(props.game.selectedRound?.roles, (x) => {
+    return (
+      x.userName.match(new RegExp(search.value, "ig")) ||
+      x.roleName.match(new RegExp(search.value, "ig"))
+    );
+  });
+});
 
 const props = defineProps({
   userList: Object,
   game: Object,
 });
+
+function close() {
+  props.userList.open = false;
+  search.value = "";
+}
 </script>
 
 <template>
   <div
     class="fixed top-0 left-0 w-full h-full z-50 bg-white bg-opacity-70 px-5 py-20"
-    @click.self="userList.open = false"
+    @click.self="close()"
   >
     <div
       class="bg-white rounded-md w-full h-full max-w-xl max-h-fit mx-auto shadow-lg border flex flex-col overflow-y-auto p-2"
     >
+      <div class="mb-3">
+        <input
+          type="text"
+          placeholder="جستجو"
+          v-model="search"
+          class="text-xl p-2 w-full border rounded-md"
+        />
+      </div>
       <div class="flex flex-col gap-2">
-        <template v-for="role in game.selectedRound?.roles" :key="role.userId">
+        <template v-for="role in filteredRoles" :key="role.userId">
           <div class="rounded-md border border-r-4 border-slate-300">
             <div
               class="p-2 bg-slate-100 font-bold border-b rounded-t-md flex justify-between"
