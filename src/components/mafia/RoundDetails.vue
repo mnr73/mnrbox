@@ -20,7 +20,7 @@ const props = defineProps({
       class="bg-white rounded-md w-full h-full max-w-xl max-h-fit mx-auto shadow-lg border flex flex-col overflow-y-auto p-2"
     >
       <div class="flex flex-col gap-3">
-        <template v-for="(item, key) in game.selectedRound.steps" :key="key">
+        <template v-for="(item, key) in game.selectedRound?.steps" :key="key">
           <div>
             <h2 class="font-bold text-lg border-b border-slate-500">
               {{ item.name }}
