@@ -174,12 +174,14 @@ function nextStep() {
 watch(
   () => game.lastRoundNumber,
   (newValue, oldValue) => {
-    if (game.lastRoundNumber == 0) {
-      game.rounds[game.lastRoundNumber].roles = _.cloneDeep(game.roles);
-    } else {
-      game.rounds[game.lastRoundNumber].roles = _.cloneDeep(
-        game.rounds[game.lastRoundNumber - 1].roles
-      );
+    if (game.rounds[game.lastRoundNumber].roles == undefined) {
+      if (game.lastRoundNumber == 0) {
+        game.rounds[game.lastRoundNumber].roles = _.cloneDeep(game.roles);
+      } else {
+        game.rounds[game.lastRoundNumber].roles = _.cloneDeep(
+          game.rounds[game.lastRoundNumber - 1].roles
+        );
+      }
     }
   },
   { deep: false }
