@@ -182,6 +182,11 @@ watch(
         game.rounds[game.lastRoundNumber].roles = _.cloneDeep(
           game.rounds[game.lastRoundNumber - 1].roles
         );
+
+        _.each(game.rounds[game.lastRoundNumber].roles, (role) => {
+          role.vote1 = null;
+          role.vote2 = null;
+        });
       }
     }
   },

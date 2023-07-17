@@ -14,6 +14,8 @@ class roles {
 		nightAwake: true,
 		nightOrder: 0,
 		dayOrder: 0,
+		vote1: null,
+		vote2: null,
 	}
 
 	_property = {}
