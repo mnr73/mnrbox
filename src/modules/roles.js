@@ -985,7 +985,7 @@ export class shahrdar extends roles {
 	constructor() {
 		super()
 		this._card.class = "shahrdar"
-		this._card.roleName = "شهردارد"
+		this._card.roleName = "شهردار"
 		this._card.roleComponent = "Shahrdar"
 		this._card.side = "city"
 		this._card.icon = "game-icons:castle"
