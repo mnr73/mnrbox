@@ -85,7 +85,7 @@ function addRound() {
     let round = _.cloneDeep(rounds_structure);
     round.steps = _.pick(round.steps, ["night", "day"]);
     game.rounds.push(round);
-  } else {
+  } else if (game.lastRoundNumber >= game.rounds.length - 1) {
     game.rounds.push(_.cloneDeep(rounds_structure));
   }
 }
