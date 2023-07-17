@@ -12,7 +12,7 @@ export default defineConfig({
 			devOptions: {
 				enabled: true
 			},
-			includeAssets: ['mafia.svg', 'audio/end.ogg', 'audio/mafia1.mp3'],
+			// includeAssets: ['mafia.svg', 'audio/end.ogg', 'audio/mafia1.mp3'],
 			manifest: {
 				name: 'MNR box',
 				short_name: 'MNRbox',
