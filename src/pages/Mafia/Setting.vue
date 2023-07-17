@@ -4,6 +4,7 @@ import MnrNumber from "@/components/mnr/MnrNumber.vue";
 import { Icon } from "@iconify/vue";
 import { ref, watch } from "vue";
 import mafia from "@/modules/mafia";
+import Bottom from "@/components/Bottom.vue";
 
 const data = new mafia();
 
@@ -56,5 +57,16 @@ function deleteAll() {
         </button>
       </div>
     </div>
+    <div class="h-60"></div>
   </div>
+
+  <Bottom>
+    <div class="p-1 bg-slate-100">
+      <router-link
+        to="/mafia"
+        class="bg-red-500 text-white rounded-md p-2 text-center w-full block"
+        >بازگشت</router-link
+      >
+    </div>
+  </Bottom>
 </template>

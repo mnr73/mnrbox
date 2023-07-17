@@ -6,6 +6,7 @@ import * as role from "@/modules/roles";
 import { ref, reactive, computed, watch } from "vue";
 import * as rolesComponent from "@/modules/rolesComponent";
 import RoleWrapper from "@/components/mafia/RoleWrapper.vue";
+import Bottom from "@/components/Bottom.vue";
 
 let data = new mafia();
 let name = ref();
@@ -141,5 +142,16 @@ function deleteRoles() {
         </template>
       </div>
     </div>
+    <div class="h-60"></div>
   </div>
+
+  <Bottom>
+    <div class="p-1 bg-slate-100">
+      <router-link
+        to="/mafia"
+        class="bg-red-500 text-white rounded-md p-2 text-center w-full block"
+        >تایید نقش ها</router-link
+      >
+    </div>
+  </Bottom>
 </template>
