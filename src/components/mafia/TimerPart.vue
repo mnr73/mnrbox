@@ -22,6 +22,7 @@ function start() {
     timer.remain = timer.time;
   }
   timer.paused = false;
+  timer.remain -= 1;
   time = setInterval(() => {
     timer.remain -= 1;
     if (timer.remain <= 0) {
@@ -33,8 +34,12 @@ function start() {
 }
 
 function pause() {
-  clearInterval(time);
-  timer.paused = true;
+  if (timer.paused) {
+    timer.remain = timer.time;
+  } else {
+    clearInterval(time);
+    timer.paused = true;
+  }
 }
 </script>
 
@@ -65,15 +70,31 @@ function pause() {
     <div class="flex justify-around gap-2">
       <div
         class="border rounded-md bg-white w-full text-center"
+        :class="{
+          '!bg-red-500 text-white': timer.remain < timer.time && !timer.paused,
+        }"
         @click="start()"
       >
         <Icon icon="akar-icons:play" class="inline-block w-6 h-full" />
+        <Icon
+          v-show="timer.remain < timer.time && !timer.paused"
+          icon="akar-icons:arrow-clockwise"
+          class="inline-block w-6 h-full"
+        />
       </div>
       <div
         class="border rounded-md bg-white w-full text-center"
+        :class="{
+          '!bg-red-500 text-white': timer.remain < timer.time && timer.paused,
+        }"
         @click="pause()"
       >
         <Icon icon="akar-icons:pause" class="inline-block w-6 h-full" />
+        <Icon
+          v-show="timer.remain < timer.time && timer.paused"
+          icon="akar-icons:arrow-clockwise"
+          class="inline-block w-6 h-full"
+        />
       </div>
     </div>
   </div>
