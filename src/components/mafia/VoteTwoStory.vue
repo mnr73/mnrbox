@@ -65,13 +65,29 @@ function showTargetBtn(roleClass, actType) {
                 {{ role.vote1 }}
                 از {{ game.playerCounts }}
               </div>
+              <div class="flex flex-wrap gap-2 justify-center p-2" dir="ltr">
+                <button
+                  v-for="item in game.playerCounts"
+                  class="w-8 h-8 bg-slate-200 rounded-full px-3 border border-emerald-500 flex justify-center items-center"
+                  :class="{
+                    '!border-red-500':
+                      Math.floor(game.playerCounts / 2) <= item,
+                    '!bg-red-500 text-white':
+                      role.vote2 == item &&
+                      Math.floor(game.playerCounts / 2) <= item,
+                    '!bg-emerald-500 text-white':
+                      role.vote2 == item &&
+                      Math.floor(game.playerCounts / 2) > item,
+                  }"
+                  @click="role.vote2 = item"
+                  :key="item"
+                >
+                  {{ item }}
+                </button>
+              </div>
               <div class="px-2" v-if="key == 'defense'">
                 تعداد رای 2:
-                <input
-                  type="number"
-                  class="border p-1 rounded-md w-24"
-                  v-model="role.vote2"
-                />
+                <b>{{ role.vote2 }}</b>
                 از {{ game.playerCounts }}
                 <b
                   v-if="Math.floor(game.playerCounts / 2) <= role.vote2"
