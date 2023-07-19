@@ -54,6 +54,15 @@ function showTargetBtn(roleClass, actType) {
           >
             <div class="flex flex-wrap gap-2 justify-center p-2" dir="ltr">
               <button
+                class="w-8 h-8 bg-slate-200 rounded-full px-3 border border-emerald-500 flex justify-center items-center"
+                :class="{
+                  '!bg-emerald-500 text-white': role.vote1 == 0,
+                }"
+                @click="role.vote1 = 0"
+              >
+                0
+              </button>
+              <button
                 v-for="item in game.playerCounts"
                 class="w-8 h-8 bg-slate-200 rounded-full px-3 border border-emerald-500 flex justify-center items-center"
                 :class="{

@@ -32,8 +32,8 @@ const speak = reactive({
 });
 const challenge = reactive({
   paused: false,
-  time: 40,
-  remain: 40,
+  time: 20,
+  remain: 20,
   counter: null,
 });
 const userList = reactive({
@@ -192,8 +192,8 @@ watch(
         );
 
         _.each(game.rounds[game.lastRoundNumber].roles, (role) => {
-          role.vote1 = null;
-          role.vote2 = null;
+          role.vote1 = 0;
+          role.vote2 = 0;
         });
       }
     }

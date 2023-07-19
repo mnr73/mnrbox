@@ -9,8 +9,6 @@ const route = useRoute();
 
 const menu = ref(false);
 
-console.log(route.path);
-
 router.beforeEach(() => {
   menu.value = false;
 });
