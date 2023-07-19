@@ -98,8 +98,16 @@ function showTargetBtn(key, role, actType) {
   if (role.class == "terrorist") {
     return false;
   }
-  if (role.class == "killer" && props.game.lastRoundNumber % 2 != 0) {
-    return false;
+
+  if (role.class == "killer" && role.options.justOdd) {
+    if (
+      _.find(
+        props.game.rounds?.[props.game.lastRoundNumber - 1]?.steps?.night?.acts,
+        { type: "killer_shot" }
+      )
+    ) {
+      return false;
+    }
   }
 
   return true;

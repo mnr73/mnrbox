@@ -353,7 +353,6 @@ function timerStart(timer) {
   clearInterval(timer.counter);
   timer.remain = timer.time;
   timer.paused = true;
-  console.log("a");
 }
 </script>
 
