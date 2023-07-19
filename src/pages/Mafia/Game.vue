@@ -23,10 +23,18 @@ const track = reactive({
   audio: new Audio(soundMafia1),
   paused: true,
 });
-const timer = reactive({
-  open: false,
-  speak: 40,
-  challenge: 20,
+const timerPanel = ref(false);
+const speak = reactive({
+  paused: false,
+  time: 40,
+  remain: 40,
+  counter: null,
+});
+const challenge = reactive({
+  paused: false,
+  time: 40,
+  remain: 40,
+  counter: null,
 });
 const userList = reactive({
   open: false,
@@ -340,6 +348,13 @@ function changeStep(step) {
 function changeRound(roundNumber) {
   game.lastRoundNumber = roundNumber;
 }
+
+function timerStart(timer) {
+  clearInterval(timer.counter);
+  timer.remain = timer.time;
+  timer.paused = true;
+  console.log("a");
+}
 </script>
 
 <template>
@@ -426,11 +441,11 @@ function changeRound(roundNumber) {
   <RoundDetails :game="game" :userList="roundList" v-show="roundList.open" />
 
   <Bottom>
-    <div class="bg-slate-50 border-t" v-show="timer.open">
+    <div class="bg-slate-50 border-t" v-show="timerPanel">
       <div class="flex gep-2 justify-around">
-        <TimerPart :time="timer.speak" />
+        <TimerPart :timer="speak" @start="timerStart(challenge)" />
         <div class="border-r"></div>
-        <TimerPart :time="timer.challenge" />
+        <TimerPart :timer="challenge" @start="timerStart(speak)" />
       </div>
     </div>
 
@@ -444,8 +459,8 @@ function changeRound(roundNumber) {
       </button>
       <button
         class="bg-slate-700 text-white shadow-md p-2 w-3/12 rounded-2xl"
-        :class="{ '!bg-red-700': timer.open }"
-        @click="timer.open = !timer.open"
+        :class="{ '!bg-red-700': timerPanel }"
+        @click="timerPanel = !timerPanel"
       >
         <Icon icon="akar-icons:alarm" class="inline-block w-10 h-full" />
       </button>

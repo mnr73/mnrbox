@@ -3,42 +3,45 @@ import { Icon } from "@iconify/vue";
 import { reactive } from "vue";
 import endSound from "@/assets/audio/end.ogg";
 
-let time;
+// let time;
 let sound = new Audio(endSound);
 
 const props = defineProps({
-  time: Number,
+  timer: Object,
 });
 
-const timer = reactive({
-  paused: false,
-  time: props.time,
-  remain: props.time,
-});
+const emit = defineEmits(["start"]);
+
+// const timer = reactive({
+//   paused: false,
+//   time: props.time,
+//   remain: props.time,
+// });
 
 function start() {
-  clearInterval(time);
-  if (!timer.paused) {
-    timer.remain = timer.time;
+  emit("start");
+  clearInterval(props.timer.counter);
+  if (!props.timer.paused) {
+    props.timer.remain = props.timer.time;
   }
-  timer.paused = false;
-  timer.remain -= 1;
-  time = setInterval(() => {
-    timer.remain -= 1;
-    if (timer.remain <= 0) {
-      timer.remain = timer.time;
+  props.timer.paused = false;
+  props.timer.remain -= 1;
+  props.timer.counter = setInterval(() => {
+    props.timer.remain -= 1;
+    if (props.timer.remain <= 0) {
+      props.timer.remain = props.timer.time;
       sound.play();
-      clearInterval(time);
+      clearInterval(props.timer.counter);
     }
   }, 1000);
 }
 
 function pause() {
-  if (timer.paused) {
-    timer.remain = timer.time;
+  if (props.timer.paused) {
+    props.timer.remain = props.timer.time;
   } else {
-    clearInterval(time);
-    timer.paused = true;
+    clearInterval(props.timer.counter);
+    props.timer.paused = true;
   }
 }
 </script>
