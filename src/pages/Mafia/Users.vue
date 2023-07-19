@@ -72,7 +72,7 @@ const filteredUsers = computed(() =>
             'border-r-red-500': user.active,
           }"
         >
-          <label class="block px-2 h-full flex items-center cursor-pointer">
+          <label class="px-2 h-full flex items-center cursor-pointer">
             <input
               type="checkbox"
               v-model="user.active"
