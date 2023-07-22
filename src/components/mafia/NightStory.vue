@@ -91,8 +91,13 @@ function showTargetBtn(key, role, actType) {
   if (
     role.class != "godFather" &&
     actType == "mafia_shot" &&
-    _.find(props.game.roles, { dead: false, getOut: false })
+    _.find(props.game.selectedRound?.roles, {
+      class: "godFather",
+      dead: false,
+      getOut: false,
+    })
   ) {
+    console.log(role);
     return false;
   }
   if (role.class == "terrorist") {

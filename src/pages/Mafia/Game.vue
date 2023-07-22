@@ -85,9 +85,7 @@ onMounted(() => {
     game.lastRoundNumber = game.rounds.length - 1;
   }
 
-  // console.log(game);
   game.calcActs();
-  // data.updateGame(game);
 });
 
 function addRound() {

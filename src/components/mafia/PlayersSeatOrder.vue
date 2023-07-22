@@ -8,7 +8,6 @@ const emit = defineEmits(["close"]);
 const userList = ref({});
 
 function close() {
-  console.log("close");
   emit("close");
 }
 
