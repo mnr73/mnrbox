@@ -16,9 +16,11 @@ import ShahrdarFadayiStory from "@/components/mafia/ShahrdarFadayiStory.vue";
 import UserList from "@/components/mafia/UserList.vue";
 import RoundDetails from "@/components/mafia/RoundDetails.vue";
 import roundStructure from "@/modules/mafia/roundStructure";
+import PlayersSeatOrder from "@/components/mafia/PlayersSeatOrder.vue";
 
 const data = new mafia();
 const daysBox = ref(null);
+const seatOrder = ref(false);
 const track = reactive({
   audio: new Audio(soundMafia1),
   paused: true,
@@ -357,6 +359,14 @@ function timerStart(timer) {
 </script>
 
 <template>
+  <div class="bg-slate-100 border-b flex flex-row-reverse p-1 gap-1">
+    <button
+      class="w-10 bg-slate-200 h-full flex justify-center p-1 rounded-md"
+      @click="seatOrder = !seatOrder"
+    >
+      <Icon icon="akar-icons:descending" class="h-full w-6" />
+    </button>
+  </div>
   <div class="overflow-x-auto sm:my-3 my-2 sm:px-5 px-2 text-sm" ref="daysBox">
     <div class="flex gap-2">
       <div
@@ -438,6 +448,7 @@ function timerStart(timer) {
 
   <UserList :game="game" :userList="userList" v-show="userList.open" />
   <RoundDetails :game="game" :userList="roundList" v-show="roundList.open" />
+  <PlayersSeatOrder :game="game" v-if="seatOrder" @close="seatOrder = false" />
 
   <Bottom>
     <div class="bg-slate-50 border-t" v-show="timerPanel">

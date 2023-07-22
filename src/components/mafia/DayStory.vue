@@ -13,6 +13,8 @@ const props = defineProps({
 const getRoles = computed(() => {
   // return props.game.selectedRound?.roles;
   let roles = _.clone(props.game.selectedRound?.roles);
+  roles = _.orderBy(roles, "dayOrder", "asc");
+  console.log(roles);
   return {
     defense: {
       name: "بازی کنان",

@@ -12,6 +12,7 @@ const props = defineProps({
 
 const getRoles = computed(() => {
   let roles = _.clone(props.game.selectedRound?.roles);
+  roles = _.orderBy(roles, "dayOrder", "asc");
   let removed = _.remove(roles, (role) => {
     return role.dead || role.getOut;
   });
