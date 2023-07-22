@@ -97,7 +97,6 @@ function showTargetBtn(key, role, actType) {
       getOut: false,
     })
   ) {
-    console.log(role);
     return false;
   }
   if (role.class == "terrorist") {

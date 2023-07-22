@@ -17,12 +17,15 @@ import UserList from "@/components/mafia/UserList.vue";
 import RoundDetails from "@/components/mafia/RoundDetails.vue";
 import roundStructure from "@/modules/mafia/roundStructure";
 import PlayersSeatOrder from "@/components/mafia/PlayersSeatOrder.vue";
+import CustomMusic from "@/components/mafia/CustomMusic.vue";
 
 const data = new mafia();
 const daysBox = ref(null);
 const seatOrder = ref(false);
+const changeMusic = ref(false);
 const track = reactive({
   audio: new Audio(soundMafia1),
+  custom: null,
   paused: true,
 });
 const timerPanel = ref(false);
@@ -329,12 +332,13 @@ game.calcActsStats = function (round) {
 };
 
 function toggleSound(op = "toggle") {
-  track.audio.loop = true;
+  let currentTrack = track.custom || track.audio;
+  currentTrack.loop = true;
   if (track.paused && (op == "toggle" || op == "play")) {
-    track.audio.currentTime = 0;
-    track.audio.play();
+    currentTrack.currentTime = 0;
+    currentTrack.play();
   } else if (track.paused == false && (op == "toggle" || op == "stop")) {
-    track.audio.pause();
+    currentTrack.pause();
   }
   track.paused = { toggle: !track.paused, stop: true, play: false }[op];
 }
@@ -363,6 +367,13 @@ function timerStart(timer) {
       @click="seatOrder = !seatOrder"
     >
       <Icon icon="akar-icons:descending" class="h-full w-6" />
+    </button>
+    <button
+      class="w-10 bg-slate-200 h-full flex justify-center p-1 rounded-md"
+      :class="{ '!bg-red-500 text-white': track.custom !== null }"
+      @click="changeMusic = !changeMusic"
+    >
+      <Icon icon="akar-icons:music-note" class="h-full w-6" />
     </button>
   </div>
   <div class="overflow-x-auto sm:my-3 my-2 sm:px-5 px-2 text-sm" ref="daysBox">
@@ -447,6 +458,12 @@ function timerStart(timer) {
   <UserList :game="game" :userList="userList" v-show="userList.open" />
   <RoundDetails :game="game" :userList="roundList" v-show="roundList.open" />
   <PlayersSeatOrder :game="game" v-if="seatOrder" @close="seatOrder = false" />
+  <CustomMusic
+    :game="game"
+    :track="track"
+    v-if="changeMusic"
+    @close="changeMusic = false"
+  />
 
   <Bottom>
     <div class="bg-slate-50 border-t" v-show="timerPanel">
