@@ -18,7 +18,11 @@ const props = defineProps({
 
 const getRoles = computed(() => {
   // return props.game.selectedRound?.roles;
-  let sorted = _.sortBy(props.list, ["dead", "getOut"], ["desc", "desc"]);
+  let sorted = _.sortBy(
+    props.list,
+    ["dead", "getOut", "userName"],
+    [, "desc", "desc", "asc"]
+  );
   return sorted;
 });
 
