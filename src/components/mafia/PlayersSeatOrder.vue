@@ -18,6 +18,7 @@ const props = defineProps({
 userList.value = _.filter(props.game.selectedRound?.roles, (role) => {
   return role.dead == false && role.getOut == false;
 });
+userList.value = _.orderBy(userList.value, "dayOrder", "asc");
 
 function log(data) {
   userList.value = _.map(userList.value, (role, key) => {
@@ -62,23 +63,6 @@ function log(data) {
           </div>
         </template>
       </draggable>
-      <!-- <draggable v-model="myArray" tag="transition-group" item-key="id">
-        <template #item="{ element }">
-          <div
-            class="bg-slate-50 border rounded-md p-1 flex gap-2"
-            v-for="role in users"
-            :key="role.class"
-          >
-            <div>
-              <Icon
-                icon="akar-icons:drag-horizontal"
-                class="w-6 h-6 text-slate-400"
-              />
-            </div>
-            <div>{{ role.userName }}</div>
-          </div>
-        </template>
-      </draggable> -->
     </div>
   </div>
 </template>
