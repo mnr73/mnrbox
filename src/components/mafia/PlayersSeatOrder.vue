@@ -75,7 +75,7 @@ function shiftList(index) {
             <div class="p-1">{{ element.userName }}</div>
             <div
               class="ms-auto h-full w-10 flex items-center justify-center rounded-e-md bg-slate-500 text-white cursor-pointer"
-              :class="{ 'bg-sky-500': element == _.first(userList) }"
+              :class="{ '!bg-sky-500': element == _.first(userList) }"
               @click="shiftList(index)"
             >
               <Icon icon="akar-icons:align-to-top" class="w-5 h-6" />
