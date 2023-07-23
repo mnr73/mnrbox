@@ -68,6 +68,12 @@ router.beforeEach(() => {
           }"
           >تنظیمات</router-link
         >
+        <a
+          href="https://youtu.be/lS3PCxeyQac"
+          class="block p-3 border-b"
+          target="_blank"
+          >آموزش (یوتیوب)</a
+        >
         <router-link
           to="/"
           class="block p-3 border-b"
@@ -77,7 +83,12 @@ router.beforeEach(() => {
       </div>
       <div class="h-14 p-1 bg-slate-100 border-t text-center shrink-0">
         <div>version: {{ version }}</div>
-        <a href="https://mnrtech.ir" class="font-bold text-sky-500">mnr tech</a>
+        <a
+          href="https://mnrtech.ir"
+          target="_blank"
+          class="font-bold text-sky-500"
+          >mnr tech</a
+        >
       </div>
     </div>
   </div>

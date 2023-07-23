@@ -33,11 +33,11 @@ function selected(event) {
 
 <template>
   <div
-    class="fixed top-0 left-0 w-full h-full z-50 bg-white bg-opacity-70 px-5 py-20"
+    class="fixed top-0 left-0 w-full h-full z-50 bg-white bg-opacity-70 px-5 py-20 flex items-center"
     @click.self="close()"
   >
     <div
-      class="bg-white rounded-md w-full h-full max-w-xl max-h-fit mx-auto shadow-lg border overflow-y-auto p-2"
+      class="bg-white rounded-md w-full h-64 max-w-xl mx-auto shadow-lg border overflow-y-auto p-3"
     >
       <div class="mb-5">
         <p>

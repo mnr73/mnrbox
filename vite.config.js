@@ -18,6 +18,9 @@ export default defineConfig({
 				short_name: 'MNRbox',
 				description: 'useful utility',
 				theme_color: '#65a30d',
+				start_url: "https://box.mnrtech.ir",
+				scope: "https://box.mnrtech.ir",
+				display: "fullscreen",
 				icons: [
 					{
 						src: 'pwa-192x192.png',
