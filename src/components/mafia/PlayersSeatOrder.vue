@@ -60,15 +60,16 @@ function shiftList(index) {
         item-key="class"
         @change="changeList"
         class="flex flex-col gap-2"
+        handle=".handle"
       >
         <template #item="{ element, index }" v-if="userList.length">
           <div
             class="bg-slate-50 border rounded-md flex gap-2 h-8 items-center"
           >
-            <div class="p-1">
+            <div class="p-1 handle cursor-move">
               <Icon
                 icon="akar-icons:drag-horizontal"
-                class="w-6 h-6 text-slate-400"
+                class="w-10 h-6 text-slate-400"
               />
             </div>
             <div class="p-1">{{ index }}</div>
