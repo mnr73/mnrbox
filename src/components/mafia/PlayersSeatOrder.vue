@@ -6,6 +6,8 @@ import draggable from "vuedraggable";
 
 const emit = defineEmits(["close"]);
 const userList = ref({});
+const dragging = ref(null);
+const newIndex = ref(-1);
 
 function close() {
   emit("close");
@@ -37,6 +39,12 @@ function shiftList(index) {
   // userList.value.push(sliced);
   changeList();
 }
+
+function dragEnd(item) {
+  dragging.value = -1;
+  newIndex.value = item.newIndex;
+  // input.item.classList.add("animate-bg-color");
+}
 </script>
 
 <template>
@@ -52,21 +60,25 @@ function shiftList(index) {
           در این صفحه می‌توانید کاربران را به ترتیب نشستن مرتب کنید تا مدیریت
           بازی هنگام رای گیری ساده تر شود.
         </p>
-        <!-- {{ userList }} -->
       </div>
       <draggable
         v-if="userList.length"
         v-model="userList"
         item-key="class"
         @change="changeList"
-        class="flex flex-col gap-2"
+        class="flex flex-col gap-1"
         handle=".handle"
+        @end="dragEnd"
       >
         <template #item="{ element, index }" v-if="userList.length">
           <div
-            class="bg-slate-50 border rounded-md flex gap-2 h-8 items-center"
+            class="bg-slate-50 border rounded-md flex gap-2 h-7 items-center"
+            :class="{
+              '!bg-sky-300': dragging === index,
+              'animate-bg-color': newIndex == index,
+            }"
           >
-            <div class="p-1 handle cursor-move">
+            <div class="p-1 handle cursor-move" @mousedown="dragging = index">
               <Icon
                 icon="akar-icons:drag-horizontal"
                 class="w-10 h-6 text-slate-400"
@@ -87,3 +99,18 @@ function shiftList(index) {
     </div>
   </div>
 </template>
+<style scss>
+@keyframes example {
+  0% {
+    @apply bg-sky-300;
+  }
+  100% {
+    @apply bg-slate-50;
+  }
+}
+
+.animate-bg-color {
+  animation-name: example;
+  animation-duration: 1s;
+}
+</style>
