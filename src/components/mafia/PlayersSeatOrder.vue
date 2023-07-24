@@ -45,6 +45,12 @@ function dragEnd(item) {
   newIndex.value = item.newIndex;
   // input.item.classList.add("animate-bg-color");
 }
+
+function dragStart(item) {
+  dragging.value = item.oldIndex;
+  // newIndex.value = item.newIndex;
+  // input.item.classList.add("animate-bg-color");
+}
 </script>
 
 <template>
@@ -69,6 +75,7 @@ function dragEnd(item) {
         class="flex flex-col gap-1"
         handle=".handle"
         @end="dragEnd"
+        @choose="dragStart"
       >
         <template #item="{ element, index }" v-if="userList.length">
           <div
@@ -78,7 +85,7 @@ function dragEnd(item) {
               'animate-bg-color': newIndex == index,
             }"
           >
-            <div class="p-1 handle cursor-move" @mousedown="dragging = index">
+            <div class="p-1 handle cursor-move">
               <Icon
                 icon="akar-icons:drag-horizontal"
                 class="w-10 h-6 text-slate-400"
