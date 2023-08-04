@@ -45,9 +45,15 @@ class mafia {
 	}
 
 	updatePlayers(players) {
-		this.mafia.players = players
+		this.mafia.players = _.reject(this.mafia.players, (o) => {
+			return _.find(players, ['class', o.class]) == null;
+		})
+		players = _.reject(players, (n) => {
+			return _.find(this.mafia.players, ['class', n.class]);
+		})
+		players = this.mafia.players = [...this.mafia.players, ...players]
 		this.update()
-		return this.getRoles();
+		return this.getPlayers();
 	}
 
 	getPlayers() {

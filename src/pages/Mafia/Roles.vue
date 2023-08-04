@@ -1,12 +1,12 @@
 <script setup>
-import { Icon } from "@iconify/vue";
 import mafia from "@/modules/mafia";
 import _ from "lodash";
 import * as role from "@/modules/roles";
-import { ref, reactive, computed, watch } from "vue";
+import { ref, computed, watch } from "vue";
 import * as rolesComponent from "@/modules/rolesComponent";
 import RoleWrapper from "@/components/mafia/RoleWrapper.vue";
 import Bottom from "@/components/Bottom.vue";
+import LightBtn from "@/components/btn/LightBtn.vue";
 
 let data = new mafia();
 let name = ref();
@@ -65,7 +65,7 @@ function deleteRoles() {
 }
 </script>
 <template>
-  <div class="sm:p-5 p-2">
+  <div class="sm:p-5 p-2 max-w-lg mx-auto">
     <input
       placeholder="جستجو"
       type="text"
@@ -73,85 +73,96 @@ function deleteRoles() {
       class="shadow-sm w-full border border-red-300 outline-none px-2 rounded-md h-14"
     />
     <hr class="my-4" />
-    <div class="bg-white sm:p-5 p-2 border rounded-sm">
-      <div class="flex justify-between">
-        <h2 class="font-bold">
-          نقش ها (<span>{{ _.filter(roles, "active").length }}</span> از
-          <span>{{ Object.keys(roles).length }}</span
-          >) -
-          <span class="text-slate-400"
-            >بازیکن ها {{ _.filter(users, "active")?.length || 0 }}</span
-          >
-        </h2>
-        <button
-          class="bg-red-300 text-red-800 px-2 rounded-md"
-          @click="deleteRoles()"
+    <div class="flex justify-between">
+      <h2 class="font-bold">
+        نقش ها (<span>{{ _.filter(roles, "active").length }}</span> از
+        <span>{{ Object.keys(roles).length }}</span
+        >) -
+        <span class="text-slate-400"
+          >بازیکن ها {{ _.filter(users, "active")?.length || 0 }}</span
         >
-          ریست
-        </button>
+      </h2>
+      <button
+        class="bg-red-300 text-red-800 px-2 rounded-md"
+        @click="deleteRoles()"
+      >
+        ریست
+      </button>
+    </div>
+    <div class="grid grid-cols-4 gap-2 mt-2">
+      <div class="bg-red-500 p-2 rounded-md text-white text-center">
+        {{
+          _.filter(roles, {
+            card: { side: "mafia" },
+            active: true,
+          }).length
+        }}
+        از {{ _.filter(roles, ["card.side", "mafia"]).length }}
       </div>
-      <div class="grid grid-cols-4 gap-2 mt-2">
-        <div class="bg-red-500 p-2 rounded-md text-white text-center">
-          {{
-            _.filter(roles, {
-              card: { side: "mafia" },
-              active: true,
-            }).length
-          }}
-          از {{ _.filter(roles, ["card.side", "mafia"]).length }}
-        </div>
-        <div class="bg-emerald-500 p-2 rounded-md text-white text-center">
-          {{
-            _.filter(roles, {
-              card: { side: "city" },
-              active: true,
-            }).length
-          }}
-          از {{ _.filter(roles, ["card.side", "city"]).length }}
-        </div>
-        <div class="bg-amber-500 p-2 rounded-md text-white text-center">
-          {{
-            _.filter(roles, {
-              card: { side: "independent" },
-              active: true,
-            }).length
-          }}
-          از {{ _.filter(roles, ["card.side", "independent"]).length }}
-        </div>
-        <div class="bg-slate-500 p-2 rounded-md text-white text-center">
-          {{
-            _.filter(roles, {
-              card: { side: "gray" },
-              active: true,
-            }).length
-          }}
-          از {{ _.filter(roles, ["card.side", "gray"]).length }}
-        </div>
+      <div class="bg-emerald-500 p-2 rounded-md text-white text-center">
+        {{
+          _.filter(roles, {
+            card: { side: "city" },
+            active: true,
+          }).length
+        }}
+        از {{ _.filter(roles, ["card.side", "city"]).length }}
       </div>
-      <div class="mt-5" v-if="Object.keys(roles).length == 0">
-        کاربری وجود ندارد
+      <div class="bg-amber-500 p-2 rounded-md text-white text-center">
+        {{
+          _.filter(roles, {
+            card: { side: "independent" },
+            active: true,
+          }).length
+        }}
+        از {{ _.filter(roles, ["card.side", "independent"]).length }}
       </div>
-      <div class="mt-5 grid grid-cols-1 gap-3" v-else>
-        <template v-for="role in filteredRoles" :key="role.card.class">
-          <RoleWrapper :role="role">
-            <component
-              :is="rolesComponent[role.card.roleComponent]"
-              :role="role.card"
-            ></component>
-          </RoleWrapper>
-        </template>
+      <div class="bg-slate-500 p-2 rounded-md text-white text-center">
+        {{
+          _.filter(roles, {
+            card: { side: "gray" },
+            active: true,
+          }).length
+        }}
+        از {{ _.filter(roles, ["card.side", "gray"]).length }}
       </div>
     </div>
+    <div class="mt-5" v-if="Object.keys(roles).length == 0">
+      کاربری وجود ندارد
+    </div>
+    <transition-group
+      tag="div"
+      name="flip-list"
+      class="mt-5 grid grid-cols-1 gap-3"
+      v-else
+    >
+      <template v-for="role in filteredRoles" :key="role.card.class">
+        <RoleWrapper :role="role">
+          <component
+            :is="rolesComponent[role.card.roleComponent]"
+            :role="role.card"
+          ></component>
+        </RoleWrapper>
+      </template>
+    </transition-group>
     <div class="h-60"></div>
   </div>
 
   <Bottom>
-    <div class="p-1 bg-slate-100">
-      <router-link
+    <div class="p-1 max-w-lg mx-auto">
+      <LightBtn
         to="/mafia"
-        class="bg-red-500 text-white rounded-md p-2 text-center w-full block"
-        >تایید نقش ها</router-link
+        class="!bg-red-500 !text-white"
+        icon="akar-icons:thumbs-up"
+        :center="true"
+        >تایید</LightBtn
       >
     </div>
   </Bottom>
 </template>
+
+<style scoped>
+.flip-list-move {
+  transition: transform 0.5s;
+}
+</style>

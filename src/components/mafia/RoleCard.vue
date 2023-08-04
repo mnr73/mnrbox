@@ -43,7 +43,7 @@ const props = defineProps({
         <div>
           {{ props.role?.userName }}
         </div>
-        <div class="text-slate-400 font-thin ms-auto">
+        <div class="text-slate-400 font-thin ms-auto" v-show="!game.privetMode">
           <Icon :icon="props.role.icon" class="inline-block mx-1 h-full w-6" />
           {{ props.role?.roleName }}
         </div>

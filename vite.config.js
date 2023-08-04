@@ -12,7 +12,7 @@ export default defineConfig({
 			devOptions: {
 				enabled: true
 			},
-			// includeAssets: ['mafia.svg', 'audio/end.ogg', 'audio/mafia1.mp3'],
+			includeAssets: ['mafia.svg', 'audio/end.ogg', 'audio/mafia1.mp3', 'font/Vazir-Regular-FD-WOL.woff', 'font/Vazir-Bold-FD-WOL.woff'],
 			manifest: {
 				name: 'MNR box',
 				short_name: 'MNRbox',
@@ -39,6 +39,7 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, './src'),
+			'@p': path.resolve(__dirname, './public'),
 		},
 	},
 	define: {

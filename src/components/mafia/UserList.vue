@@ -1,9 +1,8 @@
 <script setup>
 import { Icon } from "@iconify/vue";
-import { reactive, ref, computed } from "vue";
-import endSound from "@/assets/audio/end.ogg";
-import RoleCard from "./RoleCard.vue";
+import { ref, computed } from "vue";
 import _ from "lodash";
+import Modal from "../Modal.vue";
 
 const search = ref("");
 
@@ -31,13 +30,8 @@ function close() {
 </script>
 
 <template>
-  <div
-    class="fixed top-0 left-0 w-full h-full z-50 bg-white bg-opacity-70 px-5 py-20"
-    @click.self="close()"
-  >
-    <div
-      class="bg-white rounded-md w-full h-full max-w-xl max-h-fit mx-auto shadow-lg border flex flex-col overflow-y-auto p-2"
-    >
+  <Modal @close="close()">
+    <div class="p-2">
       <div class="mb-3">
         <input
           type="text"
@@ -101,5 +95,5 @@ function close() {
         </template>
       </div>
     </div>
-  </div>
+  </Modal>
 </template>

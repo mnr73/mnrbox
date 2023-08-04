@@ -3,6 +3,7 @@ import { Icon } from "@iconify/vue";
 import { computed, ref } from "vue";
 import _ from "lodash";
 import draggable from "vuedraggable";
+import Modal from "../Modal.vue";
 
 const emit = defineEmits(["close"]);
 const userList = ref({});
@@ -54,13 +55,8 @@ function dragStart(item) {
 </script>
 
 <template>
-  <div
-    class="fixed top-0 left-0 w-full h-full z-50 bg-white bg-opacity-70 px-5 py-20"
-    @click.self="close()"
-  >
-    <div
-      class="bg-white rounded-md w-full h-full max-w-xl max-h-fit mx-auto shadow-lg border overflow-y-auto p-2"
-    >
+  <Modal @close="close()">
+    <div class="p-2">
       <div class="mb-5">
         <p>
           در این صفحه می‌توانید کاربران را به ترتیب نشستن مرتب کنید تا مدیریت
@@ -104,10 +100,10 @@ function dragStart(item) {
         </template>
       </draggable>
     </div>
-  </div>
+  </Modal>
 </template>
-<style scss>
-@keyframes example {
+<style scss scoped>
+@keyframes bg-color-animate {
   0% {
     @apply bg-sky-300;
   }
@@ -117,7 +113,7 @@ function dragStart(item) {
 }
 
 .animate-bg-color {
-  animation-name: example;
+  animation-name: bg-color-animate;
   animation-duration: 1s;
 }
 </style>

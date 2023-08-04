@@ -5,6 +5,7 @@ import { Icon } from "@iconify/vue";
 import { ref, watch } from "vue";
 import mafia from "@/modules/mafia";
 import Bottom from "@/components/Bottom.vue";
+import LightBtn from "@/components/btn/LightBtn.vue";
 
 const data = new mafia();
 
@@ -20,7 +21,7 @@ function deleteAll() {
 </script>
 <template>
   <div class="p-2">
-    <div class="p-5 max-w-2xl bg-white border mt-10 mx-auto">
+    <div class="p-5 max-w-lg bg-white border mt-10 mx-auto">
       <!-- <div class="my-2">
         <h2 class="font-bold text-lg">ریست کردن نقش های بازی</h2>
         <p class="mt-5">
@@ -61,11 +62,13 @@ function deleteAll() {
   </div>
 
   <Bottom>
-    <div class="p-1 bg-slate-100">
-      <router-link
+    <div class="p-1 bg-slate-100 max-w-lg mx-auto">
+      <LightBtn
         to="/mafia"
-        class="bg-red-500 text-white rounded-md p-2 text-center w-full block"
-        >بازگشت</router-link
+        class="!bg-red-500 !text-white"
+        icon="akar-icons:thumbs-up"
+        :center="true"
+        >تایید</LightBtn
       >
     </div>
   </Bottom>

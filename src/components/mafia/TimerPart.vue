@@ -1,7 +1,6 @@
 <script setup>
 import { Icon } from "@iconify/vue";
-import { reactive } from "vue";
-import endSound from "@/assets/audio/end.ogg";
+import endSound from "@p/audio/end.ogg";
 
 // let time;
 let sound = new Audio(endSound);

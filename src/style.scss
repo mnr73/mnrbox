@@ -4,13 +4,13 @@
 
 @font-face {
 	font-family: vazir;
-	src: url("./assets/fonts/Vazir-Regular-FD-WOL.woff") format("woff");
+	src: url("@p/fonts/Vazir-Regular-FD-WOL.woff") format("woff");
 	font-weight: normal;
 	font-display: swap;
 }
 @font-face {
 	font-family: vazir;
-	src: url("./assets/fonts/Vazir-Bold-FD-WOL.woff") format("woff");
+	src: url("@p/fonts/Vazir-Bold-FD-WOL.woff") format("woff");
 	font-weight: bold;
 	font-display: swap;
 }
@@ -23,4 +23,8 @@
 
 html {
 	scroll-behavior: smooth;
+}
+
+body {
+	@apply bg-gray-50;
 }

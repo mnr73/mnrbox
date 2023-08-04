@@ -1,12 +1,10 @@
 <script setup>
-import { Icon } from "@iconify/vue";
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import _ from "lodash";
-import draggable from "vuedraggable";
+import Modal from "../Modal.vue";
 
 const emit = defineEmits(["close"]);
 const userList = ref({});
-const file = ref({});
 
 function close() {
   emit("close");
@@ -32,13 +30,8 @@ function selected(event) {
 </script>
 
 <template>
-  <div
-    class="fixed top-0 left-0 w-full h-full z-50 bg-white bg-opacity-70 px-5 py-20 flex items-center"
-    @click.self="close()"
-  >
-    <div
-      class="bg-white rounded-md w-full h-64 max-w-xl mx-auto shadow-lg border overflow-y-auto p-3"
-    >
+  <Modal @close="close()">
+    <div class="p-3">
       <div class="mb-5">
         <p>
           در این صفحه می‌توانید آهنگ دلخواه خود را انتخاب کنید تا موقع پخش آن
@@ -62,5 +55,5 @@ function selected(event) {
         </button>
       </div>
     </div>
-  </div>
+  </Modal>
 </template>

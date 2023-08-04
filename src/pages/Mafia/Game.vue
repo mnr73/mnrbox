@@ -4,7 +4,7 @@ import mafia from "@/modules/mafia";
 import _ from "lodash";
 import Bottom from "@/components/Bottom.vue";
 import { Icon } from "@iconify/vue";
-import soundMafia1 from "@/assets/audio/mafia1.mp3";
+import soundMafia1 from "@p/audio/mafia1.mp3";
 import TimerPart from "@/components/mafia/TimerPart.vue";
 import NightStory from "@/components/mafia/NightStory.vue";
 import DayStory from "@/components/mafia/DayStory.vue";
@@ -51,6 +51,7 @@ const roundList = reactive({
 const game = reactive({
   rounds: [],
   end: false,
+  privetMode: false,
   roles: [],
   lastRoundNumber: null,
   selectedRound: {},
@@ -374,6 +375,13 @@ function timerStart(timer) {
       @click="changeMusic = !changeMusic"
     >
       <Icon icon="akar-icons:music-note" class="h-full w-6" />
+    </button>
+    <button
+      class="w-10 bg-slate-200 h-full flex justify-center p-1 rounded-md"
+      :class="{ '!bg-red-500 text-white': game.privetMode }"
+      @click="game.privetMode = !game.privetMode"
+    >
+      <Icon icon="akar-icons:eye-slashed" class="h-full w-6" />
     </button>
   </div>
   <div class="overflow-x-auto sm:my-3 my-2 sm:px-5 px-2 text-sm" ref="daysBox">

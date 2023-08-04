@@ -7,6 +7,8 @@ import mafia from "@/modules/mafia";
 import MnrSelect from "@/components/mnr/MnrSelect.vue";
 import _ from "lodash";
 import Bottom from "@/components/Bottom.vue";
+import Modal from "@/components/Modal.vue";
+import LightBtn from "@/components/btn/LightBtn.vue";
 
 const data = new mafia();
 const users = ref();
@@ -14,6 +16,7 @@ const roles = ref();
 // let selectedUser = ref()
 
 users.value = data.getActiveUsers();
+users.value = _.shuffle(users.value);
 roles.value = data.getPlayers();
 
 users.value = _.map(users.value, (user) => {
@@ -30,8 +33,9 @@ onMounted(() => {
       (user) => selectedUsers.find((id) => id == user.id) == undefined
     );
     freeUsers = _.shuffle(freeUsers);
-    role.userId = freeUsers[0].id;
-    role.userName = freeUsers[0].name;
+    let randomIndex = Math.floor(Math.random() * freeUsers.length);
+    role.userId = freeUsers[randomIndex].id;
+    role.userName = freeUsers[randomIndex].name;
   });
   data.updatePlayers(roles.value);
 });
@@ -63,22 +67,21 @@ const openRole = computed(() => {
         <div class="text-lg">{{ user.name }}</div>
       </div>
     </div>
-    <div
+    <Modal
       v-show="openUser"
-      @click.self="
+      @close="
         openUser.seen = true;
         openUser.open = false;
       "
-      class="fixed w-full h-screen bg-black bg-opacity-30 top-0 left-0 z-50 flex items-center justify-center"
+      title="نمایش نقش"
+      closeText="متوجه شدم"
     >
-      <div
-        class="w-11/12 h-2/6 max-w-screen-sm bg-white shadow-lg rounded-md flex flex-col gap-5 items-center justify-center"
-      >
+      <div class="flex flex-col items-center justify-center gap-8 py-16">
         <div class="font-bold">{{ openUser?.name }}</div>
-        <div>
+        <div class="text-gray-300">
           <Icon :icon="openRole?.icon" class="h-20 w-20" />
         </div>
-        <div class="">
+        <div class="text-gray-400">
           {{ openRole?.roleName }} ({{
             {
               mafia: "مافیا",
@@ -88,25 +91,17 @@ const openRole = computed(() => {
             }[openRole?.side]
           }})
         </div>
-        <button
-          class="bg-red-600 text-white p-2 rounded-md"
-          @click="
-            openUser.seen = true;
-            openUser.open = false;
-          "
-        >
-          متوجه شدم
-        </button>
       </div>
-    </div>
+    </Modal>
     <Bottom>
-      <div class="p-1">
-        <router-link
+      <div class="p-1 max-w-lg mx-auto">
+        <LightBtn
           to="/mafia/game"
-          class="bg-red-600 text-white rounded-md p-2 w-full block text-center"
+          class="!bg-red-500 !text-white"
+          icon="akar-icons:thumbs-up"
+          :center="true"
+          >شروع بازی</LightBtn
         >
-          شروع بازی
-        </router-link>
       </div>
     </Bottom>
   </div>
